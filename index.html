@@ -563,88 +563,85 @@
 const WORKER_URL = 'https://heinsenberg-worker.mariopimentel1610.workers.dev/';
 
 const UNITS = {
-  163: {
-    name: "Unit 163",
-    location: "Kissimmee, FL",
-    maxGuests: "[PLACEHOLDER]",
+  107: {
+    name: "Unit 107",
+    location: "Legacy Grand, Kissimmee, FL",
+    maxGuests: "4",
 
     wifi: {
-      ssid: "[PLACEHOLDER — Nome da rede]",
-      password: "[PLACEHOLDER — Senha]"
+      ssid: "LegacyGrandGuest",
+      password: "192gate"
     },
 
     checkin: {
-      checkInTime: "16:00",
+      checkInTime: "15:00",
       checkOutTime: "11:00",
-      lockCode: "[PLACEHOLDER]",
+      lockCode: "2410",
       instructions: {
-        pt: "Ao chegar, utilize o código acima no teclado numérico da fechadura. A porta abrirá automaticamente. Por favor, certifique-se de trancar ao sair.",
-        en: "Upon arrival, use the code above on the lock keypad. The door will open automatically. Please make sure to lock it when leaving.",
-        es: "Al llegar, use el código de arriba en el teclado de la cerradura. La puerta se abrirá automáticamente. Por favor, asegúrese de cerrar al salir."
+        pt: "Seu apartamento é o 107 no Prédio 1. Ao chegar, digite o código acima no teclado da fechadura. A porta abrirá automaticamente. Tranche ao sair.",
+        en: "Your apartment is 107 in Building 1. Upon arrival, enter the code above on the lock keypad. The door will open automatically. Lock it when leaving.",
+        es: "Su apartamento es el 107 en el Edificio 1. Al llegar, ingrese el código en el teclado de la cerradura. La puerta se abrirá automáticamente. Cierre al salir."
       }
     },
 
     parking: {
       rules: {
-        pt: "[PLACEHOLDER — Ex: Estacionamento coberto incluso. Vaga número [X] no bloco [Y]. Não utilize vagas de visitante.]",
-        en: "[PLACEHOLDER — e.g.: Covered parking included. Space number [X] in block [Y]. Do not use visitor spaces.]",
-        es: "[PLACEHOLDER — Ej: Estacionamiento cubierto incluido. Espacio número [X] en bloque [Y]. No use espacios de visitantes.]"
+        pt: "Utilize qualquer vaga disponível ao redor dos prédios do condomínio. Não há vaga numerada — estacione no espaço mais próximo disponível.",
+        en: "Use any available space around the condominium buildings. There is no assigned spot — park in the nearest available space.",
+        es: "Use cualquier espacio disponible alrededor de los edificios del condominio. No hay espacio asignado — estacione en el espacio más cercano disponible."
       },
-      mapsUrl: "https://maps.google.com/?q=[PLACEHOLDER]"
+      mapsUrl: "https://maps.app.goo.gl/hjzv3nqN65oZLkiU7"
     },
 
     rules: {
       pt: [
         { icon: "🚭", text: "Proibido fumar em qualquer área da unidade" },
-        { icon: "🎉", text: "Sem festas ou eventos — máximo de [PLACEHOLDER] hóspedes" },
-        { icon: "👟", text: "Retire os sapatos ao entrar na unidade" },
+        { icon: "🎉", text: "Sem festas ou eventos — máximo de 4 hóspedes" },
         { icon: "🐾", text: "Animais de estimação não são permitidos" },
         { icon: "🔇", text: "Silêncio após as 22h — respeite os vizinhos" },
-        { icon: "🗑️", text: "Deixe a unidade organizada ao fazer check-out" }
+        { icon: "🗑️", text: "Leve o lixo para fora antes do check-out" },
+        { icon: "🧹", text: "Sem serviço de limpeza durante a estadia" }
       ],
       en: [
         { icon: "🚭", text: "No smoking in any area of the unit" },
-        { icon: "🎉", text: "No parties or events — maximum [PLACEHOLDER] guests" },
-        { icon: "👟", text: "Remove shoes when entering the unit" },
+        { icon: "🎉", text: "No parties or events — maximum 4 guests" },
         { icon: "🐾", text: "Pets are not allowed" },
         { icon: "🔇", text: "Quiet after 10 PM — respect your neighbors" },
-        { icon: "🗑️", text: "Leave the unit tidy at checkout" }
+        { icon: "🗑️", text: "Take the trash out before check-out" },
+        { icon: "🧹", text: "No housekeeping service during the stay" }
       ],
       es: [
         { icon: "🚭", text: "Prohibido fumar en cualquier área de la unidad" },
-        { icon: "🎉", text: "Sin fiestas o eventos — máximo [PLACEHOLDER] huéspedes" },
-        { icon: "👟", text: "Quítese los zapatos al entrar a la unidad" },
+        { icon: "🎉", text: "Sin fiestas o eventos — máximo 4 huéspedes" },
         { icon: "🐾", text: "No se permiten mascotas" },
         { icon: "🔇", text: "Silencio después de las 10 PM — respete a sus vecinos" },
-        { icon: "🗑️", text: "Deje la unidad ordenada al hacer check-out" }
+        { icon: "🗑️", text: "Saque la basura antes del check-out" },
+        { icon: "🧹", text: "Sin servicio de limpieza durante la estadía" }
       ]
     },
 
     appliances: {
       text: {
-        pt: "[PLACEHOLDER — Ex: O ar-condicionado fica na parede da sala. Use o controle remoto para ligar (botão ON/OFF). Temperatura recomendada: 72-74°F. Para a TV, o controle é o preto na mesinha. Pressione o botão vermelho para ligar. Disney+, Netflix e YouTube estão disponíveis.]",
-        en: "[PLACEHOLDER — e.g.: The air conditioner is on the living room wall. Use the remote to turn it on (ON/OFF button). Recommended temperature: 72-74°F. For the TV, the remote is the black one on the coffee table. Press the red button to turn on. Disney+, Netflix and YouTube are available.]",
-        es: "[PLACEHOLDER — Ej: El aire acondicionado está en la pared de la sala. Use el control remoto para encenderlo (botón ON/OFF). Temperatura recomendada: 72-74°F. Para la TV, el control es el negro en la mesita. Presione el botón rojo para encender. Disney+, Netflix y YouTube están disponibles.]"
+        pt: "[PLACEHOLDER — instruções do AC e TV a preencher]",
+        en: "[PLACEHOLDER — AC and TV instructions to be filled]",
+        es: "[PLACEHOLDER — instrucciones del AC y TV a completar]"
       },
-      photos: [
-        // Adicione URLs de fotos aqui. Ex: "https://i.imgur.com/xxxxx.jpg"
-        // Deixe vazio [] para mostrar placeholder
-      ]
+      photos: []
     },
 
     pool: {
       text: {
-        pt: "[PLACEHOLDER — Ex: Piscina e academia disponíveis para hóspedes. Horário: 8h às 22h. Acesso pelo corredor B, térreo. Trazer toalha própria. Crianças menores de 12 anos precisam de supervisão.]",
-        en: "[PLACEHOLDER — e.g.: Pool and gym available for guests. Hours: 8 AM to 10 PM. Access via corridor B, ground floor. Bring your own towel. Children under 12 need supervision.]",
-        es: "[PLACEHOLDER — Ej: Piscina y gimnasio disponibles para huéspedes. Horario: 8h a 22h. Acceso por el pasillo B, planta baja. Traer toalla propia. Niños menores de 12 años necesitan supervisión.]"
+        pt: "Piscina disponível para hóspedes. Horário: 8h às 19h (8 AM–7 PM). Traga sua própria toalha.\n\nLavanderia paga disponível próximo à piscina: $3,50 para lavar + $3,50 para secar.",
+        en: "Pool available for guests. Hours: 8 AM to 7 PM. Bring your own towel.\n\nPaid laundry available near the pool: $3.50 to wash + $3.50 to dry.",
+        es: "Piscina disponible para huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla.\n\nLavandería de pago disponible cerca de la piscina: $3.50 para lavar + $3.50 para secar."
       },
       photos: []
     },
 
     trash: {
-      pt: "[PLACEHOLDER — Ex: Descarte o lixo nos contêineres ao lado do estacionamento, entrada pelo portão lateral. Separe recicláveis (azul) do lixo comum (preto). Coleta: segunda e quinta.]",
-      en: "[PLACEHOLDER — e.g.: Dispose of trash in the containers next to the parking lot, entrance via side gate. Separate recyclables (blue) from regular trash (black). Collection: Monday and Thursday.]",
-      es: "[PLACEHOLDER — Ej: Deseche la basura en los contenedores al lado del estacionamiento, entrada por la puerta lateral. Separe reciclables (azul) de basura común (negro). Recolección: lunes y jueves.]"
+      pt: "Por favor, leve o lixo para fora antes de fazer check-out. Deposite nos contêineres do condomínio.",
+      en: "Please take the trash out before checking out. Dispose in the condominium containers.",
+      es: "Por favor, saque la basura antes de hacer check-out. Deposítela en los contenedores del condominio."
     },
 
     recommendations: {
@@ -666,72 +663,99 @@ const UNITS = {
     },
 
     emergency: [
-      { name: "Mônica", role: { pt: "Suporte LF Services", en: "LF Services Support", es: "Soporte LF Services" }, phone: "+14070000000", whatsapp: true }
+      {
+        name: "Recepção Legacy Grand",
+        role: { pt: "Recepção do condomínio (10h–22h)", en: "Condo reception (10 AM–10 PM)", es: "Recepción del condominio (10h–22h)" },
+        phone: "+16896808177",
+        whatsapp: false
+      },
+      {
+        name: "Mônica",
+        role: { pt: "Suporte LF Services (via Airbnb)", en: "LF Services Support (via Airbnb)", es: "Soporte LF Services (via Airbnb)" },
+        phone: "",
+        whatsapp: false,
+        airbnb: true
+      }
     ],
 
     knowledgeBase: {
-      pt: `Você é o assistente virtual da Unit 163 da LF Services em Kissimmee, Florida, EUA. Responda apenas perguntas relacionadas à estadia nesta unidade. Seja amigável, conciso e útil.
+      pt: `Você é o assistente virtual da Unit 107 da LF Services no Legacy Grand, Kissimmee, Florida, EUA. Responda apenas perguntas relacionadas à estadia nesta unidade. Seja amigável, conciso e útil.
 
 DADOS DA UNIDADE:
-- WiFi: rede "[PLACEHOLDER]", senha "[PLACEHOLDER]"
-- Check-in: 16h (4 PM) | Check-out: 11h (11 AM)
-- Código da fechadura: [PLACEHOLDER]
-- Máximo de hóspedes: [PLACEHOLDER]
-- Localização: Kissimmee, FL
+- Prédio 1, Apartamento 107
+- Endereço: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
+- WiFi: rede "LegacyGrandGuest", senha "192gate"
+- Check-in: 15h (3 PM) | Check-out: 11h (11 AM)
+- Código da fechadura: 2410
+- Máximo de hóspedes: 4
 
-REGRAS: sem festas, sem fumar, sem sapatos dentro, sem pets, silêncio após 22h.
+REGRAS: sem festas, sem fumar, sem pets, silêncio após 22h, leve o lixo para fora antes do check-out, sem serviço de limpeza durante a estadia.
 
-AR-CONDICIONADO: [PLACEHOLDER — como ligar, temperatura recomendada]
-TV: [PLACEHOLDER — como ligar, apps disponíveis]
-PISCINA/ACADEMIA: [PLACEHOLDER — horário e localização]
-DESCARTE DE LIXO: [PLACEHOLDER — onde e quando]
-ESTACIONAMENTO: [PLACEHOLDER — vaga e localização]
+ESTACIONAMENTO: qualquer vaga ao redor dos prédios do condomínio, sem vaga numerada.
+PISCINA: aberta das 8h às 19h (8 AM–7 PM). Trazer toalha própria.
+LAVANDERIA: paga, perto da piscina — $3,50 lavar + $3,50 secar.
+AR-CONDICIONADO: [a preencher]
+TV: [a preencher]
 
-EMERGÊNCIA: Mônica: +1 407-000-0000 (WhatsApp disponível)
+TRANSFER: transfer gratuito disponível — pergunte à Mônica via Airbnb para mais detalhes.
 
-Se o hóspede perguntar algo que você não sabe, sugira contatar a Mônica pelo WhatsApp.`,
+EMERGÊNCIA:
+- Recepção Legacy Grand: +1 689 680-8177 (funciona das 10h às 22h, ligue para problemas no condomínio)
+- Mônica (LF Services): contate via mensagem no Airbnb
 
-      en: `You are the virtual assistant for Unit 163 by LF Services in Kissimmee, Florida, USA. Only answer questions related to the stay at this unit. Be friendly, concise and helpful.
+Se não souber responder algo, sugira contatar a Mônica via Airbnb ou a recepção pelo telefone.`,
+
+      en: `You are the virtual assistant for Unit 107 by LF Services at Legacy Grand, Kissimmee, Florida, USA. Only answer questions related to the stay at this unit. Be friendly, concise and helpful.
 
 UNIT DATA:
-- WiFi: network "[PLACEHOLDER]", password "[PLACEHOLDER]"
-- Check-in: 4 PM | Check-out: 11 AM
-- Lock code: [PLACEHOLDER]
-- Maximum guests: [PLACEHOLDER]
-- Location: Kissimmee, FL
+- Building 1, Apartment 107
+- Address: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
+- WiFi: network "LegacyGrandGuest", password "192gate"
+- Check-in: 3 PM | Check-out: 11 AM
+- Lock code: 2410
+- Maximum guests: 4
 
-RULES: no parties, no smoking, no shoes inside, no pets, quiet after 10 PM.
+RULES: no parties, no smoking, no pets, quiet after 10 PM, take trash out before check-out, no housekeeping during stay.
 
-AIR CONDITIONING: [PLACEHOLDER — how to turn on, recommended temperature]
-TV: [PLACEHOLDER — how to turn on, available apps]
-POOL/GYM: [PLACEHOLDER — hours and location]
-TRASH DISPOSAL: [PLACEHOLDER — where and when]
-PARKING: [PLACEHOLDER — spot and location]
+PARKING: any available space around the condominium buildings, no assigned spot.
+POOL: open 8 AM to 7 PM. Bring your own towel.
+LAUNDRY: paid, near the pool — $3.50 wash + $3.50 dry.
+AIR CONDITIONING: [to be filled]
+TV: [to be filled]
 
-EMERGENCY: Mônica: +1 407-000-0000 (WhatsApp available)
+TRANSFER: free transfer available — ask Mônica via Airbnb for details.
 
-If the guest asks something you don't know, suggest contacting Mônica via WhatsApp.`,
+EMERGENCY:
+- Legacy Grand Reception: +1 689 680-8177 (available 10 AM–10 PM, call for condo issues)
+- Mônica (LF Services): contact via Airbnb message
 
-      es: `Eres el asistente virtual de la Unit 163 de LF Services en Kissimmee, Florida, EE. UU. Solo responde preguntas relacionadas con la estadía en esta unidad. Sé amable, conciso y útil.
+If unsure about something, suggest contacting Mônica via Airbnb or the reception by phone.`,
+
+      es: `Eres el asistente virtual de la Unit 107 de LF Services en Legacy Grand, Kissimmee, Florida, EE. UU. Solo responde preguntas relacionadas con la estadía en esta unidad. Sé amable, conciso y útil.
 
 DATOS DE LA UNIDAD:
-- WiFi: red "[PLACEHOLDER]", contraseña "[PLACEHOLDER]"
-- Check-in: 4 PM | Check-out: 11 AM
-- Código de la cerradura: [PLACEHOLDER]
-- Máximo de huéspedes: [PLACEHOLDER]
-- Ubicación: Kissimmee, FL
+- Edificio 1, Apartamento 107
+- Dirección: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
+- WiFi: red "LegacyGrandGuest", contraseña "192gate"
+- Check-in: 3 PM | Check-out: 11 AM
+- Código de la cerradura: 2410
+- Máximo de huéspedes: 4
 
-REGLAS: sin fiestas, sin fumar, sin zapatos adentro, sin mascotas, silencio después de las 22h.
+REGLAS: sin fiestas, sin fumar, sin mascotas, silencio después de las 10 PM, saque la basura antes del check-out, sin servicio de limpieza durante la estadía.
 
-AIRE ACONDICIONADO: [PLACEHOLDER — cómo encender, temperatura recomendada]
-TV: [PLACEHOLDER — cómo encender, apps disponibles]
-PISCINA/GIMNASIO: [PLACEHOLDER — horario y ubicación]
-BASURA: [PLACEHOLDER — dónde y cuándo]
-ESTACIONAMIENTO: [PLACEHOLDER — espacio y ubicación]
+ESTACIONAMIENTO: cualquier espacio disponible alrededor de los edificios, sin espacio asignado.
+PISCINA: abierta de 8 AM a 7 PM. Traiga su propia toalla.
+LAVANDERÍA: de pago, cerca de la piscina — $3.50 lavar + $3.50 secar.
+AIRE ACONDICIONADO: [a completar]
+TV: [a completar]
 
-EMERGENCIA: Mônica: +1 407-000-0000 (WhatsApp disponible)
+TRANSFER: transfer gratuito disponible — consulte a Mônica via Airbnb para más detalles.
 
-Si el huésped pregunta algo que no sabes, sugiere contactar a Mônica por WhatsApp.`
+EMERGENCIA:
+- Recepción Legacy Grand: +1 689 680-8177 (disponible 10h–22h, llame para problemas del condominio)
+- Mônica (LF Services): contacte via mensaje en Airbnb
+
+Si no sabe algo, sugiera contactar a Mônica via Airbnb o a la recepción por teléfono.`
     }
   }
 

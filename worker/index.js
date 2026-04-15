@@ -67,28 +67,19 @@ export default {
           'x-api-key': env.ANTHROPIC_API_KEY,
           'anthropic-version': '2023-06-01',
           'content-type': 'application/json',
-          // Cache de prompt: o system prompt é estável por unidade/idioma
-          // Anthropic cacheia automaticamente blocos com > 1024 tokens
         },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001', // rápido e econômico para FAQ
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: 512,
-          system: [
-            {
-              type: 'text',
-              text: knowledgeBase,
-              cache_control: { type: 'ephemeral' } // ativa prompt caching
-            }
-          ],
+          system: knowledgeBase,
           messages: sanitizedMessages
         })
       });
 
       if (!claudeResponse.ok) {
         const errText = await claudeResponse.text();
-        console.error('Claude API error:', claudeResponse.status, errText);
         return corsResponse(
-          JSON.stringify({ error: 'AI service unavailable', detail: claudeResponse.status }),
+          JSON.stringify({ error: 'AI service unavailable', detail: claudeResponse.status, message: errText }),
           502
         );
       }
