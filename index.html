@@ -90,8 +90,17 @@
 
     /* ── HERO ───────────────────────────────────────────────── */
     .hero {
-      padding: 28px 20px 20px;
-      background: linear-gradient(180deg, #1A1040 0%, var(--bg) 100%);
+      padding: 28px 20px 24px;
+      background: linear-gradient(160deg, #1A0A3A 0%, #0F0C28 50%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 80% 0%, rgba(124,58,237,0.12) 0%, transparent 60%);
+      pointer-events: none;
     }
     .hero-label {
       font-size: 0.7rem;
@@ -119,24 +128,26 @@
     }
     .hero-time-card {
       flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(240,192,64,0.2);
       border-radius: var(--radius-sm);
-      padding: 12px 14px;
+      padding: 14px 16px;
+      backdrop-filter: blur(4px);
     }
     .hero-time-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: var(--gold-dim);
     }
     .hero-time-value {
-      font-size: 1.5rem;
-      font-weight: 800;
+      font-size: 1.6rem;
+      font-weight: 900;
       color: var(--gold);
       line-height: 1.2;
       margin-top: 2px;
+      letter-spacing: 0.02em;
     }
 
     /* ── TABS ───────────────────────────────────────────────── */
@@ -178,6 +189,11 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .acc-item.open {
+      border-color: rgba(240,192,64,0.35);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
     }
     .acc-header {
       width: 100%;
@@ -189,7 +205,17 @@
       transition: background var(--transition);
     }
     .acc-header:active { background: var(--bg-card2); }
-    .acc-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .acc-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(240,192,64,0.08);
+      border-radius: 8px;
+    }
     .acc-title {
       font-size: 0.95rem;
       font-weight: 600;
@@ -197,12 +223,12 @@
       flex: 1;
     }
     .acc-chevron {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
       transition: transform var(--transition);
       flex-shrink: 0;
     }
-    .acc-item.open .acc-chevron { transform: rotate(180deg); }
+    .acc-item.open .acc-chevron { transform: rotate(180deg); color: var(--gold); }
     .acc-body {
       max-height: 0;
       overflow: hidden;
@@ -335,6 +361,26 @@
     }
     .rules-list li:last-child { border-bottom: none; }
     .rule-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── CHECKLIST (check-in / check-out steps) ──────────────── */
+    .checklist {
+      list-style: none;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--bg-card2);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .checklist-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .checklist-text { font-size: 0.9rem; color: var(--text); line-height: 1.4; }
+    .checklist-sub { font-size: 0.78rem; color: var(--text-dim); margin-top: 2px; }
 
     /* ── PHOTO GRID ──────────────────────────────────────────── */
     .photo-grid {
@@ -584,6 +630,57 @@ const UNITS = {
       }
     },
 
+    checkinSteps: {
+      pt: [
+        { icon: "🕐", text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
+        { icon: "🏢", text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: "🔐", text: "Digite 2410 na fechadura eletrônica", sub: "A porta abre automaticamente — não precisa de chave física" },
+        { icon: "📶", text: "Conecte ao WiFi: LegacyGrandGuest", sub: "Senha: 192gate" },
+        { icon: "❄️", text: "Ligue o AC e ajuste a temperatura conforme preferência", sub: "[instruções do AC a preencher]" }
+      ],
+      en: [
+        { icon: "🕐", text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
+        { icon: "🏢", text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: "🔐", text: "Enter 2410 on the electronic lock", sub: "Door opens automatically — no physical key needed" },
+        { icon: "📶", text: "Connect to WiFi: LegacyGrandGuest", sub: "Password: 192gate" },
+        { icon: "❄️", text: "Turn on the AC and set your preferred temperature", sub: "[AC instructions to be filled]" }
+      ],
+      es: [
+        { icon: "🕐", text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
+        { icon: "🏢", text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: "🔐", text: "Ingrese 2410 en la cerradura electrónica", sub: "La puerta se abre automáticamente — no necesita llave física" },
+        { icon: "📶", text: "Conéctese al WiFi: LegacyGrandGuest", sub: "Contraseña: 192gate" },
+        { icon: "❄️", text: "Encienda el AC y ajuste la temperatura", sub: "[instrucciones del AC a completar]" }
+      ]
+    },
+
+    checkoutSteps: {
+      pt: [
+        { icon: "🕐", text: "Saia até as 11h (11 AM)", sub: "Late check-out sujeito a disponibilidade" },
+        { icon: "🗑️", text: "Leve todo o lixo para os contêineres do condomínio", sub: "Obrigatório — não deixe lixo dentro da unidade" },
+        { icon: "🧹", text: "Deixe a unidade organizada", sub: "Pratos lavados, tudo no lugar, toalhas dobradas" },
+        { icon: "🪟", text: "Feche e trave todas as janelas e portas internas", sub: "" },
+        { icon: "❄️", text: "Desligue o AC e todos os aparelhos", sub: "" },
+        { icon: "🔒", text: "Feche a porta ao sair — a fechadura trava sozinha", sub: "Confirme que está travada antes de deixar o local" }
+      ],
+      en: [
+        { icon: "🕐", text: "Check out by 11 AM", sub: "Late check-out subject to availability" },
+        { icon: "🗑️", text: "Take all trash to the condo containers", sub: "Required — do not leave trash inside the unit" },
+        { icon: "🧹", text: "Leave the unit tidy", sub: "Washed dishes, everything in place, towels folded" },
+        { icon: "🪟", text: "Close and lock all windows and interior doors", sub: "" },
+        { icon: "❄️", text: "Turn off the AC and all appliances", sub: "" },
+        { icon: "🔒", text: "Close the door when leaving — the lock is self-locking", sub: "Confirm it is locked before leaving" }
+      ],
+      es: [
+        { icon: "🕐", text: "Haga check-out antes de las 11 AM", sub: "Late check-out sujeto a disponibilidad" },
+        { icon: "🗑️", text: "Lleve toda la basura a los contenedores del condominio", sub: "Obligatorio — no deje basura dentro de la unidad" },
+        { icon: "🧹", text: "Deje la unidad ordenada", sub: "Platos lavados, todo en su lugar, toallas dobladas" },
+        { icon: "🪟", text: "Cierre y asegure todas las ventanas y puertas internas", sub: "" },
+        { icon: "❄️", text: "Apague el AC y todos los aparatos", sub: "" },
+        { icon: "🔒", text: "Cierre la puerta al salir — la cerradura se bloquea sola", sub: "Confirme que está cerrada antes de irse" }
+      ]
+    },
+
     parking: {
       rules: {
         pt: "Utilize qualquer vaga disponível ao redor dos prédios do condomínio. Não há vaga numerada — estacione no espaço mais próximo disponível.",
@@ -631,11 +728,41 @@ const UNITS = {
 
     pool: {
       text: {
-        pt: "Piscina disponível para hóspedes. Horário: 8h às 19h (8 AM–7 PM). Traga sua própria toalha.\n\nLavanderia paga disponível próximo à piscina: $3,50 para lavar + $3,50 para secar.",
-        en: "Pool available for guests. Hours: 8 AM to 7 PM. Bring your own towel.\n\nPaid laundry available near the pool: $3.50 to wash + $3.50 to dry.",
-        es: "Piscina disponible para huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla.\n\nLavandería de pago disponible cerca de la piscina: $3.50 para lavar + $3.50 para secar."
+        pt: "Piscina disponível para todos os hóspedes. Horário: 8h às 19h (8 AM–7 PM). Traga sua própria toalha — não são fornecidas.",
+        en: "Pool available for all guests. Hours: 8 AM to 7 PM. Bring your own towel — towels are not provided.",
+        es: "Piscina disponible para todos los huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla — no se proporcionan toallas."
       },
       photos: []
+    },
+
+    gym: {
+      text: {
+        pt: "Academia disponível no condomínio. Consulte horários na recepção do Legacy Grand.",
+        en: "Gym available in the condominium. Check hours at the Legacy Grand front desk.",
+        es: "Gimnasio disponible en el condominio. Consulte los horarios en la recepción del Legacy Grand."
+      },
+      photos: []
+    },
+
+    laundry: {
+      text: {
+        pt: "Lavanderia paga disponível próximo à piscina.\n💧 Lavar: $3,50 | 🌀 Secar: $3,50\nLeve moedas ou use o app indicado na lavanderia.",
+        en: "Paid laundry available near the pool.\n💧 Wash: $3.50 | 🌀 Dry: $3.50\nBring coins or use the app indicated at the laundry.",
+        es: "Lavandería de pago disponible cerca de la piscina.\n💧 Lavar: $3.50 | 🌀 Secar: $3.50\nTraiga monedas o use la app indicada en la lavandería."
+      }
+    },
+
+    transfer: {
+      text: {
+        pt: "Transfer gratuito disponível para hóspedes da LF Services! Consulte a Mônica via Airbnb para agendar e ver as especificações (aeroportos atendidos, horários disponíveis e destinos).",
+        en: "Free transfer available for LF Services guests! Contact Mônica via Airbnb to schedule and see the specifications (airports served, available times and destinations).",
+        es: "¡Transfer gratuito disponible para los huéspedes de LF Services! Consulte a Mônica via Airbnb para programar y ver las especificaciones (aeropuertos atendidos, horarios disponibles y destinos)."
+      },
+      photos: [] // ← adicionar URL da imagem com especificações do transfer
+    },
+
+    condoMap: {
+      photos: [] // ← adicionar URL do mapa do condomínio aqui
     },
 
     trash: {
@@ -782,23 +909,31 @@ const i18n = {
     checkout_time_label: "Horário de check-out",
     lock_label: "Código da Fechadura",
     checkin_instructions: "Instruções de acesso",
+    checkin_steps_title: "Instruções de Check-in",
+    checkout_steps_title: "Instruções de Check-out",
     parking_title: "Estacionamento",
     parking_rules: "Regras e localização",
     parking_maps: "Ver no Maps",
     rules_title: "Regras da Casa",
     appliances_title: "AC & Eletrodomésticos",
-    pool_title: "Piscina & Academia",
+    pool_title: "Piscina",
+    gym_title: "Academia",
+    laundry_title: "Lavanderia",
+    transfer_title: "Transfer Gratuito",
+    condo_map_title: "Mapa do Condomínio",
     trash_title: "Descarte de Lixo",
     rec_title: "Recomendações Locais",
     emergency_title: "Emergência",
     call_btn: "Ligar",
     whatsapp_btn: "WhatsApp",
+    airbnb_btn: "Mensagem Airbnb",
     chat_welcome: "Olá! 👋 Sou o assistente da {unit}. Pode me perguntar qualquer coisa sobre a sua estadia — WiFi, AC, TV, piscina, lixo, estacionamento e muito mais!",
     chat_placeholder: "Sua pergunta...",
     chat_notice: "Assistente com IA — pode cometer erros. Para urgências, contate a Mônica.",
     chat_error: "Não consegui conectar ao assistente. Tente novamente ou contate a Mônica.",
     chat_worker_notice: "Configure o WORKER_URL para ativar o chat com IA.",
     photo_placeholder: "Foto em breve",
+    map_placeholder: "Mapa em breve",
     fallback_title: "Unidade não encontrada",
     fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Por favor, entre em contato com o suporte.",
     fallback_contact: "Contato de suporte",
@@ -819,23 +954,31 @@ const i18n = {
     checkout_time_label: "Check-out time",
     lock_label: "Lock Code",
     checkin_instructions: "Access instructions",
+    checkin_steps_title: "Check-in Instructions",
+    checkout_steps_title: "Check-out Instructions",
     parking_title: "Parking",
     parking_rules: "Rules and location",
     parking_maps: "View on Maps",
     rules_title: "House Rules",
     appliances_title: "AC & Appliances",
-    pool_title: "Pool & Gym",
+    pool_title: "Pool",
+    gym_title: "Gym",
+    laundry_title: "Laundry",
+    transfer_title: "Free Transfer",
+    condo_map_title: "Condo Map",
     trash_title: "Trash Disposal",
     rec_title: "Local Recommendations",
     emergency_title: "Emergency",
     call_btn: "Call",
     whatsapp_btn: "WhatsApp",
+    airbnb_btn: "Airbnb Message",
     chat_welcome: "Hello! 👋 I'm the assistant for {unit}. Feel free to ask anything about your stay — WiFi, AC, TV, pool, trash, parking and much more!",
     chat_placeholder: "Your question...",
     chat_notice: "AI-powered assistant — may make mistakes. For emergencies, contact Mônica.",
     chat_error: "Could not connect to the assistant. Try again or contact Mônica.",
     chat_worker_notice: "Set WORKER_URL to enable AI chat.",
     photo_placeholder: "Photo coming soon",
+    map_placeholder: "Map coming soon",
     fallback_title: "Unit not found",
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
     fallback_contact: "Support contact",
@@ -856,23 +999,31 @@ const i18n = {
     checkout_time_label: "Hora de check-out",
     lock_label: "Código de la Cerradura",
     checkin_instructions: "Instrucciones de acceso",
+    checkin_steps_title: "Instrucciones de Check-in",
+    checkout_steps_title: "Instrucciones de Check-out",
     parking_title: "Estacionamiento",
     parking_rules: "Reglas y ubicación",
     parking_maps: "Ver en Maps",
     rules_title: "Reglas de la Casa",
     appliances_title: "AC y Electrodomésticos",
-    pool_title: "Piscina & Gimnasio",
+    pool_title: "Piscina",
+    gym_title: "Gimnasio",
+    laundry_title: "Lavandería",
+    transfer_title: "Transfer Gratuito",
+    condo_map_title: "Mapa del Condominio",
     trash_title: "Descarte de Basura",
     rec_title: "Recomendaciones Locales",
     emergency_title: "Emergencia",
     call_btn: "Llamar",
     whatsapp_btn: "WhatsApp",
+    airbnb_btn: "Mensaje Airbnb",
     chat_welcome: "¡Hola! 👋 Soy el asistente de {unit}. Puedes preguntarme cualquier cosa sobre tu estadía — WiFi, AC, TV, piscina, basura, estacionamiento ¡y mucho más!",
     chat_placeholder: "Tu pregunta...",
     chat_notice: "Asistente con IA — puede cometer errores. Para emergencias, contacta a Mônica.",
     chat_error: "No se pudo conectar al asistente. Inténtalo de nuevo o contacta a Mônica.",
     chat_worker_notice: "Configure WORKER_URL para activar el chat con IA.",
     photo_placeholder: "Foto próximamente",
+    map_placeholder: "Mapa próximamente",
     fallback_title: "Unidad no encontrada",
     fallback_text: "El enlace al que accedió no corresponde a ninguna unidad. Por favor, contacte al soporte.",
     fallback_contact: "Contacto de soporte",
@@ -919,10 +1070,16 @@ function render() {
       <div class="accordion">
         ${renderWifi(t)}
         ${renderCheckin(t)}
+        ${renderCheckinSteps(t)}
+        ${renderCheckoutSteps(t)}
         ${renderParking(t)}
         ${renderRules(t)}
         ${renderAppliances(t)}
         ${renderPool(t)}
+        ${currentUnit.gym ? renderGym(t) : ''}
+        ${currentUnit.laundry ? renderLaundry(t) : ''}
+        ${currentUnit.transfer ? renderTransfer(t) : ''}
+        ${currentUnit.condoMap ? renderCondoMap(t) : ''}
         ${renderTrash(t)}
         ${renderRecommendations(t)}
         ${renderEmergency(t)}
@@ -1055,6 +1212,36 @@ function renderCheckin(t) {
   `);
 }
 
+function renderCheckinSteps(t) {
+  const u = currentUnit;
+  if (!u.checkinSteps) return '';
+  const items = u.checkinSteps[currentLang].map(s => `
+    <li class="checklist-item">
+      <span class="checklist-icon">${s.icon}</span>
+      <div>
+        <div class="checklist-text">${s.text}</div>
+        ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
+      </div>
+    </li>
+  `).join('');
+  return accItem('checkin-steps', '✅', t.checkin_steps_title, `<ul class="checklist">${items}</ul>`);
+}
+
+function renderCheckoutSteps(t) {
+  const u = currentUnit;
+  if (!u.checkoutSteps) return '';
+  const items = u.checkoutSteps[currentLang].map(s => `
+    <li class="checklist-item">
+      <span class="checklist-icon">${s.icon}</span>
+      <div>
+        <div class="checklist-text">${s.text}</div>
+        ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
+      </div>
+    </li>
+  `).join('');
+  return accItem('checkout-steps', '🚪', t.checkout_steps_title, `<ul class="checklist">${items}</ul>`);
+}
+
 function renderParking(t) {
   const u = currentUnit;
   return accItem('parking', '🚗', t.parking_title, `
@@ -1104,6 +1291,56 @@ function renderPool(t) {
   `);
 }
 
+function renderGym(t) {
+  const u = currentUnit;
+  const photos = u.gym.photos && u.gym.photos.length
+    ? u.gym.photos.map(url =>
+        `<div class="photo-item"><img src="${url}" alt="Gym" loading="lazy" /></div>`
+      ).join('')
+    : '';
+  return accItem('gym', '🏋️', t.gym_title, `
+    <p>${u.gym.text[currentLang]}</p>
+    ${photos ? `<div class="photo-grid">${photos}</div>` : ''}
+  `);
+}
+
+function renderLaundry(t) {
+  const u = currentUnit;
+  return accItem('laundry', '👕', t.laundry_title, `
+    <p style="white-space:pre-line;">${u.laundry.text[currentLang]}</p>
+  `);
+}
+
+function renderTransfer(t) {
+  const u = currentUnit;
+  const photos = u.transfer.photos && u.transfer.photos.length
+    ? u.transfer.photos.map(url =>
+        `<div class="photo-item" style="grid-column:1/-1;aspect-ratio:16/9;">
+          <img src="${url}" alt="Transfer" loading="lazy" />
+        </div>`
+      ).join('')
+    : `<div style="margin-top:12px;padding:14px;background:var(--bg-card2);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--text-dim);text-align:center;">${i18n[currentLang].photo_placeholder}</div>`;
+  return accItem('transfer', '🚐', t.transfer_title, `
+    <p>${u.transfer.text[currentLang]}</p>
+    ${photos}
+  `);
+}
+
+function renderCondoMap(t) {
+  const u = currentUnit;
+  const photos = u.condoMap.photos && u.condoMap.photos.length
+    ? u.condoMap.photos.map(url =>
+        `<div class="photo-item" style="grid-column:1/-1;aspect-ratio:4/3;">
+          <img src="${url}" alt="Condo Map" loading="lazy" style="object-fit:contain;background:#1E1E35;" />
+        </div>`
+      ).join('')
+    : `<div style="margin-top:12px;padding:24px;background:var(--bg-card2);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--text-dim);text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">🗺️</div>
+        ${i18n[currentLang].map_placeholder}
+      </div>`;
+  return accItem('condo-map', '🗺️', t.condo_map_title, `<div class="photo-grid">${photos}</div>`);
+}
+
 function renderTrash(t) {
   return accItem('trash', '🗑️', t.trash_title, `<p>${currentUnit.trash[currentLang]}</p>`);
 }
@@ -1124,13 +1361,15 @@ function renderRecommendations(t) {
 function renderEmergency(t) {
   const contacts = currentUnit.emergency.map(c => {
     const waMsg = encodeURIComponent(`Olá ${c.name}, sou hóspede da ${currentUnit.name} e preciso de ajuda.`);
+    const hasPhone = c.phone && c.phone.length > 0;
     return `
       <div class="contact-card">
         <div class="contact-name">${c.name}</div>
         <div class="contact-role">${c.role[currentLang]}</div>
         <div class="action-row" style="margin-top:12px;">
-          <a href="tel:${c.phone}" class="action-btn btn-call">📞 ${t.call_btn}</a>
-          ${c.whatsapp ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${waMsg}" target="_blank" rel="noopener" class="action-btn btn-whatsapp">💬 ${t.whatsapp_btn}</a>` : ''}
+          ${hasPhone ? `<a href="tel:${c.phone}" class="action-btn btn-call">📞 ${t.call_btn}</a>` : ''}
+          ${c.whatsapp && hasPhone ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${waMsg}" target="_blank" rel="noopener" class="action-btn btn-whatsapp">💬 ${t.whatsapp_btn}</a>` : ''}
+          ${c.airbnb ? `<span class="action-btn" style="background:var(--gold-dim);color:#fff;cursor:default;">✉️ ${t.airbnb_btn}</span>` : ''}
         </div>
       </div>
     `;
