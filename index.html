@@ -473,6 +473,68 @@
 
     /* ── BOTTOM PADDING ───────────────────── */
     .accordion:last-child { padding-bottom: 28px; }
+
+    /* ── ADMIN ───────────────────────────── */
+    .admin-badge {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; background: var(--danger); color: #fff;
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .admin-wrap { width: 100%; max-width: 480px; padding: 20px 16px 48px; }
+    .admin-section { margin-top: 24px; }
+    .admin-section-title {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px;
+    }
+    .admin-stat-row { display: flex; gap: 10px; }
+    .admin-stat-card {
+      flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+    }
+    .admin-stat-num { font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .admin-stat-label { font-size: 0.72rem; color: var(--text-dim); margin-top: 4px; }
+    .admin-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .admin-bar-label {
+      font-size: 0.82rem; color: var(--text); flex: 1;
+      min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .admin-bar-track {
+      flex: 0 0 90px; height: 6px; background: var(--border);
+      border-radius: 3px; overflow: hidden;
+    }
+    .admin-bar-fill { height: 100%; background: var(--gold); border-radius: 3px; }
+    .admin-bar-count { font-size: 0.75rem; font-weight: 700; color: var(--text-dim); min-width: 28px; text-align: right; }
+    .admin-conv-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px;
+    }
+    .admin-conv-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+    .admin-conv-date { font-size: 0.7rem; color: var(--text-dim); }
+    .admin-conv-unit {
+      font-size: 0.62rem; font-weight: 700;
+      background: rgba(123,60,232,0.15); color: #A78BFA;
+      padding: 2px 8px; border-radius: 999px;
+    }
+    .admin-conv-lang {
+      font-size: 0.62rem; font-weight: 700;
+      background: rgba(240,192,64,0.12); color: var(--gold-dim);
+      padding: 2px 8px; border-radius: 999px;
+    }
+    .admin-conv-q { font-size: 0.85rem; color: var(--text); font-weight: 600; margin-bottom: 4px; }
+    .admin-conv-a {
+      font-size: 0.78rem; color: var(--text-dim); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .admin-loading {
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px 20px; flex-direction: column; gap: 14px; color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+    .admin-error {
+      background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25);
+      border-radius: var(--radius-sm); padding: 16px; color: var(--danger);
+      font-size: 0.85rem; text-align: center; line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -945,6 +1007,21 @@ let lightboxIdx = 0;
    ═══════════════════════════════════════════════════════ */
 function init() {
   const params = new URLSearchParams(window.location.search);
+
+  // Modo admin — ?admin=KEY
+  const adminKey = params.get('admin');
+  if (adminKey) {
+    // Remove a key da URL imediatamente (segurança básica)
+    const cleanParams = new URLSearchParams(params);
+    cleanParams.delete('admin');
+    const cleanSearch = cleanParams.toString() ? '?' + cleanParams.toString() : '';
+    history.replaceState({}, '', window.location.pathname + cleanSearch);
+    document.getElementById('lang-screen').classList.add('hidden');
+    renderAdminLoading();
+    fetchAdminStats(adminKey);
+    return;
+  }
+
   const unitId = params.get('unit');
   currentUnit = unitId ? UNITS[Number(unitId)] : null;
 
@@ -1600,6 +1677,146 @@ async function sendMessage() {
     chatHistory.push({ role: 'assistant', content: t.chat_error });
   }
   scrollChat();
+}
+
+/* ═══════════════════════════════════════════════════════
+   ADMIN
+   ═══════════════════════════════════════════════════════ */
+function renderAdminLoading() {
+  document.getElementById('app').innerHTML = `
+    <header class="header">
+      <div class="logo">LF Services</div>
+      <span class="admin-badge">ADMIN</span>
+    </header>
+    <div class="admin-loading">
+      <div class="chat-typing">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <span>Carregando métricas...</span>
+    </div>`;
+}
+
+async function fetchAdminStats(key) {
+  try {
+    const res = await fetch(WORKER_URL + '?action=stats&key=' + encodeURIComponent(key));
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      renderAdminError(data.error || 'Erro desconhecido.');
+      return;
+    }
+    renderAdminUI(data);
+  } catch {
+    renderAdminError('Não foi possível conectar ao worker.<br>Verifique se o WORKER_URL está correto.');
+  }
+}
+
+function renderAdminUI(data) {
+  const maxQ    = data.topQuestions[0]?.count || 1;
+  const maxUnit = Math.max(...Object.values(data.byUnit || {0:1}), 1);
+  const maxLang = Math.max(...Object.values(data.byLang || {0:1}), 1);
+
+  const bar = (label, count, max) => `
+    <div class="admin-bar-row">
+      <span class="admin-bar-label" title="${label}">${label}</span>
+      <div class="admin-bar-track">
+        <div class="admin-bar-fill" style="width:${Math.round(count/max*100)}%"></div>
+      </div>
+      <span class="admin-bar-count">${count}x</span>
+    </div>`;
+
+  const unitBars = Object.entries(data.byUnit || {})
+    .sort(([,a],[,b]) => b-a)
+    .map(([u, c]) => bar(u, c, maxUnit)).join('');
+
+  const langMap = { pt: '🇧🇷 Português', en: '🇺🇸 English', es: '🇪🇸 Español' };
+  const langBars = Object.entries(data.byLang || {})
+    .sort(([,a],[,b]) => b-a)
+    .map(([l, c]) => bar(langMap[l] || l, c, maxLang)).join('');
+
+  const topQRows = data.topQuestions.slice(0, 10)
+    .map((q, i) => bar(`${i+1}. ${q.question}`, q.count, maxQ)).join('');
+
+  const recentItems = data.recent.slice(0, 25).map(r => {
+    const d = new Date(r.ts);
+    const dateStr = d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' })
+      + ' ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    const safeQ = r.question.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const safeA = r.answer.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return `
+      <div class="admin-conv-item">
+        <div class="admin-conv-meta">
+          <span class="admin-conv-date">${dateStr}</span>
+          <span class="admin-conv-unit">${r.unit}</span>
+          <span class="admin-conv-lang">${r.lang.toUpperCase()}</span>
+        </div>
+        <div class="admin-conv-q">❓ ${safeQ}</div>
+        <div class="admin-conv-a">${safeA}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('app').innerHTML = `
+    <header class="header">
+      <div class="logo">LF Services</div>
+      <span class="admin-badge">ADMIN</span>
+    </header>
+    <div class="admin-wrap">
+
+      <div class="admin-section">
+        <div class="admin-section-title">Visão Geral</div>
+        <div class="admin-stat-row">
+          <div class="admin-stat-card">
+            <div class="admin-stat-num">${data.total}</div>
+            <div class="admin-stat-label">conversas no total</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num">${data.topQuestions.length}</div>
+            <div class="admin-stat-label">perguntas distintas</div>
+          </div>
+        </div>
+      </div>
+
+      ${unitBars ? `
+      <div class="admin-section">
+        <div class="admin-section-title">Por Unidade</div>
+        ${unitBars}
+      </div>` : ''}
+
+      ${langBars ? `
+      <div class="admin-section">
+        <div class="admin-section-title">Por Idioma</div>
+        ${langBars}
+      </div>` : ''}
+
+      ${topQRows ? `
+      <div class="admin-section">
+        <div class="admin-section-title">🔥 Top Perguntas</div>
+        ${topQRows}
+      </div>` : ''}
+
+      ${recentItems ? `
+      <div class="admin-section">
+        <div class="admin-section-title">📋 Últimas Conversas</div>
+        ${recentItems}
+      </div>` : ''}
+
+      ${!data.total ? `
+      <div class="admin-error" style="margin-top:32px;">
+        Nenhuma conversa registrada ainda.<br>
+        As métricas aparecem após os hóspedes usarem o chat.
+      </div>` : ''}
+
+    </div>`;
+}
+
+function renderAdminError(msg) {
+  document.getElementById('app').innerHTML = `
+    <header class="header">
+      <div class="logo">LF Services</div>
+      <span class="admin-badge">ADMIN</span>
+    </header>
+    <div class="admin-wrap">
+      <div class="admin-error" style="margin-top:40px;">${msg}</div>
+    </div>`;
 }
 
 /* ── auto-resize textarea ── */
