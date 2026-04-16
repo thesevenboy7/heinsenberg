@@ -3,30 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <meta name="theme-color" content="#0D0D1A" />
+  <meta name="theme-color" content="#0A0A18" />
   <title>LF Services — Guest Portal</title>
   <style>
-    /* ── VARIÁVEIS ──────────────────────────────────────────── */
     :root {
-      --bg:          #0D0D1A;
-      --bg-card:     #16162A;
-      --bg-card2:    #1E1E35;
-      --gold:        #F0C040;
-      --gold-dim:    #A07A1A;
-      --purple:      #7C3AED;
-      --purple-dim:  #4C1D95;
-      --text:        #E8E8F0;
-      --text-dim:    #8888A8;
-      --border:      #2A2A45;
-      --success:     #34D399;
-      --danger:      #F87171;
-      --radius:      14px;
-      --radius-sm:   8px;
-      --font:        system-ui, -apple-system, 'Segoe UI', sans-serif;
-      --transition:  0.25s ease;
+      --bg:         #0A0A18;
+      --bg-card:    #111127;
+      --bg-card2:   #1A1A35;
+      --gold:       #F0C040;
+      --gold-dim:   #A07A1A;
+      --purple:     #7B3CE8;
+      --purple-dim: #4C1D95;
+      --text:       #E8E8F0;
+      --text-dim:   #8888A8;
+      --border:     #252540;
+      --success:    #34D399;
+      --danger:     #F87171;
+      --radius:     16px;
+      --radius-sm:  10px;
+      --font:       system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --transition: 0.22s ease;
+      --shadow:     0 2px 16px rgba(0,0,0,0.4);
     }
-
-    /* ── RESET ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; -webkit-tap-highlight-color: transparent; }
     body {
@@ -42,570 +40,500 @@
     img { display: block; max-width: 100%; }
     button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
 
-    /* ── WRAPPER ─────────────────────────────────────────────── */
-    .app {
-      width: 100%;
-      max-width: 480px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+    /* ── LANGUAGE SCREEN ──────────────────── */
+    .lang-screen {
+      position: fixed; inset: 0; z-index: 1000;
+      background: linear-gradient(160deg, #140830 0%, #0D0A22 55%, #0A0A18 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 28px; gap: 32px;
     }
-
-    /* ── HEADER ─────────────────────────────────────────────── */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .lang-screen.hidden { display: none; }
+    .lang-screen-logo {
+      font-size: 2rem; font-weight: 800; color: var(--gold); letter-spacing: 0.02em;
     }
-    .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.03em;
+    .lang-screen-unit {
+      font-size: 0.85rem; color: var(--text-dim); margin-top: -24px; text-align: center;
     }
-    .lang-switcher {
-      display: flex;
-      gap: 4px;
+    .lang-screen-prompt {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-dim);
     }
-    .lang-btn {
-      padding: 5px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      color: var(--text-dim);
-      transition: var(--transition);
-    }
-    .lang-btn.active {
-      background: var(--gold);
-      color: #0D0D1A;
-    }
-
-    /* ── HERO ───────────────────────────────────────────────── */
-    .hero {
-      padding: 28px 20px 24px;
-      background: linear-gradient(160deg, #1A0A3A 0%, #0F0C28 50%, var(--bg) 100%);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 80% 0%, rgba(124,58,237,0.12) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: var(--purple);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .hero-name {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1.1;
-    }
-    .hero-location {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-top: 4px;
-    }
-    .hero-times {
-      display: flex;
-      gap: 12px;
-      margin-top: 18px;
-    }
-    .hero-time-card {
-      flex: 1;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(240,192,64,0.2);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      backdrop-filter: blur(4px);
-    }
-    .hero-time-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-    }
-    .hero-time-value {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--gold);
-      line-height: 1.2;
-      margin-top: 2px;
-      letter-spacing: 0.02em;
-    }
-
-    /* ── TABS ───────────────────────────────────────────────── */
-    .tabs {
-      display: flex;
-      padding: 0 20px;
-      gap: 4px;
-      margin-top: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 12px 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      border-bottom: 2px solid transparent;
-      transition: var(--transition);
-      text-align: center;
-    }
-    .tab-btn.active {
-      color: var(--gold);
-      border-bottom-color: var(--gold);
-    }
-
-    /* ── TAB CONTENT ─────────────────────────────────────────── */
-    .tab-content { display: none; flex: 1; }
-    .tab-content.active { display: flex; flex-direction: column; }
-
-    /* ── ACCORDION ───────────────────────────────────────────── */
-    .accordion {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .acc-item {
+    .lang-options { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 340px; }
+    .lang-option-btn {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 20px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      color: var(--text); font-size: 1rem; font-weight: 600;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      box-shadow: var(--shadow);
+    }
+    .lang-option-btn:active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+    .lang-flag { font-size: 1.8rem; line-height: 1; }
+    .lang-name { flex: 1; }
+    .lang-arrow { color: var(--text-dim); font-size: 1rem; }
+
+    /* ── APP WRAPPER ──────────────────────── */
+    .app { width: 100%; max-width: 480px; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── HEADER ───────────────────────────── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,24,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .logo { font-size: 1.05rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+    .lang-switcher { display: flex; gap: 4px; }
+    .lang-btn {
+      padding: 5px 10px; border-radius: var(--radius-sm);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--text-dim); transition: var(--transition);
+    }
+    .lang-btn.active { background: var(--gold); color: #0A0A18; }
+
+    /* ── HERO ─────────────────────────────── */
+    .hero {
+      padding: 28px 20px 24px;
+      background: linear-gradient(160deg, #180A38 0%, #0F0C28 55%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border); position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 85% 0%, rgba(123,60,232,0.14) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      color: var(--purple); text-transform: uppercase; margin-bottom: 4px;
+    }
+    .hero-name { font-size: 1.75rem; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .hero-location { font-size: 0.82rem; color: var(--text-dim); margin-top: 5px; }
+    .hero-times { display: flex; gap: 12px; margin-top: 20px; }
+    .hero-time-card {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(240,192,64,0.18);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+    }
+    .hero-time-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--gold-dim);
+    }
+    .hero-time-value {
+      font-size: 1.65rem; font-weight: 900; color: var(--gold);
+      line-height: 1.2; margin-top: 2px; letter-spacing: 0.02em;
+    }
+
+    /* ── TRANSFER BANNER ──────────────────── */
+    .transfer-banner {
+      margin: 14px 16px 0;
+      background: linear-gradient(135deg, #160D40 0%, #221060 100%);
+      border: 1px solid rgba(123,60,232,0.45);
+      border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: 0 4px 20px rgba(123,60,232,0.2);
+    }
+    .transfer-banner-btn {
+      width: 100%; padding: 14px 16px 12px; text-align: left;
+    }
+    .transfer-banner-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .transfer-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(240,192,64,0.15);
+      border: 1px solid rgba(240,192,64,0.4);
+      border-radius: 999px; padding: 4px 12px;
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .transfer-chevron {
+      font-size: 0.72rem; color: var(--text-dim);
+      transition: transform var(--transition);
+    }
+    .transfer-banner.open .transfer-chevron { transform: rotate(180deg); }
+    .transfer-headline {
+      font-size: 0.98rem; font-weight: 700; color: var(--text); line-height: 1.3;
+    }
+    .transfer-banner-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .transfer-banner.open .transfer-banner-body { max-height: 800px; }
+    .transfer-banner-inner { padding: 0 16px 16px; }
+    .transfer-banner-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; }
+    .transfer-photo-grid { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .transfer-photo-item {
+      border-radius: var(--radius-sm); overflow: hidden;
+      aspect-ratio: 16/9; background: var(--bg-card2); cursor: pointer; position: relative;
+    }
+    .transfer-photo-item img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── TABS ─────────────────────────────── */
+    .tabs {
+      display: flex; padding: 0 20px; gap: 4px;
+      margin-top: 12px; border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1; padding: 12px 8px; font-size: 0.85rem; font-weight: 600;
+      color: var(--text-dim); border-bottom: 2px solid transparent;
+      transition: var(--transition); text-align: center;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-content { display: none; flex: 1; flex-direction: column; }
+    .tab-content.active { display: flex; }
+
+    /* ── SECTION GROUPS ───────────────────── */
+    .section-group {
+      display: flex; align-items: center; gap: 10px;
+      padding: 20px 20px 8px;
+    }
+    .section-group-label {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim); white-space: nowrap;
+    }
+    .section-group-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── ACCORDION ────────────────────────── */
+    .accordion { padding: 0 16px 4px; display: flex; flex-direction: column; gap: 8px; }
+    .acc-item {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow);
       transition: border-color var(--transition), box-shadow var(--transition);
     }
-    .acc-item.open {
-      border-color: rgba(240,192,64,0.35);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
-    }
+    .acc-item.open { border-color: rgba(240,192,64,0.3); box-shadow: 0 6px 28px rgba(0,0,0,0.45); }
     .acc-header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      text-align: left;
-      transition: background var(--transition);
+      width: 100%; display: flex; align-items: center; gap: 12px;
+      padding: 16px; text-align: left; transition: background var(--transition);
     }
     .acc-header:active { background: var(--bg-card2); }
     .acc-icon {
-      font-size: 1.25rem;
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(240,192,64,0.08);
-      border-radius: 8px;
+      font-size: 1.2rem; flex-shrink: 0; width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(240,192,64,0.07); border-radius: 10px;
     }
-    .acc-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      flex: 1;
-    }
+    .acc-title { font-size: 0.93rem; font-weight: 600; color: var(--text); flex: 1; }
     .acc-chevron {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      transition: transform var(--transition);
-      flex-shrink: 0;
+      font-size: 0.72rem; color: var(--text-dim);
+      transition: transform var(--transition); flex-shrink: 0;
     }
     .acc-item.open .acc-chevron { transform: rotate(180deg); color: var(--gold); }
-    .acc-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-    .acc-item.open .acc-body { max-height: 2000px; }
-    .acc-inner {
-      padding: 0 16px 16px;
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
+    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .acc-item.open .acc-body { max-height: 2400px; }
+    .acc-inner { padding: 0 16px 16px; font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
 
-    /* ── WIFI ───────────────────────────────────────────────── */
+    /* ── WIFI ─────────────────────────────── */
     .wifi-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg-card2);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-top: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg-card2); border-radius: var(--radius-sm);
+      padding: 12px 14px; margin-top: 8px;
     }
-    .wifi-label { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+    .wifi-label { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
     .wifi-value { font-size: 1rem; font-weight: 700; color: var(--text); margin-top: 2px; }
     .copy-btn {
-      background: var(--gold);
-      color: #0D0D1A;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      min-width: 80px;
-      text-align: center;
+      background: var(--gold); color: #0A0A18;
+      font-size: 0.75rem; font-weight: 700; padding: 8px 14px;
+      border-radius: var(--radius-sm); min-width: 78px; text-align: center;
       transition: opacity var(--transition);
     }
     .copy-btn:active { opacity: 0.7; }
-    .copy-btn.copied {
-      background: var(--success);
+    .copy-btn.copied { background: var(--success); }
+    .wifi-qr-btn {
+      width: 100%; margin-top: 10px; padding: 12px 16px;
+      background: rgba(123,60,232,0.1);
+      border: 1px dashed rgba(123,60,232,0.4);
+      border-radius: var(--radius-sm); color: #A78BFA;
+      font-size: 0.85rem; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background var(--transition);
     }
+    .wifi-qr-btn:active { background: rgba(123,60,232,0.2); }
 
-    /* ── ACTION BUTTONS ──────────────────────────────────────── */
-    .action-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+    /* ── MODAL (WiFi QR) ──────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center; padding: 32px;
     }
+    .modal-overlay.hidden { display: none; }
+    .modal-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      width: 100%; max-width: 300px; text-align: center; position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      font-size: 1.15rem; color: var(--text-dim); padding: 4px 8px;
+    }
+    .modal-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .modal-sub { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 20px; }
+    .modal-qr-wrap {
+      background: #fff; border-radius: var(--radius-sm);
+      padding: 12px; display: inline-block;
+    }
+    .modal-qr-wrap img { display: block; width: 180px; height: 180px; }
+    .modal-hint { font-size: 0.72rem; color: var(--text-dim); margin-top: 16px; line-height: 1.5; }
+
+    /* ── ACTION BUTTONS ───────────────────── */
+    .action-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
     .action-btn {
-      flex: 1;
-      min-width: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 12px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: opacity var(--transition);
-      min-height: 44px;
+      flex: 1; min-width: 120px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 12px 14px; border-radius: var(--radius-sm);
+      font-size: 0.85rem; font-weight: 600;
+      transition: opacity var(--transition); min-height: 44px;
     }
     .action-btn:active { opacity: 0.7; }
     .btn-maps { background: var(--purple); color: #fff; }
-    .btn-call { background: var(--success); color: #0D0D1A; }
+    .btn-call { background: var(--success); color: #0A0A18; }
     .btn-whatsapp { background: #25D366; color: #fff; }
 
-    /* ── INFO ROWS ───────────────────────────────────────────── */
+    /* ── INFO ROWS ────────────────────────── */
     .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      gap: 12px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px;
     }
     .info-row:last-child { border-bottom: none; }
     .info-key {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      flex-shrink: 0;
+      font-size: 0.72rem; font-weight: 600; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.1em; flex-shrink: 0;
     }
-    .info-val {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text);
-      text-align: right;
-    }
+    .info-val { font-size: 0.9rem; font-weight: 600; color: var(--text); text-align: right; }
 
-    /* ── LOCK CODE ───────────────────────────────────────────── */
+    /* ── LOCK CODE ────────────────────────── */
     .lockcode-box {
-      background: var(--bg-card2);
-      border: 1px solid var(--gold-dim);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-top: 10px;
+      background: var(--bg-card2); border: 1px solid rgba(240,192,64,0.3);
+      border-radius: var(--radius-sm); padding: 16px; margin-top: 10px;
     }
-    .lockcode-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-    }
-    .lockcode-value {
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: 0.3em;
-      margin-top: 4px;
-    }
+    .lockcode-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); }
+    .lockcode-value { font-size: 2.2rem; font-weight: 900; color: var(--gold); letter-spacing: 0.35em; margin-top: 4px; }
 
-    /* ── RULES LIST ──────────────────────────────────────────── */
-    .rules-list {
-      list-style: none;
-      margin-top: 8px;
-    }
+    /* ── RULES LIST ───────────────────────── */
+    .rules-list { list-style: none; margin-top: 8px; }
     .rules-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text);
-      line-height: 1.4;
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; color: var(--text); line-height: 1.45;
     }
     .rules-list li:last-child { border-bottom: none; }
     .rule-icon { flex-shrink: 0; margin-top: 1px; }
 
-    /* ── CHECKLIST (check-in / check-out steps) ──────────────── */
-    .checklist {
-      list-style: none;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    /* ── CHECKLIST ────────────────────────── */
+    .checklist { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
     .checklist-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      background: var(--bg-card2);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--bg-card2); border-radius: var(--radius-sm); padding: 12px 14px;
     }
     .checklist-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-    .checklist-text { font-size: 0.9rem; color: var(--text); line-height: 1.4; }
-    .checklist-sub { font-size: 0.78rem; color: var(--text-dim); margin-top: 2px; }
+    .checklist-text { font-size: 0.88rem; color: var(--text); line-height: 1.4; }
+    .checklist-sub { font-size: 0.76rem; color: var(--text-dim); margin-top: 2px; }
 
-    /* ── PHOTO GRID ──────────────────────────────────────────── */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
+    /* ── PHOTO GRID ───────────────────────── */
+    .photo-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-top: 12px; }
     .photo-item {
-      aspect-ratio: 4/3;
-      border-radius: var(--radius-sm);
-      background: var(--bg-card2);
-      overflow: hidden;
-      position: relative;
+      aspect-ratio: 4/3; border-radius: var(--radius-sm);
+      background: var(--bg-card2); overflow: hidden; position: relative; cursor: pointer;
     }
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .photo-item:active img { transform: scale(0.97); }
+    .photo-zoom-hint {
+      position: absolute; bottom: 5px; right: 5px;
+      background: rgba(0,0,0,0.65); border-radius: 4px;
+      font-size: 0.6rem; padding: 2px 6px; color: rgba(255,255,255,0.8);
     }
     .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      color: var(--text-dim);
-      font-size: 0.7rem;
-      text-align: center;
-      padding: 8px;
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; color: var(--text-dim); font-size: 0.68rem; text-align: center; padding: 8px;
     }
     .photo-placeholder-icon { font-size: 1.5rem; }
 
-    /* ── EMERGENCY CONTACTS ──────────────────────────────────── */
-    .contact-card {
-      background: var(--bg-card2);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-top: 8px;
+    /* ── LIGHTBOX ─────────────────────────── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 700;
+      background: rgba(0,0,0,0.97);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .contact-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
+    .lightbox.hidden { display: none; }
+    .lightbox-close {
+      position: absolute; top: 14px; right: 16px;
+      font-size: 1.6rem; color: rgba(255,255,255,0.7); padding: 8px; z-index: 10; line-height: 1;
     }
-    .contact-role {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      margin-top: 2px;
+    .lightbox-img-wrap {
+      width: 100%; max-height: 82vh;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
     }
+    .lightbox-img { max-width: 100%; max-height: 82vh; border-radius: 10px; object-fit: contain; }
+    .lightbox-nav {
+      display: flex; align-items: center; gap: 24px; margin-top: 16px; padding: 0 16px;
+    }
+    .lightbox-nav-btn { font-size: 1.8rem; color: rgba(255,255,255,0.6); padding: 8px 14px; }
+    .lightbox-nav-btn:disabled { opacity: 0.15; }
+    .lightbox-counter { font-size: 0.8rem; color: rgba(255,255,255,0.4); min-width: 56px; text-align: center; }
 
-    /* ── RECOMMENDATIONS ─────────────────────────────────────── */
-    .rec-card {
-      background: var(--bg-card2);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-top: 8px;
-    }
-    .rec-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .rec-name { font-weight: 700; color: var(--text); }
+    /* ── EMERGENCY CONTACTS ───────────────── */
+    .contact-card { background: var(--bg-card2); border-radius: var(--radius-sm); padding: 14px; margin-top: 8px; }
+    .contact-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .contact-role { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+
+    /* ── RECOMMENDATIONS ──────────────────── */
+    .rec-card { background: var(--bg-card2); border-radius: var(--radius-sm); padding: 12px 14px; margin-top: 8px; }
+    .rec-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .rec-name { font-weight: 700; color: var(--text); font-size: 0.95rem; }
     .rec-type {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--purple);
-      background: rgba(124, 58, 237, 0.15);
-      padding: 3px 8px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.65rem; font-weight: 700; color: var(--purple);
+      background: rgba(123,60,232,0.15); padding: 3px 9px;
+      border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
     }
-    .rec-tip { font-size: 0.85rem; color: var(--text-dim); margin-top: 6px; }
+    .rec-tip { font-size: 0.84rem; color: var(--text-dim); margin-top: 6px; }
 
-    /* ── CHAT ────────────────────────────────────────────────── */
-    #tab-chat {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      height: calc(100vh - 230px);
-    }
+    /* ── CHAT ─────────────────────────────── */
+    #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 230px); }
     #tab-chat.active { display: flex; }
     .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      flex: 1; overflow-y: auto; padding: 16px 20px;
+      display: flex; flex-direction: column; gap: 12px;
     }
     .chat-msg {
-      max-width: 85%;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      word-break: break-word;
+      max-width: 86%; padding: 10px 14px; border-radius: 16px;
+      font-size: 0.88rem; line-height: 1.55; word-break: break-word;
     }
     .chat-msg.bot {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px;
     }
     .chat-msg.user {
-      background: var(--purple);
-      color: #fff;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
+      background: var(--purple); color: #fff;
+      align-self: flex-end; border-bottom-right-radius: 4px;
     }
+    /* Markdown in chat */
+    .chat-msg strong { font-weight: 700; }
+    .chat-msg.bot strong { color: var(--gold); }
+    .chat-msg.user strong { color: #fff; }
+    .chat-msg p { margin-bottom: 5px; }
+    .chat-msg p:last-child { margin-bottom: 0; }
+    .chat-msg ul { margin: 5px 0 5px 16px; }
+    .chat-msg li { margin-bottom: 3px; }
     .chat-typing {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 10px 14px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      border-bottom-left-radius: 4px;
-      align-self: flex-start;
+      display: flex; align-items: center; gap: 4px; padding: 10px 14px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start;
     }
-    .dot {
-      width: 7px; height: 7px;
-      background: var(--text-dim);
-      border-radius: 50%;
-      animation: bounce 1.2s infinite;
-    }
+    .dot { width: 7px; height: 7px; background: var(--text-dim); border-radius: 50%; animation: bounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce {
-      0%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-6px); }
-    }
+    @keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
     .chat-input-wrap {
-      padding: 12px 16px;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
+      padding: 12px 16px; background: var(--bg);
+      border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-end;
     }
     .chat-input {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 10px 16px;
-      color: var(--text);
-      font: inherit;
-      font-size: 0.9rem;
-      outline: none;
-      resize: none;
-      max-height: 100px;
-      line-height: 1.4;
+      flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 22px; padding: 10px 16px; color: var(--text);
+      font: inherit; font-size: 0.88rem; outline: none; resize: none;
+      max-height: 100px; line-height: 1.4;
     }
     .chat-input::placeholder { color: var(--text-dim); }
     .chat-input:focus { border-color: var(--purple); }
     .chat-send {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--gold);
-      color: #0D0D1A;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--gold); color: #0A0A18; font-size: 1.05rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
       transition: opacity var(--transition);
     }
     .chat-send:active { opacity: 0.7; }
-    .chat-notice {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      text-align: center;
-      padding: 4px 20px 0;
-    }
+    .chat-notice { font-size: 0.7rem; color: var(--text-dim); text-align: center; padding: 4px 20px 0; }
 
-    /* ── WORKER NOTICE (para desenvolvimento) ────────────────── */
+    /* ── WORKER NOTICE ────────────────────── */
     .worker-notice {
-      background: rgba(248, 113, 113, 0.1);
-      border: 1px solid rgba(248, 113, 113, 0.3);
-      border-radius: var(--radius-sm);
-      padding: 8px 12px;
-      margin: 8px 20px 0;
-      font-size: 0.75rem;
-      color: var(--danger);
-      text-align: center;
+      background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25);
+      border-radius: var(--radius-sm); padding: 8px 12px; margin: 8px 20px 0;
+      font-size: 0.74rem; color: var(--danger); text-align: center;
     }
 
-    /* ── FALLBACK ────────────────────────────────────────────── */
+    /* ── FALLBACK ─────────────────────────── */
     .fallback {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 32px;
-      text-align: center;
-      gap: 16px;
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 32px; text-align: center; gap: 16px;
     }
     .fallback-icon { font-size: 3rem; }
     .fallback-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
     .fallback-text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
 
-    /* ── SCROLLBAR ───────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 4px; }
+    /* ── SCROLLBAR ────────────────────────── */
+    ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ── BOTTOM PADDING ───────────────────── */
+    .accordion:last-child { padding-bottom: 28px; }
   </style>
 </head>
 <body>
+
+<!-- Tela de idioma -->
+<div id="lang-screen" class="lang-screen">
+  <div class="lang-screen-logo">LF Services</div>
+  <p class="lang-screen-unit" id="lang-screen-unit"></p>
+  <p class="lang-screen-prompt">Choose your language</p>
+  <div class="lang-options">
+    <button class="lang-option-btn" onclick="selectLang('pt')">
+      <span class="lang-flag">🇧🇷</span>
+      <span class="lang-name">Português</span>
+      <span class="lang-arrow">›</span>
+    </button>
+    <button class="lang-option-btn" onclick="selectLang('en')">
+      <span class="lang-flag">🇺🇸</span>
+      <span class="lang-name">English</span>
+      <span class="lang-arrow">›</span>
+    </button>
+    <button class="lang-option-btn" onclick="selectLang('es')">
+      <span class="lang-flag">🇪🇸</span>
+      <span class="lang-name">Español</span>
+      <span class="lang-arrow">›</span>
+    </button>
+  </div>
+</div>
+
+<!-- Modal WiFi QR -->
+<div id="wifi-qr-modal" class="modal-overlay hidden" onclick="closeWifiQRBg(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeWifiQR()">✕</button>
+    <div class="modal-title" id="wifi-modal-title">WiFi</div>
+    <div class="modal-sub" id="wifi-modal-sub"></div>
+    <div class="modal-qr-wrap">
+      <img id="wifi-qr-img" src="" alt="QR WiFi" />
+    </div>
+    <p class="modal-hint" id="wifi-modal-hint"></p>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox hidden" onclick="closeLightboxBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="lightbox-img-wrap">
+    <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+  </div>
+  <div id="lightbox-nav" class="lightbox-nav">
+    <button class="lightbox-nav-btn" id="lb-prev" onclick="lightboxNav(-1)">‹</button>
+    <span class="lightbox-counter" id="lb-counter"></span>
+    <button class="lightbox-nav-btn" id="lb-next" onclick="lightboxNav(1)">›</button>
+  </div>
+</div>
+
 <div class="app" id="app"></div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   CONFIGURAÇÃO — edite apenas esta seção para adicionar unidades
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   CONFIG — edite apenas esta seção para adicionar unidades
+   ═══════════════════════════════════════════════════════ */
 
-// URL do Cloudflare Worker (configure após o deploy)
 const WORKER_URL = 'https://heinsenberg-worker.mariopimentel1610.workers.dev/';
 
 const UNITS = {
@@ -614,10 +542,7 @@ const UNITS = {
     location: "Legacy Grand, Kissimmee, FL",
     maxGuests: "4",
 
-    wifi: {
-      ssid: "LegacyGrandGuest",
-      password: "192gate"
-    },
+    wifi: { ssid: "LegacyGrandGuest", password: "192gate" },
 
     checkin: {
       checkInTime: "15:00",
@@ -634,21 +559,21 @@ const UNITS = {
       pt: [
         { icon: "🕐", text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
         { icon: "🏢", text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: "🔐", text: "Digite 2410 na fechadura eletrônica", sub: "A porta abre automaticamente — não precisa de chave física" },
+        { icon: "🔐", text: "Digite 2410 na fechadura eletrônica", sub: "A porta abre automaticamente — sem chave física" },
         { icon: "📶", text: "Conecte ao WiFi: LegacyGrandGuest", sub: "Senha: 192gate" },
-        { icon: "❄️", text: "Ligue o AC e ajuste a temperatura conforme preferência", sub: "[instruções do AC a preencher]" }
+        { icon: "❄️", text: "Ligue o AC e ajuste a temperatura", sub: "[instruções do AC a preencher]" }
       ],
       en: [
         { icon: "🕐", text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
         { icon: "🏢", text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
         { icon: "🔐", text: "Enter 2410 on the electronic lock", sub: "Door opens automatically — no physical key needed" },
         { icon: "📶", text: "Connect to WiFi: LegacyGrandGuest", sub: "Password: 192gate" },
-        { icon: "❄️", text: "Turn on the AC and set your preferred temperature", sub: "[AC instructions to be filled]" }
+        { icon: "❄️", text: "Turn on the AC and set your temperature", sub: "[AC instructions to be filled]" }
       ],
       es: [
         { icon: "🕐", text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
         { icon: "🏢", text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: "🔐", text: "Ingrese 2410 en la cerradura electrónica", sub: "La puerta se abre automáticamente — no necesita llave física" },
+        { icon: "🔐", text: "Ingrese 2410 en la cerradura electrónica", sub: "La puerta se abre automáticamente — sin llave física" },
         { icon: "📶", text: "Conéctese al WiFi: LegacyGrandGuest", sub: "Contraseña: 192gate" },
         { icon: "❄️", text: "Encienda el AC y ajuste la temperatura", sub: "[instrucciones del AC a completar]" }
       ]
@@ -661,7 +586,7 @@ const UNITS = {
         { icon: "🧹", text: "Deixe a unidade organizada", sub: "Pratos lavados, tudo no lugar, toalhas dobradas" },
         { icon: "🪟", text: "Feche e trave todas as janelas e portas internas", sub: "" },
         { icon: "❄️", text: "Desligue o AC e todos os aparelhos", sub: "" },
-        { icon: "🔒", text: "Feche a porta ao sair — a fechadura trava sozinha", sub: "Confirme que está travada antes de deixar o local" }
+        { icon: "🔒", text: "Feche a porta ao sair — a fechadura trava sozinha", sub: "Confirme que está travada antes de sair" }
       ],
       en: [
         { icon: "🕐", text: "Check out by 11 AM", sub: "Late check-out subject to availability" },
@@ -669,15 +594,15 @@ const UNITS = {
         { icon: "🧹", text: "Leave the unit tidy", sub: "Washed dishes, everything in place, towels folded" },
         { icon: "🪟", text: "Close and lock all windows and interior doors", sub: "" },
         { icon: "❄️", text: "Turn off the AC and all appliances", sub: "" },
-        { icon: "🔒", text: "Close the door when leaving — the lock is self-locking", sub: "Confirm it is locked before leaving" }
+        { icon: "🔒", text: "Close the door when leaving — self-locking", sub: "Confirm it is locked before leaving" }
       ],
       es: [
         { icon: "🕐", text: "Haga check-out antes de las 11 AM", sub: "Late check-out sujeto a disponibilidad" },
-        { icon: "🗑️", text: "Lleve toda la basura a los contenedores del condominio", sub: "Obligatorio — no deje basura dentro de la unidad" },
+        { icon: "🗑️", text: "Lleve toda la basura a los contenedores del condominio", sub: "Obligatorio — no deje basura dentro" },
         { icon: "🧹", text: "Deje la unidad ordenada", sub: "Platos lavados, todo en su lugar, toallas dobladas" },
-        { icon: "🪟", text: "Cierre y asegure todas las ventanas y puertas internas", sub: "" },
+        { icon: "🪟", text: "Cierre todas las ventanas y puertas internas", sub: "" },
         { icon: "❄️", text: "Apague el AC y todos los aparatos", sub: "" },
-        { icon: "🔒", text: "Cierre la puerta al salir — la cerradura se bloquea sola", sub: "Confirme que está cerrada antes de irse" }
+        { icon: "🔒", text: "Cierre la puerta al salir — se bloquea sola", sub: "Confirme que está cerrada antes de irse" }
       ]
     },
 
@@ -685,7 +610,7 @@ const UNITS = {
       rules: {
         pt: "Utilize qualquer vaga disponível ao redor dos prédios do condomínio. Não há vaga numerada — estacione no espaço mais próximo disponível.",
         en: "Use any available space around the condominium buildings. There is no assigned spot — park in the nearest available space.",
-        es: "Use cualquier espacio disponible alrededor de los edificios del condominio. No hay espacio asignado — estacione en el espacio más cercano disponible."
+        es: "Use cualquier espacio disponible alrededor de los edificios. No hay espacio asignado — estacione en el espacio más cercano."
       },
       mapsUrl: "https://maps.app.goo.gl/hjzv3nqN65oZLkiU7"
     },
@@ -730,7 +655,7 @@ const UNITS = {
       text: {
         pt: "Piscina disponível para todos os hóspedes. Horário: 8h às 19h (8 AM–7 PM). Traga sua própria toalha — não são fornecidas.",
         en: "Pool available for all guests. Hours: 8 AM to 7 PM. Bring your own towel — towels are not provided.",
-        es: "Piscina disponible para todos los huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla — no se proporcionan toallas."
+        es: "Piscina disponible para todos los huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla — no se proporcionan."
       },
       photos: []
     },
@@ -756,9 +681,9 @@ const UNITS = {
       text: {
         pt: "Transfer gratuito disponível para hóspedes da LF Services! Consulte a Mônica via Airbnb para agendar e ver as especificações (aeroportos atendidos, horários disponíveis e destinos).",
         en: "Free transfer available for LF Services guests! Contact Mônica via Airbnb to schedule and see the specifications (airports served, available times and destinations).",
-        es: "¡Transfer gratuito disponible para los huéspedes de LF Services! Consulte a Mônica via Airbnb para programar y ver las especificaciones (aeropuertos atendidos, horarios disponibles y destinos)."
+        es: "¡Transfer gratuito disponible para los huéspedes de LF Services! Consulte a Mônica via Airbnb para programar y ver las especificaciones (aeropuertos atendidos, horarios y destinos)."
       },
-      photos: [] // ← adicionar URL da imagem com especificações do transfer
+      photos: [] // ← adicionar URL da foto do panfleto aqui
     },
 
     condoMap: {
@@ -806,285 +731,308 @@ const UNITS = {
     ],
 
     knowledgeBase: {
-      pt: `Você é o assistente virtual da Unit 107 da LF Services no Legacy Grand, Kissimmee, Florida, EUA. Responda apenas perguntas relacionadas à estadia nesta unidade. Seja amigável, conciso e útil.
+      pt: `Você é o assistente virtual da Unit 107 da LF Services no Legacy Grand, Kissimmee, Florida, EUA.
+Use **negrito** para informações importantes. Use listas com "- " quando houver múltiplos itens ou passos. Seja conciso.
 
 DADOS DA UNIDADE:
 - Prédio 1, Apartamento 107
 - Endereço: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
 - WiFi: rede "LegacyGrandGuest", senha "192gate"
 - Check-in: 15h (3 PM) | Check-out: 11h (11 AM)
-- Código da fechadura: 2410
+- Código da fechadura: **2410**
 - Máximo de hóspedes: 4
 
-REGRAS: sem festas, sem fumar, sem pets, silêncio após 22h, leve o lixo para fora antes do check-out, sem serviço de limpeza durante a estadia.
+REGRAS: sem festas, sem fumar, sem pets, silêncio após 22h, leve o lixo antes do check-out.
 
-ESTACIONAMENTO: qualquer vaga ao redor dos prédios do condomínio, sem vaga numerada.
-PISCINA: aberta das 8h às 19h (8 AM–7 PM). Trazer toalha própria.
+ESTACIONAMENTO: qualquer vaga ao redor dos prédios, sem vaga numerada.
+PISCINA: aberta das 8h às 19h. Trazer toalha própria.
 LAVANDERIA: paga, perto da piscina — $3,50 lavar + $3,50 secar.
-AR-CONDICIONADO: [a preencher]
-TV: [a preencher]
-
-TRANSFER: transfer gratuito disponível — pergunte à Mônica via Airbnb para mais detalhes.
+TRANSFER: gratuito para hóspedes LF Services — pergunte à Mônica via Airbnb.
 
 EMERGÊNCIA:
-- Recepção Legacy Grand: +1 689 680-8177 (funciona das 10h às 22h, ligue para problemas no condomínio)
-- Mônica (LF Services): contate via mensagem no Airbnb
+- Recepção Legacy Grand: +1 689 680-8177 (10h–22h)
+- Mônica (LF Services): mensagem no Airbnb
 
-Se não souber responder algo, sugira contatar a Mônica via Airbnb ou a recepção pelo telefone.`,
+Se não souber responder, sugira contatar a Mônica via Airbnb.`,
 
-      en: `You are the virtual assistant for Unit 107 by LF Services at Legacy Grand, Kissimmee, Florida, USA. Only answer questions related to the stay at this unit. Be friendly, concise and helpful.
+      en: `You are the virtual assistant for Unit 107 by LF Services at Legacy Grand, Kissimmee, Florida, USA.
+Use **bold** for important info. Use "- " lists when there are multiple items or steps. Be concise.
 
 UNIT DATA:
 - Building 1, Apartment 107
 - Address: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
 - WiFi: network "LegacyGrandGuest", password "192gate"
 - Check-in: 3 PM | Check-out: 11 AM
-- Lock code: 2410
+- Lock code: **2410**
 - Maximum guests: 4
 
-RULES: no parties, no smoking, no pets, quiet after 10 PM, take trash out before check-out, no housekeeping during stay.
+RULES: no parties, no smoking, no pets, quiet after 10 PM, take trash before check-out.
 
-PARKING: any available space around the condominium buildings, no assigned spot.
+PARKING: any available space around the buildings, no assigned spot.
 POOL: open 8 AM to 7 PM. Bring your own towel.
 LAUNDRY: paid, near the pool — $3.50 wash + $3.50 dry.
-AIR CONDITIONING: [to be filled]
-TV: [to be filled]
-
-TRANSFER: free transfer available — ask Mônica via Airbnb for details.
+TRANSFER: free for LF Services guests — ask Mônica via Airbnb.
 
 EMERGENCY:
-- Legacy Grand Reception: +1 689 680-8177 (available 10 AM–10 PM, call for condo issues)
-- Mônica (LF Services): contact via Airbnb message
+- Legacy Grand Reception: +1 689 680-8177 (10 AM–10 PM)
+- Mônica (LF Services): Airbnb message
 
-If unsure about something, suggest contacting Mônica via Airbnb or the reception by phone.`,
+If unsure about something, suggest contacting Mônica via Airbnb.`,
 
-      es: `Eres el asistente virtual de la Unit 107 de LF Services en Legacy Grand, Kissimmee, Florida, EE. UU. Solo responde preguntas relacionadas con la estadía en esta unidad. Sé amable, conciso y útil.
+      es: `Eres el asistente virtual de la Unit 107 de LF Services en Legacy Grand, Kissimmee, Florida, EE. UU.
+Usa **negrita** para información importante. Usa listas con "- " cuando haya múltiples elementos o pasos. Sé conciso.
 
 DATOS DE LA UNIDAD:
 - Edificio 1, Apartamento 107
 - Dirección: Legacy Grand East Cond Association, 5245 W Irlo Bronson Hwy, Kissimmee, FL 34746
 - WiFi: red "LegacyGrandGuest", contraseña "192gate"
 - Check-in: 3 PM | Check-out: 11 AM
-- Código de la cerradura: 2410
+- Código de la cerradura: **2410**
 - Máximo de huéspedes: 4
 
-REGLAS: sin fiestas, sin fumar, sin mascotas, silencio después de las 10 PM, saque la basura antes del check-out, sin servicio de limpieza durante la estadía.
+REGLAS: sin fiestas, sin fumar, sin mascotas, silencio después de las 10 PM, saque la basura antes del check-out.
 
-ESTACIONAMIENTO: cualquier espacio disponible alrededor de los edificios, sin espacio asignado.
+ESTACIONAMIENTO: cualquier espacio disponible, sin espacio asignado.
 PISCINA: abierta de 8 AM a 7 PM. Traiga su propia toalla.
 LAVANDERÍA: de pago, cerca de la piscina — $3.50 lavar + $3.50 secar.
-AIRE ACONDICIONADO: [a completar]
-TV: [a completar]
-
-TRANSFER: transfer gratuito disponible — consulte a Mônica via Airbnb para más detalles.
+TRANSFER: gratuito para huéspedes LF Services — consulte a Mônica via Airbnb.
 
 EMERGENCIA:
-- Recepción Legacy Grand: +1 689 680-8177 (disponible 10h–22h, llame para problemas del condominio)
-- Mônica (LF Services): contacte via mensaje en Airbnb
+- Recepción Legacy Grand: +1 689 680-8177 (10h–22h)
+- Mônica (LF Services): mensaje en Airbnb
 
-Si no sabe algo, sugiera contactar a Mônica via Airbnb o a la recepción por teléfono.`
+Si no sabe algo, sugiera contactar a Mônica via Airbnb.`
     }
   }
-
-  // Para adicionar mais unidades, copie o bloco acima e altere a chave (número da unidade)
-  // e os dados correspondentes.
 };
 
-/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    TRADUÇÕES DE INTERFACE
-   ═══════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 const i18n = {
   pt: {
-    tab_info: "Informações",
-    tab_chat: "Assistente IA",
-    checkin_label: "CHECK-IN",
-    checkout_label: "CHECK-OUT",
-    wifi_title: "WiFi",
-    wifi_network: "REDE",
-    wifi_password: "SENHA",
-    wifi_copy: "Copiar",
-    wifi_copied: "Copiado!",
+    tab_info: "Informações", tab_chat: "Assistente IA",
+    checkin_label: "CHECK-IN", checkout_label: "CHECK-OUT",
+    wifi_title: "WiFi", wifi_network: "REDE", wifi_password: "SENHA",
+    wifi_copy: "Copiar", wifi_copied: "Copiado!",
+    wifi_qr_btn: "📷 Conectar via QR Code",
+    wifi_qr_sub: "Aponte a câmera para conectar automaticamente",
+    wifi_qr_hint: "Abra a câmera do celular, aponte para o QR code e aceite a conexão sugerida.",
     checkin_title: "Check-in / Check-out",
-    checkin_time_label: "Horário de check-in",
-    checkout_time_label: "Horário de check-out",
+    checkin_time_label: "Horário de check-in", checkout_time_label: "Horário de check-out",
     lock_label: "Código da Fechadura",
-    checkin_instructions: "Instruções de acesso",
     checkin_steps_title: "Instruções de Check-in",
     checkout_steps_title: "Instruções de Check-out",
-    parking_title: "Estacionamento",
-    parking_rules: "Regras e localização",
-    parking_maps: "Ver no Maps",
+    parking_title: "Estacionamento", parking_maps: "Ver no Maps",
     rules_title: "Regras da Casa",
     appliances_title: "AC & Eletrodomésticos",
-    pool_title: "Piscina",
-    gym_title: "Academia",
+    pool_title: "Piscina", gym_title: "Academia",
     laundry_title: "Lavanderia",
     transfer_title: "Transfer Gratuito",
+    transfer_badge: "✦ Transfer Gratuito Incluído",
+    transfer_headline: "🚐 Transfer gratuito incluso na sua estadia!",
     condo_map_title: "Mapa do Condomínio",
     trash_title: "Descarte de Lixo",
     rec_title: "Recomendações Locais",
     emergency_title: "Emergência",
-    call_btn: "Ligar",
-    whatsapp_btn: "WhatsApp",
-    airbnb_btn: "Mensagem Airbnb",
-    chat_welcome: "Olá! 👋 Sou o assistente da {unit}. Pode me perguntar qualquer coisa sobre a sua estadia — WiFi, AC, TV, piscina, lixo, estacionamento e muito mais!",
+    call_btn: "Ligar", whatsapp_btn: "WhatsApp", airbnb_btn: "Mensagem Airbnb",
+    section_arrival: "Chegada", section_during: "Durante a estadia",
+    section_departure: "Saída", section_more: "Mais",
+    chat_welcome: "Olá! 👋 Sou o assistente da {unit}. Pergunte sobre WiFi, código, piscina, AC, transfer e muito mais!",
     chat_placeholder: "Sua pergunta...",
-    chat_notice: "Assistente com IA — pode cometer erros. Para urgências, contate a Mônica.",
-    chat_error: "Não consegui conectar ao assistente. Tente novamente ou contate a Mônica.",
+    chat_notice: "Assistente com IA — para urgências, contate a Mônica.",
+    chat_error: "Não consegui conectar. Tente novamente ou contate a Mônica.",
     chat_worker_notice: "Configure o WORKER_URL para ativar o chat com IA.",
-    photo_placeholder: "Foto em breve",
-    map_placeholder: "Mapa em breve",
+    photo_placeholder: "Foto em breve", map_placeholder: "Mapa em breve",
+    photo_zoom: "🔍 ampliar",
     fallback_title: "Unidade não encontrada",
-    fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Por favor, entre em contato com o suporte.",
-    fallback_contact: "Contato de suporte",
-    unit_label: "UNIDADE"
+    fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Contate o suporte.",
+    fallback_contact: "Contato de suporte", unit_label: "UNIDADE"
   },
   en: {
-    tab_info: "Information",
-    tab_chat: "AI Assistant",
-    checkin_label: "CHECK-IN",
-    checkout_label: "CHECK-OUT",
-    wifi_title: "WiFi",
-    wifi_network: "NETWORK",
-    wifi_password: "PASSWORD",
-    wifi_copy: "Copy",
-    wifi_copied: "Copied!",
+    tab_info: "Information", tab_chat: "AI Assistant",
+    checkin_label: "CHECK-IN", checkout_label: "CHECK-OUT",
+    wifi_title: "WiFi", wifi_network: "NETWORK", wifi_password: "PASSWORD",
+    wifi_copy: "Copy", wifi_copied: "Copied!",
+    wifi_qr_btn: "📷 Connect via QR Code",
+    wifi_qr_sub: "Point your camera to connect automatically",
+    wifi_qr_hint: "Open your phone camera, point at the QR code and accept the suggested connection.",
     checkin_title: "Check-in / Check-out",
-    checkin_time_label: "Check-in time",
-    checkout_time_label: "Check-out time",
+    checkin_time_label: "Check-in time", checkout_time_label: "Check-out time",
     lock_label: "Lock Code",
-    checkin_instructions: "Access instructions",
     checkin_steps_title: "Check-in Instructions",
     checkout_steps_title: "Check-out Instructions",
-    parking_title: "Parking",
-    parking_rules: "Rules and location",
-    parking_maps: "View on Maps",
+    parking_title: "Parking", parking_maps: "View on Maps",
     rules_title: "House Rules",
     appliances_title: "AC & Appliances",
-    pool_title: "Pool",
-    gym_title: "Gym",
+    pool_title: "Pool", gym_title: "Gym",
     laundry_title: "Laundry",
     transfer_title: "Free Transfer",
+    transfer_badge: "✦ Free Transfer Included",
+    transfer_headline: "🚐 Free transfer included in your stay!",
     condo_map_title: "Condo Map",
     trash_title: "Trash Disposal",
     rec_title: "Local Recommendations",
     emergency_title: "Emergency",
-    call_btn: "Call",
-    whatsapp_btn: "WhatsApp",
-    airbnb_btn: "Airbnb Message",
-    chat_welcome: "Hello! 👋 I'm the assistant for {unit}. Feel free to ask anything about your stay — WiFi, AC, TV, pool, trash, parking and much more!",
+    call_btn: "Call", whatsapp_btn: "WhatsApp", airbnb_btn: "Airbnb Message",
+    section_arrival: "Arrival", section_during: "During your stay",
+    section_departure: "Departure", section_more: "More",
+    chat_welcome: "Hello! 👋 I'm the assistant for {unit}. Ask me about WiFi, check-in code, pool, AC, transfer and more!",
     chat_placeholder: "Your question...",
-    chat_notice: "AI-powered assistant — may make mistakes. For emergencies, contact Mônica.",
-    chat_error: "Could not connect to the assistant. Try again or contact Mônica.",
+    chat_notice: "AI assistant — for emergencies, contact Mônica.",
+    chat_error: "Could not connect. Try again or contact Mônica.",
     chat_worker_notice: "Set WORKER_URL to enable AI chat.",
-    photo_placeholder: "Photo coming soon",
-    map_placeholder: "Map coming soon",
+    photo_placeholder: "Photo coming soon", map_placeholder: "Map coming soon",
+    photo_zoom: "🔍 zoom",
     fallback_title: "Unit not found",
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
-    fallback_contact: "Support contact",
-    unit_label: "UNIT"
+    fallback_contact: "Support contact", unit_label: "UNIT"
   },
   es: {
-    tab_info: "Información",
-    tab_chat: "Asistente IA",
-    checkin_label: "CHECK-IN",
-    checkout_label: "CHECK-OUT",
-    wifi_title: "WiFi",
-    wifi_network: "RED",
-    wifi_password: "CONTRASEÑA",
-    wifi_copy: "Copiar",
-    wifi_copied: "¡Copiado!",
+    tab_info: "Información", tab_chat: "Asistente IA",
+    checkin_label: "CHECK-IN", checkout_label: "CHECK-OUT",
+    wifi_title: "WiFi", wifi_network: "RED", wifi_password: "CONTRASEÑA",
+    wifi_copy: "Copiar", wifi_copied: "¡Copiado!",
+    wifi_qr_btn: "📷 Conectar vía código QR",
+    wifi_qr_sub: "Apunta la cámara para conectar automáticamente",
+    wifi_qr_hint: "Abre la cámara del teléfono, apunta al código QR y acepta la conexión sugerida.",
     checkin_title: "Check-in / Check-out",
-    checkin_time_label: "Hora de check-in",
-    checkout_time_label: "Hora de check-out",
+    checkin_time_label: "Hora de check-in", checkout_time_label: "Hora de check-out",
     lock_label: "Código de la Cerradura",
-    checkin_instructions: "Instrucciones de acceso",
     checkin_steps_title: "Instrucciones de Check-in",
     checkout_steps_title: "Instrucciones de Check-out",
-    parking_title: "Estacionamiento",
-    parking_rules: "Reglas y ubicación",
-    parking_maps: "Ver en Maps",
+    parking_title: "Estacionamiento", parking_maps: "Ver en Maps",
     rules_title: "Reglas de la Casa",
     appliances_title: "AC y Electrodomésticos",
-    pool_title: "Piscina",
-    gym_title: "Gimnasio",
+    pool_title: "Piscina", gym_title: "Gimnasio",
     laundry_title: "Lavandería",
     transfer_title: "Transfer Gratuito",
+    transfer_badge: "✦ Transfer Gratuito Incluido",
+    transfer_headline: "🚐 ¡Transfer gratuito incluido en tu estadía!",
     condo_map_title: "Mapa del Condominio",
     trash_title: "Descarte de Basura",
     rec_title: "Recomendaciones Locales",
     emergency_title: "Emergencia",
-    call_btn: "Llamar",
-    whatsapp_btn: "WhatsApp",
-    airbnb_btn: "Mensaje Airbnb",
-    chat_welcome: "¡Hola! 👋 Soy el asistente de {unit}. Puedes preguntarme cualquier cosa sobre tu estadía — WiFi, AC, TV, piscina, basura, estacionamiento ¡y mucho más!",
+    call_btn: "Llamar", whatsapp_btn: "WhatsApp", airbnb_btn: "Mensaje Airbnb",
+    section_arrival: "Llegada", section_during: "Durante tu estadía",
+    section_departure: "Salida", section_more: "Más",
+    chat_welcome: "¡Hola! 👋 Soy el asistente de {unit}. Pregúntame sobre WiFi, código, piscina, AC, transfer ¡y más!",
     chat_placeholder: "Tu pregunta...",
-    chat_notice: "Asistente con IA — puede cometer errores. Para emergencias, contacta a Mônica.",
-    chat_error: "No se pudo conectar al asistente. Inténtalo de nuevo o contacta a Mônica.",
+    chat_notice: "Asistente con IA — para emergencias, contacta a Mônica.",
+    chat_error: "No se pudo conectar. Inténtalo de nuevo o contacta a Mônica.",
     chat_worker_notice: "Configure WORKER_URL para activar el chat con IA.",
-    photo_placeholder: "Foto próximamente",
-    map_placeholder: "Mapa próximamente",
+    photo_placeholder: "Foto próximamente", map_placeholder: "Mapa próximamente",
+    photo_zoom: "🔍 ampliar",
     fallback_title: "Unidad no encontrada",
-    fallback_text: "El enlace al que accedió no corresponde a ninguna unidad. Por favor, contacte al soporte.",
-    fallback_contact: "Contacto de soporte",
-    unit_label: "UNIDAD"
+    fallback_text: "El enlace no corresponde a ninguna unidad. Por favor contacte al soporte.",
+    fallback_contact: "Contacto de soporte", unit_label: "UNIDAD"
   }
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   ESTADO DA APLICAÇÃO
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   ESTADO
+   ═══════════════════════════════════════════════════════ */
 let currentLang = 'pt';
 let currentUnit = null;
-let chatHistory = []; // { role: 'user'|'assistant', content: string }
+let chatHistory = [];
 let activeAccordion = null;
 let activeTab = 'info';
+let lightboxUrls = [];
+let lightboxIdx = 0;
 
-/* ═══════════════════════════════════════════════════════════════
-   INICIALIZAÇÃO
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════ */
 function init() {
   const params = new URLSearchParams(window.location.search);
   const unitId = params.get('unit');
   currentUnit = unitId ? UNITS[Number(unitId)] : null;
+
+  if (!currentUnit) {
+    // Sem unidade válida: esconde tela de idioma e mostra fallback
+    document.getElementById('lang-screen').classList.add('hidden');
+    render();
+    return;
+  }
+
+  // Atualiza subtítulo da tela de idioma
+  const unitEl = document.getElementById('lang-screen-unit');
+  if (unitEl) unitEl.textContent = currentUnit.name + ' · ' + currentUnit.location;
+
+  // Verifica idioma salvo
+  const saved = localStorage.getItem('lf_lang_' + unitId);
+  if (saved && ['pt','en','es'].includes(saved)) {
+    currentLang = saved;
+    document.getElementById('lang-screen').classList.add('hidden');
+    render();
+  }
+  // Caso contrário, a tela de idioma já está visível
+}
+
+function selectLang(lang) {
+  const params = new URLSearchParams(window.location.search);
+  const unitId = params.get('unit');
+  currentLang = lang;
+  if (unitId) localStorage.setItem('lf_lang_' + unitId, lang);
+  document.getElementById('lang-screen').classList.add('hidden');
   render();
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    RENDER PRINCIPAL
-   ═══════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 function render() {
   const app = document.getElementById('app');
   const t = i18n[currentLang];
 
   if (!currentUnit) {
     app.innerHTML = renderFallback(t);
+    attachLangListeners();
     return;
   }
+
+  const u = currentUnit;
 
   app.innerHTML = `
     ${renderHeader(t)}
     ${renderHero(t)}
+    ${u.transfer ? renderTransferBanner(t) : ''}
     ${renderTabs(t)}
+
     <div class="tab-content ${activeTab === 'info' ? 'active' : ''}" id="tab-info">
+
+      ${sectionGroup(t.section_arrival)}
       <div class="accordion">
         ${renderWifi(t)}
         ${renderCheckin(t)}
         ${renderCheckinSteps(t)}
-        ${renderCheckoutSteps(t)}
         ${renderParking(t)}
+      </div>
+
+      ${sectionGroup(t.section_during)}
+      <div class="accordion">
         ${renderRules(t)}
         ${renderAppliances(t)}
         ${renderPool(t)}
-        ${currentUnit.gym ? renderGym(t) : ''}
-        ${currentUnit.laundry ? renderLaundry(t) : ''}
-        ${currentUnit.transfer ? renderTransfer(t) : ''}
-        ${currentUnit.condoMap ? renderCondoMap(t) : ''}
+        ${u.gym ? renderGym(t) : ''}
+        ${u.laundry ? renderLaundry(t) : ''}
+        ${u.condoMap ? renderCondoMap(t) : ''}
+      </div>
+
+      ${sectionGroup(t.section_departure)}
+      <div class="accordion">
+        ${renderCheckoutSteps(t)}
         ${renderTrash(t)}
+      </div>
+
+      ${sectionGroup(t.section_more)}
+      <div class="accordion">
         ${renderRecommendations(t)}
         ${renderEmergency(t)}
       </div>
+
     </div>
+
     <div class="tab-content ${activeTab === 'chat' ? 'active' : ''}" id="tab-chat">
       ${WORKER_URL.includes('[SEU-WORKER]') ? `<div class="worker-notice">${t.chat_worker_notice}</div>` : ''}
       <div class="chat-messages" id="chat-messages"></div>
@@ -1102,27 +1050,30 @@ function render() {
   attachTabListeners(t);
   attachLangListeners();
 
-  if (activeTab === 'chat') {
-    renderChatMessages(t);
-  }
+  if (activeTab === 'chat') renderChatMessages(t);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   COMPONENTES HTML
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   COMPONENTES
+   ═══════════════════════════════════════════════════════ */
+function sectionGroup(label) {
+  return `
+    <div class="section-group">
+      <span class="section-group-label">${label}</span>
+      <div class="section-group-line"></div>
+    </div>`;
+}
+
 function renderHeader(t) {
   return `
     <header class="header">
       <div class="logo">LF Services</div>
       <div class="lang-switcher">
         ${['pt','en','es'].map(l => `
-          <button class="lang-btn ${currentLang === l ? 'active' : ''}" data-lang="${l}">
-            ${l.toUpperCase()}
-          </button>
+          <button class="lang-btn ${currentLang===l?'active':''}" data-lang="${l}">${l.toUpperCase()}</button>
         `).join('')}
       </div>
-    </header>
-  `;
+    </header>`;
 }
 
 function renderHero(t) {
@@ -1142,21 +1093,49 @@ function renderHero(t) {
           <div class="hero-time-value">${u.checkin.checkOutTime}</div>
         </div>
       </div>
-    </div>
-  `;
+    </div>`;
+}
+
+function renderTransferBanner(t) {
+  const u = currentUnit;
+  const photos = u.transfer.photos && u.transfer.photos.length
+    ? u.transfer.photos.map((url, i) => `
+        <div class="transfer-photo-item" onclick='openLightbox(${JSON.stringify(u.transfer.photos)},${i})'>
+          <img src="${url}" alt="Transfer" loading="lazy" />
+        </div>`).join('')
+    : '';
+  return `
+    <div class="transfer-banner" id="transfer-banner">
+      <button class="transfer-banner-btn" onclick="toggleTransferBanner()">
+        <div class="transfer-banner-top">
+          <span class="transfer-badge">${t.transfer_badge}</span>
+          <span class="transfer-chevron" id="transfer-chevron">▼</span>
+        </div>
+        <div class="transfer-headline">${t.transfer_headline}</div>
+      </button>
+      <div class="transfer-banner-body" id="transfer-body">
+        <div class="transfer-banner-inner">
+          <p class="transfer-banner-text">${u.transfer.text[currentLang]}</p>
+          ${photos ? `<div class="transfer-photo-grid">${photos}</div>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+function toggleTransferBanner() {
+  const banner = document.getElementById('transfer-banner');
+  const chevron = document.getElementById('transfer-chevron');
+  if (!banner) return;
+  banner.classList.toggle('open');
+  chevron.style.transform = banner.classList.contains('open') ? 'rotate(180deg)' : '';
 }
 
 function renderTabs(t) {
   return `
     <div class="tabs">
-      <button class="tab-btn ${activeTab === 'info' ? 'active' : ''}" data-tab="info">
-        ${t.tab_info}
-      </button>
-      <button class="tab-btn ${activeTab === 'chat' ? 'active' : ''}" data-tab="chat">
-        ✨ ${t.tab_chat}
-      </button>
-    </div>
-  `;
+      <button class="tab-btn ${activeTab==='info'?'active':''}" data-tab="info">${t.tab_info}</button>
+      <button class="tab-btn ${activeTab==='chat'?'active':''}" data-tab="chat">✨ ${t.tab_chat}</button>
+    </div>`;
 }
 
 function accItem(id, icon, title, content) {
@@ -1170,8 +1149,7 @@ function accItem(id, icon, title, content) {
       <div class="acc-body">
         <div class="acc-inner">${content}</div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
 function renderWifi(t) {
@@ -1190,6 +1168,7 @@ function renderWifi(t) {
       </div>
       <button class="copy-btn" id="copy-wifi-btn" onclick="copyWifi()">${t.wifi_copy}</button>
     </div>
+    <button class="wifi-qr-btn" onclick="openWifiQR()">${t.wifi_qr_btn}</button>
   `);
 }
 
@@ -1222,8 +1201,7 @@ function renderCheckinSteps(t) {
         <div class="checklist-text">${s.text}</div>
         ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
       </div>
-    </li>
-  `).join('');
+    </li>`).join('');
   return accItem('checkin-steps', '✅', t.checkin_steps_title, `<ul class="checklist">${items}</ul>`);
 }
 
@@ -1237,8 +1215,7 @@ function renderCheckoutSteps(t) {
         <div class="checklist-text">${s.text}</div>
         ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
       </div>
-    </li>
-  `).join('');
+    </li>`).join('');
   return accItem('checkout-steps', '🚪', t.checkout_steps_title, `<ul class="checklist">${items}</ul>`);
 }
 
@@ -1255,36 +1232,40 @@ function renderParking(t) {
 }
 
 function renderRules(t) {
-  const u = currentUnit;
-  const items = u.rules[currentLang].map(r =>
-    `<li><span class="rule-icon">${r.icon}</span>${r.text}</li>`
-  ).join('');
+  const items = currentUnit.rules[currentLang].map(r =>
+    `<li><span class="rule-icon">${r.icon}</span>${r.text}</li>`).join('');
   return accItem('rules', '📋', t.rules_title, `<ul class="rules-list">${items}</ul>`);
+}
+
+function photoGrid(photos, altPrefix, t) {
+  if (photos && photos.length) {
+    return photos.map((url, i) =>
+      `<div class="photo-item" onclick='openLightbox(${JSON.stringify(photos)},${i})'>
+        <img src="${url}" alt="${altPrefix} ${i+1}" loading="lazy" />
+        <span class="photo-zoom-hint">${t.photo_zoom}</span>
+      </div>`).join('');
+  }
+  return `<div class="photo-item"><div class="photo-placeholder">
+    <span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}
+  </div></div>
+  <div class="photo-item"><div class="photo-placeholder">
+    <span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}
+  </div></div>`;
 }
 
 function renderAppliances(t) {
   const u = currentUnit;
-  const photos = u.appliances.photos.length
-    ? u.appliances.photos.map(url =>
-        `<div class="photo-item"><img src="${url}" alt="Appliance" loading="lazy" /></div>`
-      ).join('')
-    : `<div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${i18n[currentLang].photo_placeholder}</div></div>
-       <div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${i18n[currentLang].photo_placeholder}</div></div>`;
-
   return accItem('appliances', '🌡️', t.appliances_title, `
     <p>${u.appliances.text[currentLang]}</p>
-    <div class="photo-grid">${photos}</div>
+    <div class="photo-grid">${photoGrid(u.appliances.photos, 'Appliance', t)}</div>
   `);
 }
 
 function renderPool(t) {
   const u = currentUnit;
-  const photos = u.pool.photos.length
-    ? u.pool.photos.map(url =>
-        `<div class="photo-item"><img src="${url}" alt="Pool" loading="lazy" /></div>`
-      ).join('')
-    : `<div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${i18n[currentLang].photo_placeholder}</div></div>`;
-
+  const photos = u.pool.photos && u.pool.photos.length
+    ? u.pool.photos.map((url,i)=>`<div class="photo-item" onclick='openLightbox(${JSON.stringify(u.pool.photos)},${i})'><img src="${url}" alt="Pool" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div>`).join('')
+    : `<div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}</div></div>`;
   return accItem('pool', '🏊', t.pool_title, `
     <p>${u.pool.text[currentLang]}</p>
     <div class="photo-grid">${photos}</div>
@@ -1294,9 +1275,7 @@ function renderPool(t) {
 function renderGym(t) {
   const u = currentUnit;
   const photos = u.gym.photos && u.gym.photos.length
-    ? u.gym.photos.map(url =>
-        `<div class="photo-item"><img src="${url}" alt="Gym" loading="lazy" /></div>`
-      ).join('')
+    ? u.gym.photos.map((url,i)=>`<div class="photo-item" onclick='openLightbox(${JSON.stringify(u.gym.photos)},${i})'><img src="${url}" alt="Gym" loading="lazy" /></div>`).join('')
     : '';
   return accItem('gym', '🏋️', t.gym_title, `
     <p>${u.gym.text[currentLang]}</p>
@@ -1305,38 +1284,21 @@ function renderGym(t) {
 }
 
 function renderLaundry(t) {
-  const u = currentUnit;
   return accItem('laundry', '👕', t.laundry_title, `
-    <p style="white-space:pre-line;">${u.laundry.text[currentLang]}</p>
-  `);
-}
-
-function renderTransfer(t) {
-  const u = currentUnit;
-  const photos = u.transfer.photos && u.transfer.photos.length
-    ? u.transfer.photos.map(url =>
-        `<div class="photo-item" style="grid-column:1/-1;aspect-ratio:16/9;">
-          <img src="${url}" alt="Transfer" loading="lazy" />
-        </div>`
-      ).join('')
-    : `<div style="margin-top:12px;padding:14px;background:var(--bg-card2);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--text-dim);text-align:center;">${i18n[currentLang].photo_placeholder}</div>`;
-  return accItem('transfer', '🚐', t.transfer_title, `
-    <p>${u.transfer.text[currentLang]}</p>
-    ${photos}
+    <p style="white-space:pre-line;">${currentUnit.laundry.text[currentLang]}</p>
   `);
 }
 
 function renderCondoMap(t) {
   const u = currentUnit;
   const photos = u.condoMap.photos && u.condoMap.photos.length
-    ? u.condoMap.photos.map(url =>
-        `<div class="photo-item" style="grid-column:1/-1;aspect-ratio:4/3;">
-          <img src="${url}" alt="Condo Map" loading="lazy" style="object-fit:contain;background:#1E1E35;" />
-        </div>`
-      ).join('')
-    : `<div style="margin-top:12px;padding:24px;background:var(--bg-card2);border-radius:var(--radius-sm);font-size:0.8rem;color:var(--text-dim);text-align:center;">
-        <div style="font-size:2rem;margin-bottom:8px;">🗺️</div>
-        ${i18n[currentLang].map_placeholder}
+    ? u.condoMap.photos.map((url,i)=>`
+        <div class="photo-item" style="grid-column:1/-1;aspect-ratio:4/3;" onclick='openLightbox(${JSON.stringify(u.condoMap.photos)},${i})'>
+          <img src="${url}" alt="Condo Map" loading="lazy" style="object-fit:contain;background:#1A1A35;" />
+          <span class="photo-zoom-hint">${t.photo_zoom}</span>
+        </div>`).join('')
+    : `<div style="padding:24px;text-align:center;color:var(--text-dim);font-size:0.8rem;">
+        <div style="font-size:2rem;margin-bottom:8px;">🗺️</div>${t.map_placeholder}
       </div>`;
   return accItem('condo-map', '🗺️', t.condo_map_title, `<div class="photo-grid">${photos}</div>`);
 }
@@ -1353,8 +1315,7 @@ function renderRecommendations(t) {
         <span class="rec-type">${r.type}</span>
       </div>
       <p class="rec-tip">${r.tip}</p>
-    </div>
-  `).join('');
+    </div>`).join('');
   return accItem('rec', '🍽️', t.rec_title, items);
 }
 
@@ -1371,8 +1332,7 @@ function renderEmergency(t) {
           ${c.whatsapp && hasPhone ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${waMsg}" target="_blank" rel="noopener" class="action-btn btn-whatsapp">💬 ${t.whatsapp_btn}</a>` : ''}
           ${c.airbnb ? `<span class="action-btn" style="background:var(--gold-dim);color:#fff;cursor:default;">✉️ ${t.airbnb_btn}</span>` : ''}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
   return accItem('emergency', '🆘', t.emergency_title, contacts);
 }
@@ -1383,11 +1343,7 @@ function renderFallback(t) {
     <header class="header">
       <div class="logo">LF Services</div>
       <div class="lang-switcher">
-        ${['pt','en','es'].map(l => `
-          <button class="lang-btn ${currentLang === l ? 'active' : ''}" data-lang="${l}">
-            ${l.toUpperCase()}
-          </button>
-        `).join('')}
+        ${['pt','en','es'].map(l=>`<button class="lang-btn ${currentLang===l?'active':''}" data-lang="${l}">${l.toUpperCase()}</button>`).join('')}
       </div>
     </header>
     <div class="fallback">
@@ -1399,18 +1355,101 @@ function renderFallback(t) {
         <a href="tel:+14070000000" class="action-btn btn-call">📞 ${t.call_btn ?? 'Ligar'}</a>
         <a href="https://wa.me/14070000000?text=${waMsg}" target="_blank" rel="noopener" class="action-btn btn-whatsapp">💬 WhatsApp</a>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════════════════ */
+function openLightbox(urls, idx) {
+  lightboxUrls = Array.isArray(urls) ? urls : [urls];
+  lightboxIdx = idx || 0;
+  updateLightbox();
+  document.getElementById('lightbox').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function closeLightboxBg(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+function lightboxNav(dir) {
+  lightboxIdx = Math.max(0, Math.min(lightboxUrls.length - 1, lightboxIdx + dir));
+  updateLightbox();
+}
+
+function updateLightbox() {
+  document.getElementById('lightbox-img').src = lightboxUrls[lightboxIdx];
+  document.getElementById('lb-counter').textContent = lightboxUrls.length > 1
+    ? `${lightboxIdx + 1} / ${lightboxUrls.length}` : '';
+  document.getElementById('lb-prev').disabled = lightboxIdx === 0;
+  document.getElementById('lb-next').disabled = lightboxIdx === lightboxUrls.length - 1;
+  document.getElementById('lightbox-nav').style.display = lightboxUrls.length <= 1 ? 'none' : 'flex';
+}
+
+/* ═══════════════════════════════════════════════════════
+   WIFI QR
+   ═══════════════════════════════════════════════════════ */
+function openWifiQR() {
+  const t = i18n[currentLang];
+  const u = currentUnit;
+  const data = `WIFI:T:WPA;S:${u.wifi.ssid};P:${u.wifi.password};;`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
+  document.getElementById('wifi-qr-img').src = qrUrl;
+  document.getElementById('wifi-modal-title').textContent = u.wifi.ssid;
+  document.getElementById('wifi-modal-sub').textContent = t.wifi_qr_sub;
+  document.getElementById('wifi-modal-hint').textContent = t.wifi_qr_hint;
+  document.getElementById('wifi-qr-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeWifiQR() {
+  document.getElementById('wifi-qr-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function closeWifiQRBg(e) {
+  if (e.target === document.getElementById('wifi-qr-modal')) closeWifiQR();
+}
+
+/* ═══════════════════════════════════════════════════════
+   MARKDOWN RENDERER (simples, seguro)
+   ═══════════════════════════════════════════════════════ */
+function renderMarkdown(text) {
+  const escaped = text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const lines = escaped.split('\n');
+  let html = '', inList = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (t.startsWith('- ') || t.startsWith('• ')) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += `<li>${t.slice(2).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>`;
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      if (t) html += `<p>${t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>`;
+    }
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
+/* ═══════════════════════════════════════════════════════
    EVENT LISTENERS
-   ═══════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 function attachLangListeners() {
   document.querySelectorAll('[data-lang]').forEach(btn => {
     btn.addEventListener('click', () => {
+      const params = new URLSearchParams(window.location.search);
+      const unitId = params.get('unit');
       currentLang = btn.dataset.lang;
-      chatHistory = []; // reset chat ao trocar idioma
+      chatHistory = [];
+      if (unitId) localStorage.setItem('lf_lang_' + unitId, currentLang);
       render();
     });
   });
@@ -1439,14 +1478,10 @@ function attachAccordionListeners() {
       const id = btn.dataset.acc;
       const item = document.getElementById('acc-' + id);
       const isOpen = item.classList.contains('open');
-
-      // Fechar todos
       document.querySelectorAll('.acc-item.open').forEach(el => {
         el.classList.remove('open');
         el.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
       });
-
-      // Abrir o clicado (se estava fechado)
       if (!isOpen) {
         item.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
@@ -1458,80 +1493,60 @@ function attachAccordionListeners() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    INTERAÇÕES
-   ═══════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 function copyWifi() {
   const t = i18n[currentLang];
   const btn = document.getElementById('copy-wifi-btn');
   if (!btn) return;
-
   navigator.clipboard.writeText(currentUnit.wifi.password).then(() => {
-    btn.textContent = t.wifi_copied;
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = t.wifi_copy;
-      btn.classList.remove('copied');
-    }, 2000);
+    btn.textContent = t.wifi_copied; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = t.wifi_copy; btn.classList.remove('copied'); }, 2000);
   }).catch(() => {
-    // Fallback para navegadores sem clipboard API
     const ta = document.createElement('textarea');
-    ta.value = currentUnit.wifi.password;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
+    ta.value = currentUnit.wifi.password; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
     document.body.removeChild(ta);
-    btn.textContent = t.wifi_copied;
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = t.wifi_copy;
-      btn.classList.remove('copied');
-    }, 2000);
+    btn.textContent = t.wifi_copied; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = t.wifi_copy; btn.classList.remove('copied'); }, 2000);
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    CHAT IA
-   ═══════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════ */
 function renderChatMessages(t) {
   const container = document.getElementById('chat-messages');
   if (!container) return;
-
   container.innerHTML = '';
-
-  // Mensagem de boas-vindas
   if (chatHistory.length === 0) {
-    const welcome = t.chat_welcome.replace('{unit}', currentUnit.name);
-    addChatBubble(container, 'bot', welcome);
+    addChatBubble(container, 'bot', t.chat_welcome.replace('{unit}', currentUnit.name), false);
   }
-
-  // Histórico
   chatHistory.forEach(msg => {
-    addChatBubble(container, msg.role === 'user' ? 'user' : 'bot', msg.content);
+    addChatBubble(container, msg.role === 'user' ? 'user' : 'bot', msg.content, msg.role !== 'user');
   });
-
   scrollChat();
 }
 
-function addChatBubble(container, type, text) {
+function addChatBubble(container, type, text, useMarkdown) {
   const div = document.createElement('div');
   div.className = `chat-msg ${type}`;
-  div.textContent = text;
+  if (useMarkdown && type === 'bot') {
+    div.innerHTML = renderMarkdown(text);
+  } else {
+    div.textContent = text;
+  }
   container.appendChild(div);
 }
 
 function scrollChat() {
-  const container = document.getElementById('chat-messages');
-  if (container) container.scrollTop = container.scrollHeight;
+  const c = document.getElementById('chat-messages');
+  if (c) c.scrollTop = c.scrollHeight;
 }
 
 function handleChatKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
 
 async function sendMessage() {
@@ -1542,28 +1557,22 @@ async function sendMessage() {
 
   const t = i18n[currentLang];
   const container = document.getElementById('chat-messages');
-  input.value = '';
-  input.style.height = 'auto';
+  input.value = ''; input.style.height = 'auto';
 
-  // Mostrar mensagem do usuário
-  addChatBubble(container, 'user', text);
+  addChatBubble(container, 'user', text, false);
   chatHistory.push({ role: 'user', content: text });
   scrollChat();
 
-  // Mostrar typing indicator
   const typing = document.createElement('div');
   typing.className = 'chat-typing';
   typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-  container.appendChild(typing);
-  scrollChat();
+  container.appendChild(typing); scrollChat();
 
-  // Verificar se Worker está configurado
   if (WORKER_URL.includes('[SEU-WORKER]')) {
     setTimeout(() => {
       container.removeChild(typing);
-      const errorMsg = t.chat_worker_notice;
-      addChatBubble(container, 'bot', errorMsg);
-      chatHistory.push({ role: 'assistant', content: errorMsg });
+      addChatBubble(container, 'bot', t.chat_worker_notice, false);
+      chatHistory.push({ role: 'assistant', content: t.chat_worker_notice });
       scrollChat();
     }, 800);
     return;
@@ -1580,25 +1589,20 @@ async function sendMessage() {
         messages: chatHistory.map(m => ({ role: m.role, content: m.content }))
       })
     });
-
     const data = await response.json();
     container.removeChild(typing);
-
     const reply = data?.content?.[0]?.text || t.chat_error;
-    addChatBubble(container, 'bot', reply);
+    addChatBubble(container, 'bot', reply, true);
     chatHistory.push({ role: 'assistant', content: reply });
   } catch {
     container.removeChild(typing);
-    addChatBubble(container, 'bot', t.chat_error);
+    addChatBubble(container, 'bot', t.chat_error, false);
     chatHistory.push({ role: 'assistant', content: t.chat_error });
   }
-
   scrollChat();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   AUTO-RESIZE TEXTAREA
-   ═══════════════════════════════════════════════════════════════ */
+/* ── auto-resize textarea ── */
 document.addEventListener('input', e => {
   if (e.target.classList.contains('chat-input')) {
     e.target.style.height = 'auto';
@@ -1606,9 +1610,6 @@ document.addEventListener('input', e => {
   }
 });
 
-/* ═══════════════════════════════════════════════════════════════
-   START
-   ═══════════════════════════════════════════════════════════════ */
 init();
 </script>
 </body>
