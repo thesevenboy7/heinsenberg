@@ -4,26 +4,86 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="theme-color" content="#0A0A18" />
+  <script>
+    (function(){
+      var mq = window.matchMedia('(prefers-color-scheme: light)');
+      function setThemeColor(e){ document.querySelector('meta[name="theme-color"]').setAttribute('content', e.matches ? '#F7F7FA' : '#0A0A18'); }
+      setThemeColor(mq);
+      mq.addEventListener('change', setThemeColor);
+    })();
+  </script>
   <title>LF Services — Guest Portal</title>
   <style>
     :root {
-      --bg:         #0A0A18;
-      --bg-card:    #111127;
-      --bg-card2:   #1A1A35;
-      --gold:       #F0C040;
-      --gold-dim:   #A07A1A;
-      --purple:     #7B3CE8;
-      --purple-dim: #4C1D95;
-      --text:       #E8E8F0;
-      --text-dim:   #8888A8;
-      --border:     #252540;
-      --success:    #34D399;
-      --danger:     #F87171;
-      --radius:     16px;
-      --radius-sm:  10px;
-      --font:       system-ui, -apple-system, 'Segoe UI', sans-serif;
-      --transition: 0.22s ease;
-      --shadow:     0 2px 16px rgba(0,0,0,0.4);
+      --bg:              #0A0A18;
+      --bg-card:         #111127;
+      --bg-card2:        #1A1A35;
+      --gold:            #F0C040;
+      --gold-dim:        #A07A1A;
+      --purple:          #7B3CE8;
+      --purple-dim:      #4C1D95;
+      --text:            #E8E8F0;
+      --text-dim:        #8888A8;
+      --border:          #252540;
+      --success:         #34D399;
+      --danger:          #F87171;
+      --radius:          16px;
+      --radius-sm:       10px;
+      --font:            system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --transition:      0.22s ease;
+      --shadow:          0 2px 16px rgba(0,0,0,0.4);
+      --bg-header:       rgba(10,10,24,0.95);
+      --bg-hero-start:   #180A38;
+      --bg-hero-end:     #0F0C28;
+      --bg-lang-start:   #140830;
+      --bg-lang-mid:     #0D0A22;
+      --bg-transfer-s:   #160D40;
+      --bg-transfer-e:   #221060;
+      --overlay-modal:   rgba(0,0,0,0.88);
+      --overlay-lbox:    rgba(0,0,0,0.97);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg:              #F7F7FA;
+        --bg-card:         #FFFFFF;
+        --bg-card2:        #EFEFF5;
+        --gold:            #B8860B;
+        --gold-dim:        #8B6508;
+        --purple:          #5B2DC8;
+        --purple-dim:      #3D1A8A;
+        --text:            #1A1A2E;
+        --text-dim:        #5A5A78;
+        --border:          #DDDDE8;
+        --shadow:          0 2px 16px rgba(0,0,0,0.10);
+        --bg-header:       rgba(247,247,250,0.95);
+        --bg-hero-start:   #E8E0FF;
+        --bg-hero-end:     #F0ECFF;
+        --bg-lang-start:   #EDE8FF;
+        --bg-lang-mid:     #F5F2FF;
+        --bg-transfer-s:   #EAE5FF;
+        --bg-transfer-e:   #F0ECFF;
+        --overlay-modal:   rgba(0,0,0,0.55);
+        --overlay-lbox:    rgba(0,0,0,0.92);
+      }
+      .header { background: var(--bg-header); }
+      .hero { background: linear-gradient(160deg, var(--bg-hero-start) 0%, var(--bg-hero-end) 100%); }
+      .hero::before { background: radial-gradient(ellipse at 85% 0%, rgba(91,45,200,0.10) 0%, transparent 65%); }
+      .hero-time-card { background: rgba(0,0,0,0.04); border-color: rgba(184,134,11,0.25); }
+      .lang-screen { background: linear-gradient(160deg, var(--bg-lang-start) 0%, var(--bg-lang-mid) 55%, var(--bg-hero-end) 100%); }
+      .transfer-banner { background: linear-gradient(135deg, var(--bg-transfer-s) 0%, var(--bg-transfer-e) 100%); border-color: rgba(91,45,200,0.35); box-shadow: 0 4px 20px rgba(91,45,200,0.12); }
+      .transfer-badge { background: rgba(184,134,11,0.12); border-color: rgba(184,134,11,0.35); }
+      .acc-item.open { border-color: rgba(184,134,11,0.3); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+      .acc-icon { background: rgba(184,134,11,0.08); }
+      .modal-overlay { background: var(--overlay-modal); }
+      .lightbox { background: var(--overlay-lbox); }
+      .lockcode-box { border-color: rgba(184,134,11,0.3); }
+      .wifi-qr-btn { background: rgba(91,45,200,0.08); border-color: rgba(91,45,200,0.3); color: var(--purple); }
+      .worker-notice { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.2); }
+      .admin-error { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.2); }
+      .photo-zoom-hint { background: rgba(0,0,0,0.45); color: rgba(255,255,255,0.9); }
+      .admin-conv-unit { background: rgba(91,45,200,0.1); color: var(--purple); }
+      .admin-conv-lang { background: rgba(184,134,11,0.1); }
+      .lang-btn.active { color: #FFFFFF; }
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; -webkit-tap-highlight-color: transparent; }
@@ -35,6 +95,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 0.3s, color 0.2s;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
@@ -43,7 +104,7 @@
     /* ── LANGUAGE SCREEN ──────────────────── */
     .lang-screen {
       position: fixed; inset: 0; z-index: 1000;
-      background: linear-gradient(160deg, #140830 0%, #0D0A22 55%, #0A0A18 100%);
+      background: linear-gradient(160deg, var(--bg-lang-start) 0%, var(--bg-lang-mid) 55%, var(--bg) 100%);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 40px 28px; gap: 32px;
@@ -81,7 +142,7 @@
     /* ── HEADER ───────────────────────────── */
     .header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,24,0.95);
+      background: var(--bg-header);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 12px 20px;
@@ -99,7 +160,7 @@
     /* ── HERO ─────────────────────────────── */
     .hero {
       padding: 28px 20px 24px;
-      background: linear-gradient(160deg, #180A38 0%, #0F0C28 55%, var(--bg) 100%);
+      background: linear-gradient(160deg, var(--bg-hero-start) 0%, var(--bg-hero-end) 55%, var(--bg) 100%);
       border-bottom: 1px solid var(--border); position: relative;
     }
     .hero::before {
@@ -132,7 +193,7 @@
     /* ── TRANSFER BANNER ──────────────────── */
     .transfer-banner {
       margin: 14px 16px 0;
-      background: linear-gradient(135deg, #160D40 0%, #221060 100%);
+      background: linear-gradient(135deg, var(--bg-transfer-s) 0%, var(--bg-transfer-e) 100%);
       border: 1px solid rgba(123,60,232,0.45);
       border-radius: var(--radius);
       overflow: hidden;
@@ -1371,7 +1432,7 @@ function renderCondoMap(t) {
   const photos = u.condoMap.photos && u.condoMap.photos.length
     ? u.condoMap.photos.map((url,i)=>`
         <div class="photo-item" style="grid-column:1/-1;aspect-ratio:4/3;" onclick='openLightbox(${JSON.stringify(u.condoMap.photos)},${i})'>
-          <img src="${url}" alt="Condo Map" loading="lazy" style="object-fit:contain;background:#1A1A35;" />
+          <img src="${url}" alt="Condo Map" loading="lazy" style="object-fit:contain;background:var(--bg-card2);" />
           <span class="photo-zoom-hint">${t.photo_zoom}</span>
         </div>`).join('')
     : `<div style="padding:24px;text-align:center;color:var(--text-dim);font-size:0.8rem;">
