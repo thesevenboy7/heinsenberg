@@ -885,13 +885,7 @@ const UNITS = {
         es: "Shuttle gratuito disponible para huéspedes de Lyrios Fabrichini Services.\n\n🏰 Magic Kingdom: salida 9:45 AM | regreso 9:00 PM\n🎬 Hollywood Studios: salida 11:45 AM | regreso 8:45 PM\n\n📞 Reservas: (407) 279-0048"
       },
       qrUrl: "https://www.firefightersallservices.net",
-      flyerPhoto: "transfer.webp",
-      lockWarning: {
-        pt: "⚠️ Não gire a trava interna da fechadura — se girar, a porta fica destravada e não tranca mais.",
-        en: "⚠️ Do not turn the interior lock — if turned, the door will stay unlocked and won't latch.",
-        es: "⚠️ No gire la trava interior — si la gira, la puerta quedará sin seguro y no cerrará."
-      },
-      lockPhoto: "fechadura.webp"
+      flyerPhoto: "transfer.webp"
     },
 
     condoMap: {
@@ -1617,10 +1611,6 @@ function renderTransferSection(t) {
       <p style="font-size:0.75rem;color:var(--text-dim);margin-top:6px;">${t.transfer_qr_hint}</p>
     </div>
     ${s.flyerPhoto ? `<div class="photo-grid" style="margin-top:14px;"><div class="photo-item" style="grid-column:1/-1;" onclick='openLightbox(["${s.flyerPhoto}"],0)'><img src="${s.flyerPhoto}" alt="Shuttle flyer" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div></div>` : ''}
-    <div style="margin-top:16px;background:var(--bg-card2);border-radius:var(--radius-sm);padding:12px 14px;border-left:3px solid var(--gold);">
-      <p style="font-size:0.88rem;line-height:1.5;">${s.lockWarning[currentLang]}</p>
-    </div>
-    ${s.lockPhoto ? `<div class="photo-grid" style="margin-top:10px;"><div class="photo-item" style="grid-column:1/-1;" onclick='openLightbox(["${s.lockPhoto}"],0)'><img src="${s.lockPhoto}" alt="Lock" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div></div>` : ''}
   `);
 }
 
