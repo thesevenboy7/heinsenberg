@@ -731,6 +731,7 @@ const UNITS = {
     name: "Legacy Grand East Gate — Unit 107",
     location: "Legacy Grand, Kissimmee, FL",
     address: "4650 Brac Medano Dr, Kissimmee, FL 34746",
+    mapsUrl: "https://maps.app.goo.gl/boz1yr51sNexrueU9",
     maxGuests: "4",
 
     wifi: { ssid: "LegacyGrandGuest", password: "192gate" },
@@ -1351,7 +1352,7 @@ function renderHero(t) {
         </div>
         <button class="hero-copy-btn" onclick="copyText('${u.checkin.lockCode}', this, '${t.wifi_copy}', '${t.wifi_copied}')">${t.wifi_copy}</button>
       </div>
-      ${u.address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.address)}" target="_blank" rel="noopener" class="hero-nav-btn"><i data-lucide="map-pin" class="lucide-sm"></i>${t.nav_btn}</a>` : ''}
+      ${u.mapsUrl ? `<a href="${u.mapsUrl}" target="_blank" rel="noopener" class="hero-nav-btn"><i data-lucide="map-pin" class="lucide-sm"></i>${t.nav_btn}</a>` : ''}
     </div>`;
 }
 
