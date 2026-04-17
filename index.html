@@ -1353,12 +1353,12 @@ function renderHero(t) {
           <div class="hero-time-value">${u.checkin.checkOutTime}</div>
         </div>
       </div>
-      <button class="hero-lock-card" onclick="revealLockCode(this,'${u.checkin.lockCode}','${t.wifi_copy}','${t.wifi_copied}')" aria-label="${t.access_code}">
+      <button class="hero-lock-card" onclick="revealLockCode(this,'${u.checkin.lockCode}')" aria-label="${t.access_code}">
         <div>
           <div class="hero-lock-label">${t.access_code}</div>
           <div class="hero-lock-code hero-lock-hidden">••••</div>
         </div>
-        <span class="hero-copy-btn hero-lock-reveal-hint">${t.reveal_code}</span>
+        <span class="hero-lock-reveal-hint">${t.reveal_code}</span>
       </button>
       ${u.mapsUrl ? `<a href="${u.mapsUrl}" target="_blank" rel="noopener" class="hero-nav-btn"><i data-lucide="map-pin" class="lucide-sm"></i>${t.nav_btn}</a>` : ''}
     </div>`;
@@ -2041,15 +2041,14 @@ document.addEventListener('input', e => {
 /* ═══════════════════════════════════════════════════════
    REVEAL LOCK CODE
    ═══════════════════════════════════════════════════════ */
-function revealLockCode(btn, code, copyLabel, copiedLabel) {
+function revealLockCode(btn, code) {
   const codeEl = btn.querySelector('.hero-lock-code');
-  const hintEl = btn.querySelector('.hero-copy-btn');
+  const hintEl = btn.querySelector('.hero-lock-reveal-hint');
   if (codeEl.classList.contains('hero-lock-hidden')) {
     codeEl.textContent = code;
     codeEl.classList.remove('hero-lock-hidden');
-    hintEl.textContent = copyLabel;
-    hintEl.classList.remove('hero-lock-reveal-hint');
-    btn.onclick = function() { copyText(code, hintEl, copyLabel, copiedLabel); };
+    if (hintEl) hintEl.remove();
+    btn.onclick = null;
   }
 }
 
