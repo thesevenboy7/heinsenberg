@@ -604,6 +604,7 @@
     /* ── LUCIDE ICONS ─────────────────────── */
     .acc-icon svg { width: 20px; height: 20px; stroke: var(--gold); stroke-width: 1.8; fill: none; }
     .lucide-sm svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .checklist-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 2; }
 
     /* ── HERO LOCK CARD ───────────────────── */
     .hero-lock-card {
@@ -734,7 +735,7 @@ const WORKER_URL = 'https://heinsenberg-worker.mariopimentel1610.workers.dev/';
 const UNITS = {
   107: {
     name: "Legacy Grand East Gate — Unit 107",
-    location: "Legacy Grand, Kissimmee, FL",
+    location: "Kissimmee, FL",
     address: "4650 Brac Medano Dr, Kissimmee, FL 34746",
     mapsUrl: "https://maps.app.goo.gl/boz1yr51sNexrueU9",
     maxGuests: "4",
@@ -754,52 +755,52 @@ const UNITS = {
 
     checkinSteps: {
       pt: [
-        { icon: "🕐", text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
-        { icon: "🏢", text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: "🔐", text: "Digite 2410 na fechadura eletrônica", sub: "A porta abre automaticamente — sem chave física" },
-        { icon: "📶", text: "Conecte ao WiFi: {wifi_ssid}", sub: "Senha: {wifi_password}" },
-        { icon: "❄️", text: "Ligue o AC e ajuste a temperatura", sub: "[instruções do AC a preencher]" }
+        { icon: '<i data-lucide="clock"></i>', text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
+        { icon: '<i data-lucide="building-2"></i>', text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: '<i data-lucide="lock"></i>', text: "Digite 2410 na fechadura eletrônica", sub: "A trava interna não gira — é normal, não force" },
+        { icon: '<i data-lucide="wifi"></i>', text: "Conecte ao WiFi: {wifi_ssid}", sub: "Senha: {wifi_password}" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Ligue o AC e ajuste a temperatura", sub: "💬 Dúvidas sobre o AC? Pergunte à assistente IA" }
       ],
       en: [
-        { icon: "🕐", text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
-        { icon: "🏢", text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: "🔐", text: "Enter 2410 on the electronic lock", sub: "Door opens automatically — no physical key needed" },
-        { icon: "📶", text: "Connect to WiFi: {wifi_ssid}", sub: "Password: {wifi_password}" },
-        { icon: "❄️", text: "Turn on the AC and set your temperature", sub: "[AC instructions to be filled]" }
+        { icon: '<i data-lucide="clock"></i>', text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
+        { icon: '<i data-lucide="building-2"></i>', text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: '<i data-lucide="lock"></i>', text: "Enter 2410 on the electronic lock", sub: "The interior lock doesn't turn — normal, don't force it" },
+        { icon: '<i data-lucide="wifi"></i>', text: "Connect to WiFi: {wifi_ssid}", sub: "Password: {wifi_password}" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Turn on the AC and set your temperature", sub: "💬 Questions about the AC? Ask the AI assistant" }
       ],
       es: [
-        { icon: "🕐", text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
-        { icon: "🏢", text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: "🔐", text: "Ingrese 2410 en la cerradura electrónica", sub: "La puerta se abre automáticamente — sin llave física" },
-        { icon: "📶", text: "Conéctese al WiFi: {wifi_ssid}", sub: "Contraseña: {wifi_password}" },
-        { icon: "❄️", text: "Encienda el AC y ajuste la temperatura", sub: "[instrucciones del AC a completar]" }
+        { icon: '<i data-lucide="clock"></i>', text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
+        { icon: '<i data-lucide="building-2"></i>', text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
+        { icon: '<i data-lucide="lock"></i>', text: "Ingrese 2410 en la cerradura electrónica", sub: "La trava interior no gira — es normal, no la fuerce" },
+        { icon: '<i data-lucide="wifi"></i>', text: "Conéctese al WiFi: {wifi_ssid}", sub: "Contraseña: {wifi_password}" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Encienda el AC y ajuste la temperatura", sub: "💬 ¿Dudas sobre el AC? Pregunta al asistente IA" }
       ]
     },
 
     checkoutSteps: {
       pt: [
-        { icon: "🕐", text: "Saia até as 11h (11 AM)", sub: "Late check-out sujeito a disponibilidade" },
-        { icon: "🗑️", text: "Leve todo o lixo para os contêineres do condomínio", sub: "Obrigatório — não deixe lixo dentro da unidade" },
-        { icon: "🧹", text: "Deixe a unidade organizada", sub: "Pratos lavados, tudo no lugar, toalhas dobradas" },
-        { icon: "🪟", text: "Feche e trave todas as janelas e portas internas", sub: "" },
-        { icon: "❄️", text: "Desligue o AC e todos os aparelhos", sub: "" },
-        { icon: "🔒", text: "Feche a porta ao sair — a fechadura trava sozinha", sub: "Confirme que está travada antes de sair" }
+        { icon: '<i data-lucide="clock"></i>', text: "Saia até as 11h (11 AM)", sub: "Late check-out sujeito a disponibilidade" },
+        { icon: '<i data-lucide="trash-2"></i>', text: "Leve todo o lixo para os contêineres do condomínio", sub: "Obrigatório — não deixe lixo dentro da unidade" },
+        { icon: '<i data-lucide="brush"></i>', text: "Deixe a unidade organizada", sub: "Pratos lavados, tudo no lugar, toalhas dobradas" },
+        { icon: '<i data-lucide="x-square"></i>', text: "Feche e trave todas as janelas e portas internas", sub: "" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Desligue o AC e todos os aparelhos", sub: "" },
+        { icon: '<i data-lucide="lock"></i>', text: "Feche a porta ao sair — a fechadura trava sozinha", sub: "Confirme que está travada antes de sair" }
       ],
       en: [
-        { icon: "🕐", text: "Check out by 11 AM", sub: "Late check-out subject to availability" },
-        { icon: "🗑️", text: "Take all trash to the condo containers", sub: "Required — do not leave trash inside the unit" },
-        { icon: "🧹", text: "Leave the unit tidy", sub: "Washed dishes, everything in place, towels folded" },
-        { icon: "🪟", text: "Close and lock all windows and interior doors", sub: "" },
-        { icon: "❄️", text: "Turn off the AC and all appliances", sub: "" },
-        { icon: "🔒", text: "Close the door when leaving — self-locking", sub: "Confirm it is locked before leaving" }
+        { icon: '<i data-lucide="clock"></i>', text: "Check out by 11 AM", sub: "Late check-out subject to availability" },
+        { icon: '<i data-lucide="trash-2"></i>', text: "Take all trash to the condo containers", sub: "Required — do not leave trash inside the unit" },
+        { icon: '<i data-lucide="brush"></i>', text: "Leave the unit tidy", sub: "Washed dishes, everything in place, towels folded" },
+        { icon: '<i data-lucide="x-square"></i>', text: "Close and lock all windows and interior doors", sub: "" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Turn off the AC and all appliances", sub: "" },
+        { icon: '<i data-lucide="lock"></i>', text: "Close the door when leaving — self-locking", sub: "Confirm it is locked before leaving" }
       ],
       es: [
-        { icon: "🕐", text: "Haga check-out antes de las 11 AM", sub: "Late check-out sujeto a disponibilidad" },
-        { icon: "🗑️", text: "Lleve toda la basura a los contenedores del condominio", sub: "Obligatorio — no deje basura dentro" },
-        { icon: "🧹", text: "Deje la unidad ordenada", sub: "Platos lavados, todo en su lugar, toallas dobladas" },
-        { icon: "🪟", text: "Cierre todas las ventanas y puertas internas", sub: "" },
-        { icon: "❄️", text: "Apague el AC y todos los aparatos", sub: "" },
-        { icon: "🔒", text: "Cierre la puerta al salir — se bloquea sola", sub: "Confirme que está cerrada antes de irse" }
+        { icon: '<i data-lucide="clock"></i>', text: "Haga check-out antes de las 11 AM", sub: "Late check-out sujeto a disponibilidad" },
+        { icon: '<i data-lucide="trash-2"></i>', text: "Lleve toda la basura a los contenedores del condominio", sub: "Obligatorio — no deje basura dentro" },
+        { icon: '<i data-lucide="brush"></i>', text: "Deje la unidad ordenada", sub: "Platos lavados, todo en su lugar, toallas dobladas" },
+        { icon: '<i data-lucide="x-square"></i>', text: "Cierre todas las ventanas y puertas internas", sub: "" },
+        { icon: '<i data-lucide="thermometer"></i>', text: "Apague el AC y todos los aparatos", sub: "" },
+        { icon: '<i data-lucide="lock"></i>', text: "Cierre la puerta al salir — se bloquea sola", sub: "Confirme que está cerrada antes de irse" }
       ]
     },
 
@@ -839,11 +840,20 @@ const UNITS = {
       ]
     },
 
-    appliances: {
+    ac: {
       text: {
-        pt: "[PLACEHOLDER — instruções do AC e TV a preencher]",
-        en: "[PLACEHOLDER — AC and TV instructions to be filled]",
-        es: "[PLACEHOLDER — instrucciones del AC y TV a completar]"
+        pt: "[PLACEHOLDER — instruções do AC a preencher]\n\n💬 Tem dúvidas? Nossa assistente IA responde na hora — toque na aba 'Assistente IA' e pergunte.",
+        en: "[PLACEHOLDER — AC instructions to be filled]\n\n💬 Have questions? Our AI assistant answers instantly — tap the 'AI Assistant' tab and ask.",
+        es: "[PLACEHOLDER — instrucciones del AC a completar]\n\n💬 ¿Tienes dudas? Nuestra asistente IA responde al instante — toca la pestaña 'Asistente IA' y pregunta."
+      },
+      photos: []
+    },
+
+    tv: {
+      text: {
+        pt: "[PLACEHOLDER — instruções da TV a preencher]\n\n💬 Tem dúvidas? Nossa assistente IA responde na hora — toque na aba 'Assistente IA' e pergunte.",
+        en: "[PLACEHOLDER — TV instructions to be filled]\n\n💬 Have questions? Our AI assistant answers instantly — tap the 'AI Assistant' tab and ask.",
+        es: "[PLACEHOLDER — instrucciones de la TV a completar]\n\n💬 ¿Tienes dudas? Nuestra asistente IA responde al instante — toca la pestaña 'Asistente IA' y pregunta."
       },
       photos: []
     },
@@ -874,13 +884,20 @@ const UNITS = {
       }
     },
 
-    transfer: {
-      text: {
-        pt: "Transfer gratuito disponível para hóspedes da Lyrios Fabrichini Services! Consulte a Mônica via Airbnb para agendar e ver as especificações (aeroportos atendidos, horários disponíveis e destinos).",
-        en: "Free transfer available for Lyrios Fabrichini Services guests! Contact Mônica via Airbnb to schedule and see the specifications (airports served, available times and destinations).",
-        es: "¡Transfer gratuito disponible para los huéspedes de Lyrios Fabrichini Services! Consulte a Mônica via Airbnb para programar y ver las especificaciones (aeropuertos atendidos, horarios y destinos)."
+    transferSection: {
+      shuttle: {
+        pt: "Shuttle gratuito disponível para hóspedes Lyrios Fabrichini Services.\n\n🏰 Magic Kingdom: saída 9:45 AM | retorno 9:00 PM\n🎬 Hollywood Studios: saída 11:45 AM | retorno 8:45 PM\n\n📞 Reservas: (407) 279-0048",
+        en: "Free shuttle available for Lyrios Fabrichini Services guests.\n\n🏰 Magic Kingdom: departs 9:45 AM | returns 9:00 PM\n🎬 Hollywood Studios: departs 11:45 AM | returns 8:45 PM\n\n📞 Reservations: (407) 279-0048",
+        es: "Shuttle gratuito disponible para huéspedes de Lyrios Fabrichini Services.\n\n🏰 Magic Kingdom: salida 9:45 AM | regreso 9:00 PM\n🎬 Hollywood Studios: salida 11:45 AM | regreso 8:45 PM\n\n📞 Reservas: (407) 279-0048"
       },
-      photos: [] // ← adicionar URL da foto do panfleto aqui
+      qrUrl: "https://www.firefightersallservices.net",
+      flyerPhoto: "transfer.webp",
+      lockWarning: {
+        pt: "⚠️ A trava interna da fechadura NÃO gira — é normal. Não force.",
+        en: "⚠️ The interior lock does NOT turn — this is normal. Do not force it.",
+        es: "⚠️ La trava interior NO gira — es normal. No la fuerce."
+      },
+      lockPhoto: "fechadura.webp"
     },
 
     condoMap: {
@@ -1066,7 +1083,11 @@ const i18n = {
     amenities_title: "Pool & Amenities",
     amenities_hours: "Horário de funcionamento",
     amenities_location: "Localização",
-    amenities_rules: "Regras"
+    amenities_rules: "Regras",
+    ac_title: "Ar-condicionado",
+    tv_title: "Televisão",
+    transfer_section_title: "Transfer & Acesso",
+    transfer_qr_hint: "Escaneie para reservar"
   },
   en: {
     tab_info: "Information", tab_chat: "AI Assistant",
@@ -1113,7 +1134,11 @@ const i18n = {
     amenities_title: "Pool & Amenities",
     amenities_hours: "Operating hours",
     amenities_location: "Location",
-    amenities_rules: "Rules"
+    amenities_rules: "Rules",
+    ac_title: "Air Conditioning",
+    tv_title: "Television",
+    transfer_section_title: "Transfer & Access",
+    transfer_qr_hint: "Scan to reserve"
   },
   es: {
     tab_info: "Información", tab_chat: "Asistente IA",
@@ -1160,7 +1185,11 @@ const i18n = {
     amenities_title: "Pool & Amenities",
     amenities_hours: "Horario de funcionamiento",
     amenities_location: "Ubicación",
-    amenities_rules: "Reglas"
+    amenities_rules: "Reglas",
+    ac_title: "Aire Acondicionado",
+    tv_title: "Televisión",
+    transfer_section_title: "Transfer & Acceso",
+    transfer_qr_hint: "Escanear para reservar"
   }
 };
 
@@ -1246,34 +1275,35 @@ function render() {
   app.innerHTML = `
     ${renderHeader(t)}
     ${renderHero(t)}
-    ${u.transfer ? renderTransferBanner(t) : ''}
     ${renderTabs(t)}
 
     <div class="tab-content ${activeTab === 'info' ? 'active' : ''}" id="tab-info">
 
       ${sectionGroup(t.section_arrival)}
       <div class="accordion">
-        ${renderWifi(t)}
-        ${renderCheckin(t)}
         ${renderCheckinSteps(t)}
+        ${renderCheckin(t)}
+        ${renderWifi(t)}
         ${renderParking(t)}
+        ${u.transferSection ? renderTransferSection(t) : ''}
       </div>
 
       ${sectionGroup(t.section_during)}
       <div class="accordion">
         ${renderRules(t)}
-        ${renderAppliances(t)}
+        ${u.ac ? renderAC(t) : ''}
+        ${u.tv ? renderTV(t) : ''}
         ${u.amenities ? renderAmenities(t) : ''}
         ${renderPool(t)}
         ${u.gym ? renderGym(t) : ''}
         ${u.laundry ? renderLaundry(t) : ''}
+        ${renderTrash(t)}
         ${u.condoMap ? renderCondoMap(t) : ''}
       </div>
 
       ${sectionGroup(t.section_departure)}
       <div class="accordion">
         ${renderCheckoutSteps(t)}
-        ${renderTrash(t)}
       </div>
 
       ${sectionGroup(t.section_more)}
@@ -1471,7 +1501,7 @@ function renderCheckinSteps(t) {
         ${s.sub ? `<div class="checklist-sub">${fill(s.sub)}</div>` : ''}
       </div>
     </li>`).join('');
-  return accItem('checkin-steps', '✅', t.checkin_steps_title, `<ul class="checklist">${items}</ul>`);
+  return accItem('checkin-steps', '<i data-lucide="list-checks"></i>', t.checkin_steps_title, `<ul class="checklist">${items}</ul>`);
 }
 
 function renderCheckoutSteps(t) {
@@ -1485,7 +1515,7 @@ function renderCheckoutSteps(t) {
         ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
       </div>
     </li>`).join('');
-  return accItem('checkout-steps', '🚪', t.checkout_steps_title, `<ul class="checklist">${items}</ul>`);
+  return accItem('checkout-steps', '<i data-lucide="door-open"></i>', t.checkout_steps_title, `<ul class="checklist">${items}</ul>`);
 }
 
 function renderParking(t) {
@@ -1520,6 +1550,39 @@ function photoGrid(photos, altPrefix, t) {
   <div class="photo-item"><div class="photo-placeholder">
     <span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}
   </div></div>`;
+}
+
+function renderAC(t) {
+  const u = currentUnit;
+  return accItem('ac', '<i data-lucide="wind"></i>', t.ac_title, `
+    <p style="white-space:pre-line;">${u.ac.text[currentLang]}</p>
+    <div class="photo-grid">${photoGrid(u.ac.photos, 'AC', t)}</div>
+  `);
+}
+
+function renderTV(t) {
+  const u = currentUnit;
+  return accItem('tv', '<i data-lucide="tv"></i>', t.tv_title, `
+    <p style="white-space:pre-line;">${u.tv.text[currentLang]}</p>
+    <div class="photo-grid">${photoGrid(u.tv.photos, 'TV', t)}</div>
+  `);
+}
+
+function renderTransferSection(t) {
+  const s = currentUnit.transferSection;
+  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(s.qrUrl)}`;
+  return accItem('transfer', '<i data-lucide="bus"></i>', t.transfer_section_title, `
+    <p style="white-space:pre-line;">${s.shuttle[currentLang]}</p>
+    <div style="text-align:center;margin-top:16px;">
+      <img src="${qrSrc}" alt="QR Shuttle" style="width:180px;height:180px;background:#fff;padding:12px;border-radius:10px;display:inline-block;" />
+      <p style="font-size:0.75rem;color:var(--text-dim);margin-top:6px;">${t.transfer_qr_hint}</p>
+    </div>
+    ${s.flyerPhoto ? `<div class="photo-grid" style="margin-top:14px;"><div class="photo-item" style="grid-column:1/-1;" onclick='openLightbox(["${s.flyerPhoto}"],0)'><img src="${s.flyerPhoto}" alt="Shuttle flyer" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div></div>` : ''}
+    <div style="margin-top:16px;background:var(--bg-card2);border-radius:var(--radius-sm);padding:12px 14px;border-left:3px solid var(--gold);">
+      <p style="font-size:0.88rem;line-height:1.5;">${s.lockWarning[currentLang]}</p>
+    </div>
+    ${s.lockPhoto ? `<div class="photo-grid" style="margin-top:10px;"><div class="photo-item" style="grid-column:1/-1;" onclick='openLightbox(["${s.lockPhoto}"],0)'><img src="${s.lockPhoto}" alt="Lock" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div></div>` : ''}
+  `);
 }
 
 function renderAppliances(t) {
@@ -1566,14 +1629,14 @@ function renderGym(t) {
   const photos = u.gym.photos && u.gym.photos.length
     ? u.gym.photos.map((url,i)=>`<div class="photo-item" onclick='openLightbox(${JSON.stringify(u.gym.photos)},${i})'><img src="${url}" alt="Gym" loading="lazy" /></div>`).join('')
     : '';
-  return accItem('gym', '🏋️', t.gym_title, `
+  return accItem('gym', '<i data-lucide="dumbbell"></i>', t.gym_title, `
     <p>${u.gym.text[currentLang]}</p>
     ${photos ? `<div class="photo-grid">${photos}</div>` : ''}
   `);
 }
 
 function renderLaundry(t) {
-  return accItem('laundry', '👕', t.laundry_title, `
+  return accItem('laundry', '<i data-lucide="washing-machine"></i>', t.laundry_title, `
     <p style="white-space:pre-line;">${currentUnit.laundry.text[currentLang]}</p>
   `);
 }
@@ -1589,7 +1652,7 @@ function renderCondoMap(t) {
     : `<div style="padding:24px;text-align:center;color:var(--text-dim);font-size:0.8rem;">
         <div style="font-size:2rem;margin-bottom:8px;">🗺️</div>${t.map_placeholder}
       </div>`;
-  return accItem('condo-map', '🗺️', t.condo_map_title, `<div class="photo-grid">${photos}</div>`);
+  return accItem('condo-map', '<i data-lucide="map"></i>', t.condo_map_title, `<div class="photo-grid">${photos}</div>`);
 }
 
 function renderTrash(t) {
@@ -1605,7 +1668,7 @@ function renderRecommendations(t) {
       </div>
       <p class="rec-tip">${r.tip}</p>
     </div>`).join('');
-  return accItem('rec', '🍽️', t.rec_title, items);
+  return accItem('rec', '<i data-lucide="utensils"></i>', t.rec_title, items);
 }
 
 function renderEmergency(t) {
