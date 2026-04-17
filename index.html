@@ -622,6 +622,11 @@
       transition: opacity var(--transition);
     }
     .hero-copy-btn:active { opacity: 0.75; }
+    .hero-lock-reveal-hint {
+      background: transparent; color: var(--text-dim); font-size: 0.75rem;
+      font-weight: 600; padding: 0; white-space: nowrap; letter-spacing: 0;
+    }
+    .hero-lock-hidden { letter-spacing: 0.2em; color: var(--text-dim); }
 
     /* ── HERO NAV BUTTON ──────────────────── */
     .hero-nav-btn {
@@ -1055,6 +1060,7 @@ const i18n = {
     fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Contate o suporte.",
     fallback_contact: "Contato de suporte", unit_label: "UNIDADE",
     access_code: "Código de Acesso",
+    reveal_code: "Toque para revelar o código",
     nav_btn: "Me leva até lá",
     sos_close: "Fechar",
     amenities_title: "Pool & Amenities",
@@ -1101,6 +1107,7 @@ const i18n = {
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
     fallback_contact: "Support contact", unit_label: "UNIT",
     access_code: "Access Code",
+    reveal_code: "Tap to reveal the code",
     nav_btn: "Take me there",
     sos_close: "Close",
     amenities_title: "Pool & Amenities",
@@ -1147,6 +1154,7 @@ const i18n = {
     fallback_text: "El enlace no corresponde a ninguna unidad. Por favor contacte al soporte.",
     fallback_contact: "Contacto de soporte", unit_label: "UNIDAD",
     access_code: "Código de Acceso",
+    reveal_code: "Toca para revelar el código",
     nav_btn: "Llévame allí",
     sos_close: "Cerrar",
     amenities_title: "Pool & Amenities",
@@ -1345,13 +1353,13 @@ function renderHero(t) {
           <div class="hero-time-value">${u.checkin.checkOutTime}</div>
         </div>
       </div>
-      <div class="hero-lock-card">
+      <button class="hero-lock-card" onclick="revealLockCode(this,'${u.checkin.lockCode}','${t.wifi_copy}','${t.wifi_copied}')" aria-label="${t.access_code}">
         <div>
           <div class="hero-lock-label">${t.access_code}</div>
-          <div class="hero-lock-code">${u.checkin.lockCode}</div>
+          <div class="hero-lock-code hero-lock-hidden">••••</div>
         </div>
-        <button class="hero-copy-btn" onclick="copyText('${u.checkin.lockCode}', this, '${t.wifi_copy}', '${t.wifi_copied}')">${t.wifi_copy}</button>
-      </div>
+        <span class="hero-copy-btn hero-lock-reveal-hint">${t.reveal_code}</span>
+      </button>
       ${u.mapsUrl ? `<a href="${u.mapsUrl}" target="_blank" rel="noopener" class="hero-nav-btn"><i data-lucide="map-pin" class="lucide-sm"></i>${t.nav_btn}</a>` : ''}
     </div>`;
 }
@@ -2029,6 +2037,21 @@ document.addEventListener('input', e => {
     e.target.style.height = Math.min(e.target.scrollHeight, 100) + 'px';
   }
 });
+
+/* ═══════════════════════════════════════════════════════
+   REVEAL LOCK CODE
+   ═══════════════════════════════════════════════════════ */
+function revealLockCode(btn, code, copyLabel, copiedLabel) {
+  const codeEl = btn.querySelector('.hero-lock-code');
+  const hintEl = btn.querySelector('.hero-copy-btn');
+  if (codeEl.classList.contains('hero-lock-hidden')) {
+    codeEl.textContent = code;
+    codeEl.classList.remove('hero-lock-hidden');
+    hintEl.textContent = copyLabel;
+    hintEl.classList.remove('hero-lock-reveal-hint');
+    btn.onclick = function() { copyText(code, hintEl, copyLabel, copiedLabel); };
+  }
+}
 
 /* ═══════════════════════════════════════════════════════
    SOS
