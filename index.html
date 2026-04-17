@@ -757,21 +757,21 @@ const UNITS = {
         { icon: "🕐", text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
         { icon: "🏢", text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
         { icon: "🔐", text: "Digite 2410 na fechadura eletrônica", sub: "A porta abre automaticamente — sem chave física" },
-        { icon: "📶", text: "Conecte ao WiFi: LegacyGrandGuest", sub: "Senha: 192gate" },
+        { icon: "📶", text: "Conecte ao WiFi: {wifi_ssid}", sub: "Senha: {wifi_password}" },
         { icon: "❄️", text: "Ligue o AC e ajuste a temperatura", sub: "[instruções do AC a preencher]" }
       ],
       en: [
         { icon: "🕐", text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
         { icon: "🏢", text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
         { icon: "🔐", text: "Enter 2410 on the electronic lock", sub: "Door opens automatically — no physical key needed" },
-        { icon: "📶", text: "Connect to WiFi: LegacyGrandGuest", sub: "Password: 192gate" },
+        { icon: "📶", text: "Connect to WiFi: {wifi_ssid}", sub: "Password: {wifi_password}" },
         { icon: "❄️", text: "Turn on the AC and set your temperature", sub: "[AC instructions to be filled]" }
       ],
       es: [
         { icon: "🕐", text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
         { icon: "🏢", text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
         { icon: "🔐", text: "Ingrese 2410 en la cerradura electrónica", sub: "La puerta se abre automáticamente — sin llave física" },
-        { icon: "📶", text: "Conéctese al WiFi: LegacyGrandGuest", sub: "Contraseña: 192gate" },
+        { icon: "📶", text: "Conéctese al WiFi: {wifi_ssid}", sub: "Contraseña: {wifi_password}" },
         { icon: "❄️", text: "Encienda el AC y ajuste la temperatura", sub: "[instrucciones del AC a completar]" }
       ]
     },
@@ -1462,12 +1462,13 @@ function renderCheckin(t) {
 function renderCheckinSteps(t) {
   const u = currentUnit;
   if (!u.checkinSteps) return '';
+  const fill = s => s.replace(/{wifi_ssid}/g, u.wifi.ssid).replace(/{wifi_password}/g, u.wifi.password);
   const items = u.checkinSteps[currentLang].map(s => `
     <li class="checklist-item">
       <span class="checklist-icon">${s.icon}</span>
       <div>
-        <div class="checklist-text">${s.text}</div>
-        ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
+        <div class="checklist-text">${fill(s.text)}</div>
+        ${s.sub ? `<div class="checklist-sub">${fill(s.sub)}</div>` : ''}
       </div>
     </li>`).join('');
   return accItem('checkin-steps', '✅', t.checkin_steps_title, `<ul class="checklist">${items}</ul>`);
