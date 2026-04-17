@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     :root {
       --bg:              #0A0A18;
@@ -599,6 +600,69 @@
       border-radius: var(--radius-sm); padding: 16px; color: var(--danger);
       font-size: 0.85rem; text-align: center; line-height: 1.6;
     }
+
+    /* ── LUCIDE ICONS ─────────────────────── */
+    .acc-icon svg { width: 20px; height: 20px; stroke: var(--gold); stroke-width: 1.8; fill: none; }
+    .lucide-sm svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+    /* ── HERO LOCK CARD ───────────────────── */
+    .hero-lock-card {
+      background: var(--bg-card2); border: 1px solid rgba(240,192,64,0.3);
+      border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    @media (prefers-color-scheme: light) {
+      .hero-lock-card { background: rgba(184,134,11,0.06); }
+    }
+    .hero-lock-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); }
+    .hero-lock-code { font-size: 2.2rem; font-weight: 900; color: var(--gold); letter-spacing: 0.3em; line-height: 1.1; margin-top: 2px; }
+    .hero-copy-btn {
+      background: var(--gold); color: #000; border-radius: var(--radius-sm);
+      padding: 8px 14px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; white-space: nowrap;
+      transition: opacity var(--transition);
+    }
+    .hero-copy-btn:active { opacity: 0.75; }
+
+    /* ── HERO NAV BUTTON ──────────────────── */
+    .hero-nav-btn {
+      width: 100%; margin-top: 10px; padding: 14px;
+      background: var(--success); color: #fff; border-radius: var(--radius-sm);
+      font-size: 0.93rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: opacity var(--transition);
+    }
+    .hero-nav-btn:active { opacity: 0.8; }
+    .hero-nav-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    /* ── SOS FAB ──────────────────────────── */
+    .sos-fab {
+      position: fixed; bottom: 24px; right: 20px; z-index: 500;
+      background: var(--danger); color: #fff; border-radius: 999px;
+      padding: 12px 18px; font-weight: 800; font-size: 0.88rem; letter-spacing: 0.04em;
+      box-shadow: 0 4px 20px rgba(248,113,113,0.45);
+      display: flex; align-items: center; gap: 7px;
+      transition: opacity var(--transition);
+    }
+    .sos-fab:active { opacity: 0.85; }
+    .sos-fab svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+    .sos-overlay { position: fixed; inset: 0; z-index: 501; background: var(--overlay-modal); display: flex; align-items: flex-end; justify-content: center; }
+    .sos-overlay.hidden { display: none; }
+    .sos-sheet {
+      background: var(--bg-card); width: 100%; max-width: 480px;
+      border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px 44px;
+    }
+    .sos-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .sos-title { font-size: 1.05rem; font-weight: 800; color: var(--danger); }
+    .sos-close-btn { font-size: 1.5rem; color: var(--text-dim); padding: 2px 8px; line-height: 1; }
+
+    /* ── AMENITIES SECTION ────────────────── */
+    .amenities-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .amenities-item {
+      display: flex; gap: 12px; padding: 12px 14px;
+      background: var(--bg-card2); border-radius: var(--radius-sm); align-items: flex-start;
+    }
+    .amenities-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .amenities-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-dim); margin-bottom: 3px; }
+    .amenities-val { font-size: 0.88rem; color: var(--text); line-height: 1.45; }
   </style>
 </head>
 <body>
@@ -666,6 +730,7 @@ const UNITS = {
   107: {
     name: "Legacy Grand East Gate — Unit 107",
     location: "Legacy Grand, Kissimmee, FL",
+    address: "4650 Brac Medano Dr, Kissimmee, FL 34746",
     maxGuests: "4",
 
     wifi: { ssid: "LegacyGrandGuest", password: "192gate" },
@@ -817,9 +882,23 @@ const UNITS = {
     },
 
     trash: {
-      pt: "Por favor, leve o lixo para fora antes de fazer check-out. Deposite nos contêineres do condomínio.",
-      en: "Please take the trash out before checking out. Dispose in the condominium containers.",
-      es: "Por favor, saque la basura antes de hacer check-out. Deposítela en los contenedores del condominio."
+      pt: "Coleta: segunda-feira e quinta-feira.\nHorário limite: coloque o lixo até as 7h nos dias de coleta.\nLocalização das lixeiras: no estacionamento, próximo ao bloco.\n\nAviso: não deixe lixo dentro da unidade ao fazer check-out.",
+      en: "Collection days: Monday and Thursday.\nDeadline: put trash out by 7 AM on collection days.\nDumpster location: in the parking area, near the building.\n\nReminder: do not leave trash inside the unit at check-out.",
+      es: "Días de recolección: lunes y jueves.\nHorario límite: saque la basura antes de las 7 AM en los días de recolección.\nUbicación de los contenedores: en el estacionamiento, cerca del bloque.\n\nAviso: no deje basura dentro de la unidad al hacer check-out."
+    },
+
+    amenities: {
+      hours: { pt: "8h às 22h (8 AM – 10 PM)", en: "8 AM to 10 PM", es: "8 AM a 10 PM" },
+      location: {
+        pt: "Área central do condomínio — siga as placas de sinalização.",
+        en: "Central area of the condominium — follow the signs.",
+        es: "Área central del condominio — siga las señales."
+      },
+      rules: {
+        pt: "Sem vidro na área da piscina • Sem comida na borda da piscina • Respeite o limite máximo de ocupação • Crianças menores de 14 anos devem estar acompanhadas",
+        en: "No glass in the pool area • No food at the pool edge • Respect maximum occupancy • Children under 14 must be accompanied",
+        es: "Sin vidrio en el área de la piscina • Sin comida en el borde • Respete la capacidad máxima • Menores de 14 años deben estar acompañados"
+      }
     },
 
     recommendations: {
@@ -973,7 +1052,14 @@ const i18n = {
     photo_zoom: "🔍 ampliar",
     fallback_title: "Unidade não encontrada",
     fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Contate o suporte.",
-    fallback_contact: "Contato de suporte", unit_label: "UNIDADE"
+    fallback_contact: "Contato de suporte", unit_label: "UNIDADE",
+    access_code: "Código de Acesso",
+    nav_btn: "Me leva até lá",
+    sos_close: "Fechar",
+    amenities_title: "Pool & Amenities",
+    amenities_hours: "Horário de funcionamento",
+    amenities_location: "Localização",
+    amenities_rules: "Regras"
   },
   en: {
     tab_info: "Information", tab_chat: "AI Assistant",
@@ -1012,7 +1098,14 @@ const i18n = {
     photo_zoom: "🔍 zoom",
     fallback_title: "Unit not found",
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
-    fallback_contact: "Support contact", unit_label: "UNIT"
+    fallback_contact: "Support contact", unit_label: "UNIT",
+    access_code: "Access Code",
+    nav_btn: "Take me there",
+    sos_close: "Close",
+    amenities_title: "Pool & Amenities",
+    amenities_hours: "Operating hours",
+    amenities_location: "Location",
+    amenities_rules: "Rules"
   },
   es: {
     tab_info: "Información", tab_chat: "Asistente IA",
@@ -1051,7 +1144,14 @@ const i18n = {
     photo_zoom: "🔍 ampliar",
     fallback_title: "Unidad no encontrada",
     fallback_text: "El enlace no corresponde a ninguna unidad. Por favor contacte al soporte.",
-    fallback_contact: "Contacto de soporte", unit_label: "UNIDAD"
+    fallback_contact: "Contacto de soporte", unit_label: "UNIDAD",
+    access_code: "Código de Acceso",
+    nav_btn: "Llévame allí",
+    sos_close: "Cerrar",
+    amenities_title: "Pool & Amenities",
+    amenities_hours: "Horario de funcionamiento",
+    amenities_location: "Ubicación",
+    amenities_rules: "Reglas"
   }
 };
 
@@ -1154,6 +1254,7 @@ function render() {
       <div class="accordion">
         ${renderRules(t)}
         ${renderAppliances(t)}
+        ${u.amenities ? renderAmenities(t) : ''}
         ${renderPool(t)}
         ${u.gym ? renderGym(t) : ''}
         ${u.laundry ? renderLaundry(t) : ''}
@@ -1192,6 +1293,15 @@ function render() {
   attachLangListeners();
 
   if (activeTab === 'chat') renderChatMessages(t);
+
+  // Ativa SOS fab e inicializa ícones Lucide
+  const sosFab = document.getElementById('sos-fab');
+  if (sosFab) sosFab.style.display = 'flex';
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  // Atualiza título do modal SOS conforme idioma
+  const sosTitle = document.getElementById('sos-modal-title');
+  if (sosTitle) sosTitle.textContent = '🚨 ' + t.emergency_title;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1234,6 +1344,14 @@ function renderHero(t) {
           <div class="hero-time-value">${u.checkin.checkOutTime}</div>
         </div>
       </div>
+      <div class="hero-lock-card">
+        <div>
+          <div class="hero-lock-label">${t.access_code}</div>
+          <div class="hero-lock-code">${u.checkin.lockCode}</div>
+        </div>
+        <button class="hero-copy-btn" onclick="copyText('${u.checkin.lockCode}', this, '${t.wifi_copy}', '${t.wifi_copied}')">${t.wifi_copy}</button>
+      </div>
+      ${u.address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.address)}" target="_blank" rel="noopener" class="hero-nav-btn"><i data-lucide="map-pin" class="lucide-sm"></i>${t.nav_btn}</a>` : ''}
     </div>`;
 }
 
@@ -1295,7 +1413,7 @@ function accItem(id, icon, title, content) {
 
 function renderWifi(t) {
   const u = currentUnit;
-  return accItem('wifi', '📶', t.wifi_title, `
+  return accItem('wifi', '<i data-lucide="wifi"></i>', t.wifi_title, `
     <div class="wifi-row">
       <div>
         <div class="wifi-label">${t.wifi_network}</div>
@@ -1315,7 +1433,7 @@ function renderWifi(t) {
 
 function renderCheckin(t) {
   const u = currentUnit;
-  return accItem('checkin', '🕐', t.checkin_title, `
+  return accItem('checkin', '<i data-lucide="clock"></i>', t.checkin_title, `
     <div class="info-row">
       <span class="info-key">${t.checkin_time_label}</span>
       <span class="info-val">${u.checkin.checkInTime}</span>
@@ -1362,7 +1480,7 @@ function renderCheckoutSteps(t) {
 
 function renderParking(t) {
   const u = currentUnit;
-  return accItem('parking', '🚗', t.parking_title, `
+  return accItem('parking', '<i data-lucide="car"></i>', t.parking_title, `
     <p>${u.parking.rules[currentLang]}</p>
     <div class="action-row">
       <a href="${u.parking.mapsUrl}" target="_blank" rel="noopener" class="action-btn btn-maps">
@@ -1375,7 +1493,7 @@ function renderParking(t) {
 function renderRules(t) {
   const items = currentUnit.rules[currentLang].map(r =>
     `<li><span class="rule-icon">${r.icon}</span>${r.text}</li>`).join('');
-  return accItem('rules', '📋', t.rules_title, `<ul class="rules-list">${items}</ul>`);
+  return accItem('rules', '<i data-lucide="clipboard-list"></i>', t.rules_title, `<ul class="rules-list">${items}</ul>`);
 }
 
 function photoGrid(photos, altPrefix, t) {
@@ -1396,9 +1514,29 @@ function photoGrid(photos, altPrefix, t) {
 
 function renderAppliances(t) {
   const u = currentUnit;
-  return accItem('appliances', '🌡️', t.appliances_title, `
+  return accItem('appliances', '<i data-lucide="thermometer"></i>', t.appliances_title, `
     <p>${u.appliances.text[currentLang]}</p>
     <div class="photo-grid">${photoGrid(u.appliances.photos, 'Appliance', t)}</div>
+  `);
+}
+
+function renderAmenities(t) {
+  const a = currentUnit.amenities;
+  return accItem('amenities', '<i data-lucide="waves"></i>', t.amenities_title, `
+    <div class="amenities-list">
+      <div class="amenities-item">
+        <span class="amenities-icon">🕐</span>
+        <div><div class="amenities-label">${t.amenities_hours}</div><div class="amenities-val">${a.hours[currentLang]}</div></div>
+      </div>
+      <div class="amenities-item">
+        <span class="amenities-icon">📍</span>
+        <div><div class="amenities-label">${t.amenities_location}</div><div class="amenities-val">${a.location[currentLang]}</div></div>
+      </div>
+      <div class="amenities-item">
+        <span class="amenities-icon">📋</span>
+        <div><div class="amenities-label">${t.amenities_rules}</div><div class="amenities-val">${a.rules[currentLang]}</div></div>
+      </div>
+    </div>
   `);
 }
 
@@ -1407,7 +1545,7 @@ function renderPool(t) {
   const photos = u.pool.photos && u.pool.photos.length
     ? u.pool.photos.map((url,i)=>`<div class="photo-item" onclick='openLightbox(${JSON.stringify(u.pool.photos)},${i})'><img src="${url}" alt="Pool" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div>`).join('')
     : `<div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}</div></div>`;
-  return accItem('pool', '🏊', t.pool_title, `
+  return accItem('pool', '<i data-lucide="waves"></i>', t.pool_title, `
     <p>${u.pool.text[currentLang]}</p>
     <div class="photo-grid">${photos}</div>
   `);
@@ -1445,7 +1583,7 @@ function renderCondoMap(t) {
 }
 
 function renderTrash(t) {
-  return accItem('trash', '🗑️', t.trash_title, `<p>${currentUnit.trash[currentLang]}</p>`);
+  return accItem('trash', '<i data-lucide="trash-2"></i>', t.trash_title, `<p style="white-space:pre-line;">${currentUnit.trash[currentLang]}</p>`);
 }
 
 function renderRecommendations(t) {
@@ -1475,7 +1613,7 @@ function renderEmergency(t) {
         </div>
       </div>`;
   }).join('');
-  return accItem('emergency', '🆘', t.emergency_title, contacts);
+  return accItem('emergency', '<i data-lucide="phone-call"></i>', t.emergency_title, contacts);
 }
 
 function renderFallback(t) {
@@ -1891,7 +2029,52 @@ document.addEventListener('input', e => {
   }
 });
 
+/* ═══════════════════════════════════════════════════════
+   SOS
+   ═══════════════════════════════════════════════════════ */
+function openSOS() {
+  const t = i18n[currentLang];
+  const u = currentUnit;
+  if (!u) return;
+  const waMsg = encodeURIComponent('Olá, sou hóspede e preciso de ajuda.');
+  const contacts = u.emergency.map(c => {
+    const hasPhone = c.phone && c.phone.length > 0;
+    return `
+      <div class="contact-card">
+        <div class="contact-name">${c.name}</div>
+        <div class="contact-role">${c.role[currentLang]}</div>
+        <div class="action-row" style="margin-top:12px;">
+          ${hasPhone ? `<a href="tel:${c.phone}" class="action-btn btn-call">📞 ${t.call_btn}</a>` : ''}
+          ${c.whatsapp && hasPhone ? `<a href="https://wa.me/${c.phone.replace(/\D/g,'')}?text=${waMsg}" target="_blank" rel="noopener" class="action-btn btn-whatsapp">💬 ${t.whatsapp_btn}</a>` : ''}
+          ${c.airbnb ? `<span class="action-btn" style="background:var(--gold-dim);color:#fff;cursor:default;">✉️ ${t.airbnb_btn}</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+  document.getElementById('sos-sheet-content').innerHTML = contacts;
+  document.getElementById('sos-overlay').classList.remove('hidden');
+}
+function closeSOS() {
+  document.getElementById('sos-overlay').classList.add('hidden');
+}
+
 init();
+if (typeof lucide !== 'undefined') lucide.createIcons();
 </script>
+
+<!-- SOS Fab -->
+<button class="sos-fab" onclick="openSOS()" id="sos-fab" style="display:none;">
+  <i data-lucide="siren"></i> SOS
+</button>
+
+<!-- SOS Modal -->
+<div id="sos-overlay" class="sos-overlay hidden" onclick="if(event.target===this)closeSOS()">
+  <div class="sos-sheet">
+    <div class="sos-header">
+      <span class="sos-title" id="sos-modal-title">🚨 Emergência</span>
+      <button class="sos-close-btn" onclick="closeSOS()">✕</button>
+    </div>
+    <div id="sos-sheet-content"></div>
+  </div>
+</div>
 </body>
 </html>
