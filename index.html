@@ -458,10 +458,10 @@
     .rec-tip { font-size: 0.84rem; color: var(--text-dim); margin-top: 6px; }
 
     /* ── CHAT ─────────────────────────────── */
-    #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 230px); }
+    #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 160px); }
     #tab-chat.active { display: flex; }
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: 16px 20px;
+      flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px;
       display: flex; flex-direction: column; gap: 12px;
     }
     .chat-msg {
@@ -601,6 +601,25 @@
       font-size: 0.85rem; text-align: center; line-height: 1.6;
     }
 
+    /* ── ACCORDION GROUP LABEL ───────────── */
+    .acc-group-label {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-dim);
+      padding: 14px 16px 4px; display: block;
+    }
+
+    /* ── AI SHORTCUT CARD ────────────────── */
+    .ai-shortcut-card {
+      margin: 12px 16px 0;
+      background: rgba(123,60,232,0.12); border: 1px solid rgba(123,60,232,0.3);
+      border-radius: var(--radius-sm); padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; transition: background var(--transition);
+    }
+    .ai-shortcut-card:active { background: rgba(123,60,232,0.2); }
+    .ai-shortcut-card svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; flex-shrink: 0; }
+    .ai-shortcut-text { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+
     /* ── LUCIDE ICONS ─────────────────────── */
     .acc-icon svg { width: 20px; height: 20px; stroke: var(--gold); stroke-width: 1.8; fill: none; }
     .lucide-sm svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
@@ -608,7 +627,7 @@
 
     /* ── HERO LOCK CARD ───────────────────── */
     .hero-lock-card {
-      background: var(--bg-card2); border: 1px solid rgba(240,192,64,0.3);
+      width: 100%; background: var(--bg-card2); border: 1px solid rgba(240,192,64,0.3);
       border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 12px;
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
@@ -632,7 +651,7 @@
     /* ── HERO NAV BUTTON ──────────────────── */
     .hero-nav-btn {
       width: 100%; margin-top: 10px; padding: 14px;
-      background: var(--success); color: #fff; border-radius: var(--radius-sm);
+      background: var(--purple); color: #fff; border-radius: var(--radius-sm);
       font-size: 0.93rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: opacity var(--transition);
     }
@@ -1109,6 +1128,8 @@ const i18n = {
     fallback_title: "Unidade não encontrada",
     fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Contate o suporte.",
     fallback_contact: "Contato de suporte", unit_label: "UNIDADE",
+    ai_shortcut: "Dúvidas sobre a estadia? Pergunte à nossa IA →",
+    grp_arrival: "Chegada", grp_condo: "Condomínio", grp_departure: "Saída", grp_support: "Suporte",
     access_code: "Código de Acesso",
     reveal_code: "Toque para revelar o código",
     nav_btn: "Me leva até lá",
@@ -1160,6 +1181,8 @@ const i18n = {
     fallback_title: "Unit not found",
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
     fallback_contact: "Support contact", unit_label: "UNIT",
+    ai_shortcut: "Questions about your stay? Ask our AI →",
+    grp_arrival: "Arrival", grp_condo: "Amenities", grp_departure: "Departure", grp_support: "Support",
     access_code: "Access Code",
     reveal_code: "Tap to reveal the code",
     nav_btn: "Take me there",
@@ -1211,6 +1234,8 @@ const i18n = {
     fallback_title: "Unidad no encontrada",
     fallback_text: "El enlace no corresponde a ninguna unidad. Por favor contacte al soporte.",
     fallback_contact: "Contacto de soporte", unit_label: "UNIDAD",
+    ai_shortcut: "¿Dudas sobre tu estadía? Pregunta a nuestra IA →",
+    grp_arrival: "Llegada", grp_condo: "Amenidades", grp_departure: "Salida", grp_support: "Soporte",
     access_code: "Código de Acceso",
     reveal_code: "Toca para revelar el código",
     nav_btn: "Llévame allí",
@@ -1308,21 +1333,22 @@ function render() {
   app.innerHTML = `
     ${renderHeader(t)}
     ${renderHero(t)}
+    <div class="ai-shortcut-card" onclick="switchTab('chat')">
+      <i data-lucide="sparkles"></i>
+      <span class="ai-shortcut-text">${t.ai_shortcut}</span>
+    </div>
     ${renderTabs(t)}
 
     <div class="tab-content ${activeTab === 'info' ? 'active' : ''}" id="tab-info">
 
-      ${sectionGroup(t.section_arrival)}
       <div class="accordion">
+        <span class="acc-group-label">${t.grp_arrival}</span>
         ${renderCheckinSteps(t)}
-        ${renderCheckin(t)}
         ${renderWifi(t)}
         ${renderParking(t)}
         ${u.transferSection ? renderTransferSection(t) : ''}
-      </div>
 
-      ${sectionGroup(t.section_during)}
-      <div class="accordion">
+        <span class="acc-group-label">${t.grp_condo}</span>
         ${renderRules(t)}
         ${u.ac ? renderAC(t) : ''}
         ${u.tv ? renderTV(t) : ''}
@@ -1330,17 +1356,13 @@ function render() {
         ${renderPool(t)}
         ${u.gym ? renderGym(t) : ''}
         ${u.laundry ? renderLaundry(t) : ''}
-        ${renderTrash(t)}
         ${u.condoMap ? renderCondoMap(t) : ''}
-      </div>
 
-      ${sectionGroup(t.section_departure)}
-      <div class="accordion">
+        <span class="acc-group-label">${t.grp_departure}</span>
         ${renderCheckoutSteps(t)}
-      </div>
+        ${renderTrash(t)}
 
-      ${sectionGroup(t.section_more)}
-      <div class="accordion">
+        <span class="acc-group-label">${t.grp_support}</span>
         ${renderRecommendations(t)}
         ${renderEmergency(t)}
       </div>
@@ -1390,7 +1412,7 @@ function sectionGroup(label) {
 function renderHeader(t) {
   return `
     <header class="header">
-      <div class="logo">Lyrios Fabrichini Services</div>
+      <div class="logo">LF Services</div>
       <div class="lang-switcher">
         ${['pt','en','es'].map(l => `
           <button class="lang-btn ${currentLang===l?'active':''}" data-lang="${l}">${l.toUpperCase()}</button>
@@ -1722,7 +1744,7 @@ function renderFallback(t) {
   const waMsg = encodeURIComponent('Olá, preciso de ajuda com o meu check-in.');
   return `
     <header class="header">
-      <div class="logo">Lyrios Fabrichini Services</div>
+      <div class="logo">LF Services</div>
       <div class="lang-switcher">
         ${['pt','en','es'].map(l=>`<button class="lang-btn ${currentLang===l?'active':''}" data-lang="${l}">${l.toUpperCase()}</button>`).join('')}
       </div>
@@ -1834,6 +1856,18 @@ function attachLangListeners() {
       render();
     });
   });
+}
+
+function switchTab(tab) {
+  const t = i18n[currentLang];
+  activeTab = tab;
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  const btn = document.querySelector(`[data-tab="${tab}"]`);
+  if (btn) btn.classList.add('active');
+  const content = document.getElementById('tab-' + tab);
+  if (content) content.classList.add('active');
+  if (tab === 'chat') { renderChatMessages(t); setTimeout(() => scrollChat(), 50); }
 }
 
 function attachTabListeners(t) {
@@ -1989,7 +2023,7 @@ async function sendMessage() {
 function renderAdminLoading() {
   document.getElementById('app').innerHTML = `
     <header class="header">
-      <div class="logo">Lyrios Fabrichini Services</div>
+      <div class="logo">LF Services</div>
       <span class="admin-badge">ADMIN</span>
     </header>
     <div class="admin-loading">
@@ -2060,7 +2094,7 @@ function renderAdminUI(data) {
 
   document.getElementById('app').innerHTML = `
     <header class="header">
-      <div class="logo">Lyrios Fabrichini Services</div>
+      <div class="logo">LF Services</div>
       <span class="admin-badge">ADMIN</span>
     </header>
     <div class="admin-wrap">
@@ -2115,7 +2149,7 @@ function renderAdminUI(data) {
 function renderAdminError(msg) {
   document.getElementById('app').innerHTML = `
     <header class="header">
-      <div class="logo">Lyrios Fabrichini Services</div>
+      <div class="logo">LF Services</div>
       <span class="admin-badge">ADMIN</span>
     </header>
     <div class="admin-wrap">
