@@ -776,17 +776,17 @@ const UNITS = {
       pt: [
         { icon: '<i data-lucide="clock"></i>', text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
         { icon: '<i data-lucide="building-2"></i>', text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: '<i data-lucide="lock"></i>', text: "Digite 2410 na fechadura eletrônica", sub: '<span style="display:block;margin-top:6px;background:var(--danger);color:#fff;font-weight:800;font-size:0.9rem;padding:8px 12px;border-radius:8px;letter-spacing:0.01em;">🚨 NÃO GIRE A TRAVA INTERNA — a porta ficará destravada</span>' },
+        { icon: '<i data-lucide="lock"></i>', text: "Digite 2410 na fechadura eletrônica", sub: '<div style="background:var(--bg-card2);border-radius:12px;padding:12px;border:1px solid var(--border);margin-top:8px;"><img src="fechadura.png" alt="Lock interior" style="border-radius:12px;width:100%;max-height:200px;object-fit:cover;"><div style="text-align:center;font-size:0.8rem;margin-top:8px;"><i data-lucide="alert-triangle" style="stroke:var(--gold);width:16px;height:16px;vertical-align:middle;"></i> A trava marcada em vermelho NÃO gira — deixe como está</div></div>' },
       ],
       en: [
         { icon: '<i data-lucide="clock"></i>', text: "Arrive from 3 PM onwards", sub: "Early check-in subject to availability" },
         { icon: '<i data-lucide="building-2"></i>', text: "Go to Building 1 — Apartment 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: '<i data-lucide="lock"></i>', text: "Enter 2410 on the electronic lock", sub: '<span style="display:block;margin-top:6px;background:var(--danger);color:#fff;font-weight:800;font-size:0.9rem;padding:8px 12px;border-radius:8px;letter-spacing:0.01em;">🚨 DO NOT TURN THE INTERIOR LOCK — the door will stay unlocked</span>' },
+        { icon: '<i data-lucide="lock"></i>', text: "Enter 2410 on the electronic lock", sub: '<div style="background:var(--bg-card2);border-radius:12px;padding:12px;border:1px solid var(--border);margin-top:8px;"><img src="fechadura.png" alt="Lock interior" style="border-radius:12px;width:100%;max-height:200px;object-fit:cover;"><div style="text-align:center;font-size:0.8rem;margin-top:8px;"><i data-lucide="alert-triangle" style="stroke:var(--gold);width:16px;height:16px;vertical-align:middle;"></i> The highlighted lock does NOT turn — leave it as is</div></div>' },
       ],
       es: [
         { icon: '<i data-lucide="clock"></i>', text: "Llegue a partir de las 3 PM", sub: "Check-in anticipado sujeto a disponibilidad" },
         { icon: '<i data-lucide="building-2"></i>', text: "Vaya al Edificio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
-        { icon: '<i data-lucide="lock"></i>', text: "Ingrese 2410 en la cerradura electrónica", sub: '<span style="display:block;margin-top:6px;background:var(--danger);color:#fff;font-weight:800;font-size:0.9rem;padding:8px 12px;border-radius:8px;letter-spacing:0.01em;">🚨 NO GIRE LA TRAVA INTERIOR — la puerta quedará sin seguro</span>' },
+        { icon: '<i data-lucide="lock"></i>', text: "Ingrese 2410 en la cerradura electrónica", sub: '<div style="background:var(--bg-card2);border-radius:12px;padding:12px;border:1px solid var(--border);margin-top:8px;"><img src="fechadura.png" alt="Lock interior" style="border-radius:12px;width:100%;max-height:200px;object-fit:cover;"><div style="text-align:center;font-size:0.8rem;margin-top:8px;"><i data-lucide="alert-triangle" style="stroke:var(--gold);width:16px;height:16px;vertical-align:middle;"></i> La trava marcada NO gira — déjela como está</div></div>' },
       ]
     },
 
@@ -833,7 +833,7 @@ const UNITS = {
         { icon: "🐾", text: "Animais de estimação não são permitidos" },
         { icon: "🔇", text: "Silêncio após as 22h — respeite os vizinhos" },
         { icon: "🗑️", text: "Leve o lixo para fora antes do check-out" },
-        { icon: "🧹", text: "Sem serviço de limpeza durante a estadia" }
+        { icon: "🧹", text: "Sem serviço de limpeza durante a estadia — limpeza extra disponível por $59 mediante solicitação à Mônica via Airbnb" }
       ],
       en: [
         { icon: "🚭", text: "No smoking in any area of the unit" },
@@ -841,7 +841,7 @@ const UNITS = {
         { icon: "🐾", text: "Pets are not allowed" },
         { icon: "🔇", text: "Quiet after 10 PM — respect your neighbors" },
         { icon: "🗑️", text: "Take the trash out before check-out" },
-        { icon: "🧹", text: "No housekeeping service during the stay" }
+        { icon: "🧹", text: "No housekeeping during the stay — extra cleaning available for $59 upon request to Mônica via Airbnb" }
       ],
       es: [
         { icon: "🚭", text: "Prohibido fumar en cualquier área de la unidad" },
@@ -849,15 +849,15 @@ const UNITS = {
         { icon: "🐾", text: "No se permiten mascotas" },
         { icon: "🔇", text: "Silencio después de las 10 PM — respete a sus vecinos" },
         { icon: "🗑️", text: "Saque la basura antes del check-out" },
-        { icon: "🧹", text: "Sin servicio de limpieza durante la estadía" }
+        { icon: "🧹", text: "Sin servicio de limpieza durante la estadía — limpieza extra disponible por $59 bajo solicitud a Mônica vía Airbnb" }
       ]
     },
 
     ac: {
       text: {
-        pt: "[PLACEHOLDER — instruções do AC a preencher]\n\n💬 Tem dúvidas? Nossa assistente IA responde na hora — toque na aba 'Assistente IA' e pergunte.",
-        en: "[PLACEHOLDER — AC instructions to be filled]\n\n💬 Have questions? Our AI assistant answers instantly — tap the 'AI Assistant' tab and ask.",
-        es: "[PLACEHOLDER — instrucciones del AC a completar]\n\n💬 ¿Tienes dudas? Nuestra asistente IA responde al instante — toca la pestaña 'Asistente IA' y pregunta."
+        pt: "O ar-condicionado é controlado diretamente no painel frontal da unidade. Para ligar: pressione o botão POWER. Ajuste a temperatura com as setas ▲▼ — recomendamos entre 72°F e 76°F para conforto. Selecione o modo COOL para resfriar. **Importante: não desligue o AC ao sair** — deixe ligado normalmente.\n\n💬 Dúvidas? Pergunte à nossa IA na aba 'Assistente IA'.",
+        en: "The air conditioning is controlled directly on the unit's front panel. To turn on: press the POWER button. Adjust temperature with ▲▼ arrows — we recommend between 72°F and 76°F for comfort. Select COOL mode to cool down. **Important: do not turn off the AC when leaving** — leave it running normally.\n\n💬 Questions? Ask our AI in the 'AI Assistant' tab.",
+        es: "El aire acondicionado se controla directamente en el panel frontal de la unidad. Para encender: presione el botón POWER. Ajuste la temperatura con las flechas ▲▼ — recomendamos entre 72°F y 76°F para mayor comodidad. Seleccione el modo COOL para enfriar. **Importante: no apague el AC al salir** — déjelo funcionando normalmente.\n\n💬 ¿Dudas? Pregúntale a nuestra IA en la pestaña 'Asistente IA'."
       },
       photos: []
     },
@@ -933,19 +933,19 @@ const UNITS = {
 
     recommendations: {
       pt: [
-        { name: "[PLACEHOLDER]", type: "Restaurante", tip: "[PLACEHOLDER — dica do local]" },
-        { name: "[PLACEHOLDER]", type: "Supermercado", tip: "[PLACEHOLDER — o mais próximo]" },
-        { name: "[PLACEHOLDER]", type: "Atração", tip: "[PLACEHOLDER — dica turística]" }
+        { name: "Aldi", type: "Supermercado", tip: "Em frente à propriedade — o mais próximo e conveniente para compras do dia a dia." },
+        { name: "Centro Comercial", type: "Restaurantes", tip: "Vários restaurantes disponíveis próximos à propriedade — ótimas opções para todas as refeições." },
+        { name: "Walt Disney World", type: "Atração", tip: "Shuttle gratuito disponível — reserve com antecedência pelo (407) 279-0048." }
       ],
       en: [
-        { name: "[PLACEHOLDER]", type: "Restaurant", tip: "[PLACEHOLDER — local tip]" },
-        { name: "[PLACEHOLDER]", type: "Grocery", tip: "[PLACEHOLDER — closest one]" },
-        { name: "[PLACEHOLDER]", type: "Attraction", tip: "[PLACEHOLDER — tourist tip]" }
+        { name: "Aldi", type: "Grocery", tip: "Right across from the property — closest and most convenient for everyday shopping." },
+        { name: "Shopping Center", type: "Restaurants", tip: "Several restaurants available near the property — great options for all meals." },
+        { name: "Walt Disney World", type: "Attraction", tip: "Free shuttle available — reserve in advance at (407) 279-0048." }
       ],
       es: [
-        { name: "[PLACEHOLDER]", type: "Restaurante", tip: "[PLACEHOLDER — consejo local]" },
-        { name: "[PLACEHOLDER]", type: "Supermercado", tip: "[PLACEHOLDER — el más cercano]" },
-        { name: "[PLACEHOLDER]", type: "Atracción", tip: "[PLACEHOLDER — consejo turístico]" }
+        { name: "Aldi", type: "Supermercado", tip: "Justo enfrente de la propiedad — el más cercano y conveniente para compras diarias." },
+        { name: "Centro Comercial", type: "Restaurantes", tip: "Varios restaurantes disponibles cerca de la propiedad — excelentes opciones para todas las comidas." },
+        { name: "Walt Disney World", type: "Atracción", tip: "Shuttle gratuito disponible — reserve con anticipación al (407) 279-0048." }
       ]
     },
 
@@ -981,6 +981,8 @@ FECHADURA: **NÃO GIRE a trava interna** — se girar, a porta fica destravada e
 
 REGRAS: sem festas, sem fumar, sem pets, silêncio após 22h, leve o lixo antes do check-out.
 
+LIMPEZA EXTRA: não há serviço de limpeza durante a estadia. Se o hóspede precisar de limpeza, está disponível por $59 — solicitar à Mônica via Airbnb com antecedência.
+
 ESTACIONAMENTO: qualquer vaga disponível ao redor dos prédios, sem vaga numerada.
 
 PISCINA & ACADEMIA:
@@ -992,7 +994,7 @@ LAVANDERIA: paga, perto da piscina — $3,50 lavar + $3,50 secar. Levar moedas.
 
 LIXO: coleta segunda e quinta. Colocar até as 7h. Lixeiras no estacionamento próximo ao bloco.
 
-AR-CONDICIONADO: **deixar ligado ao sair do apartamento** — não desligar.
+AR-CONDICIONADO: controlado no painel frontal da própria unidade. Ligar: botão POWER. Temperatura recomendada: 72°F–76°F. Modo: COOL. Não desligar ao sair.
 
 SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 - Magic Kingdom: saída 9:45 AM | retorno 9:00 PM
@@ -1002,6 +1004,8 @@ SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 EMERGÊNCIA:
 - Recepção Legacy Grand: +1 689 680-8177 (10h–22h)
 - Mônica (Lyrios Fabrichini Services): mensagem no Airbnb
+
+SUPERMERCADO: Aldi em frente à propriedade — mais próximo e conveniente. RESTAURANTES: centro comercial próximo com várias opções para todas as refeições.
 
 Se não souber responder, sugira contatar a Mônica via Airbnb.`,
 
@@ -1020,6 +1024,8 @@ LOCK: **DO NOT TURN the interior lock** — if turned, the door will stay unlock
 
 RULES: no parties, no smoking, no pets, quiet after 10 PM, take trash before check-out.
 
+EXTRA CLEANING: there is no housekeeping during the stay. If the guest needs cleaning, it is available for $59 — request to Mônica via Airbnb in advance.
+
 PARKING: any available space around the buildings, no assigned spot.
 
 POOL & GYM:
@@ -1031,7 +1037,7 @@ LAUNDRY: paid, near the pool — $3.50 wash + $3.50 dry. Bring coins.
 
 TRASH: collection Monday and Thursday. Put out by 7 AM. Dumpsters in the parking area near the building.
 
-AIR CONDITIONING: **leave it on when leaving the unit** — do not turn it off.
+AIR CONDITIONING: controlled on the unit's front panel. Turn on: POWER button. Recommended temperature: 72°F–76°F. Mode: COOL. Do not turn off when leaving.
 
 FREE SHUTTLE (Lyrios Fabrichini Services):
 - Magic Kingdom: departs 9:45 AM | returns 9:00 PM
@@ -1041,6 +1047,8 @@ FREE SHUTTLE (Lyrios Fabrichini Services):
 EMERGENCY:
 - Legacy Grand Reception: +1 689 680-8177 (10 AM–10 PM)
 - Mônica (Lyrios Fabrichini Services): Airbnb message
+
+GROCERY: Aldi right across from the property — closest and most convenient. RESTAURANTS: nearby shopping center with several options for all meals.
 
 If unsure about something, suggest contacting Mônica via Airbnb.`,
 
@@ -1059,6 +1067,8 @@ CERRADURA: **NO GIRE la trava interior** — si la gira, la puerta quedará sin 
 
 REGLAS: sin fiestas, sin fumar, sin mascotas, silencio después de las 10 PM, saque la basura antes del check-out.
 
+LIMPIEZA EXTRA: no hay servicio de limpieza durante la estadía. Si el huésped necesita limpieza, está disponible por $59 — solicitar a Mônica vía Airbnb con anticipación.
+
 ESTACIONAMIENTO: cualquier espacio disponible alrededor de los edificios, sin espacio asignado.
 
 PISCINA & GIMNASIO:
@@ -1070,7 +1080,7 @@ LAVANDERÍA: de pago, cerca de la piscina — $3.50 lavar + $3.50 secar. Traer m
 
 BASURA: recolección lunes y jueves. Sacar antes de las 7 AM. Contenedores en el estacionamiento cerca del bloque.
 
-AIRE ACONDICIONADO: **dejarlo encendido al salir** — no apagarlo.
+AIRE ACONDICIONADO: controlado en el panel frontal de la unidad. Encender: botón POWER. Temperatura recomendada: 72°F–76°F. Modo: COOL. No apagar al salir.
 
 SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 - Magic Kingdom: salida 9:45 AM | regreso 9:00 PM
@@ -1080,6 +1090,8 @@ SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 EMERGENCIA:
 - Recepción Legacy Grand: +1 689 680-8177 (10h–22h)
 - Mônica (Lyrios Fabrichini Services): mensaje en Airbnb
+
+SUPERMERCADO: Aldi justo enfrente de la propiedad — el más cercano y conveniente. RESTAURANTES: centro comercial cercano con varias opciones para todas las comidas.
 
 Si no sabe algo, sugiera contactar a Mônica via Airbnb.`
     }
