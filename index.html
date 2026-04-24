@@ -13,6 +13,11 @@
     })();
   </script>
   <title>Lyrios Fabrichini Services — Guest Portal</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LF Services">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -696,6 +701,14 @@
 <div id="lang-screen" class="lang-screen">
   <div class="lang-screen-logo">Lyrios Fabrichini Services</div>
   <p class="lang-screen-unit" id="lang-screen-unit"></p>
+  <div style="text-align:center;margin:8px 0 4px;">
+    <i data-lucide="home" style="stroke:var(--gold);width:32px;height:32px;"></i>
+  </div>
+  <div style="font-size:0.85rem;color:var(--text-dim);text-align:center;line-height:2;max-width:300px;margin:0 auto 16px;">
+    🇧🇷 Bem-vindo! Tudo que precisa para sua estadia está aqui.<br>
+    🇺🇸 Welcome! Everything you need for your stay is right here.<br>
+    🇪🇸 ¡Bienvenido! Todo lo que necesitas para tu estadía está aquí.
+  </div>
   <p class="lang-screen-prompt">Choose your language</p>
   <div class="lang-options">
     <button class="lang-option-btn" onclick="selectLang('pt')">
@@ -1153,7 +1166,10 @@ const i18n = {
     ac_title: "Ar-condicionado",
     tv_title: "Televisão",
     transfer_section_title: "Transfer & Acesso",
-    transfer_qr_hint: "Escaneie para reservar"
+    transfer_qr_hint: "Escaneie para reservar",
+    review_title: "Gostou da estadia?",
+    review_sub: "Sua avaliação faz toda a diferença para nós.",
+    review_btn: "Avaliar no Airbnb ›"
   },
   en: {
     tab_info: "Information", tab_chat: "AI Assistant",
@@ -1206,7 +1222,10 @@ const i18n = {
     ac_title: "Air Conditioning",
     tv_title: "Television",
     transfer_section_title: "Transfer & Access",
-    transfer_qr_hint: "Scan to reserve"
+    transfer_qr_hint: "Scan to reserve",
+    review_title: "Enjoyed your stay?",
+    review_sub: "Your review means everything to us.",
+    review_btn: "Leave a review on Airbnb ›"
   },
   es: {
     tab_info: "Información", tab_chat: "Asistente IA",
@@ -1259,7 +1278,10 @@ const i18n = {
     ac_title: "Aire Acondicionado",
     tv_title: "Televisión",
     transfer_section_title: "Transfer & Acceso",
-    transfer_qr_hint: "Escanear para reservar"
+    transfer_qr_hint: "Escanear para reservar",
+    review_title: "¿Disfrutó su estadía?",
+    review_sub: "Su reseña significa todo para nosotros.",
+    review_btn: "Dejar reseña en Airbnb ›"
   }
 };
 
@@ -1582,7 +1604,17 @@ function renderCheckoutSteps(t) {
         ${s.sub ? `<div class="checklist-sub">${s.sub}</div>` : ''}
       </div>
     </li>`).join('');
-  return accItem('checkout-steps', '<i data-lucide="door-open"></i>', t.checkout_steps_title, `<ul class="checklist">${items}</ul>`);
+  const reviewCard = `
+    <div style="margin-top:16px;background:var(--bg-card2);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;">
+      <div style="font-size:1.4rem;margin-bottom:6px;">⭐⭐⭐⭐⭐</div>
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">${t.review_title}</div>
+      <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:12px;">${t.review_sub}</div>
+      <a href="https://www.airbnb.com/hosting/reviews" target="_blank"
+         style="display:inline-block;background:var(--gold);color:#000;font-weight:800;font-size:0.9rem;padding:10px 24px;border-radius:10px;text-decoration:none;">
+        ${t.review_btn}
+      </a>
+    </div>`;
+  return accItem('checkout-steps', '<i data-lucide="door-open"></i>', t.checkout_steps_title, `<ul class="checklist">${items}</ul>${reviewCard}`);
 }
 
 function renderParking(t) {
@@ -2221,6 +2253,12 @@ function closeSOS() {
 
 init();
 if (typeof lucide !== 'undefined') lucide.createIcons();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 
 <!-- SOS Fab -->
