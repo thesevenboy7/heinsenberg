@@ -787,7 +787,7 @@ const UNITS = {
 
     checkinSteps: {
       pt: [
-        { icon: '<i data-lucide="clock"></i>', text: "Chegue a partir das 15h (3 PM)", sub: "Check-in antecipado sujeito à disponibilidade" },
+        { icon: '<i data-lucide="clock"></i>', text: "Chegue a partir das 3 PM", sub: "Check-in antecipado sujeito à disponibilidade" },
         { icon: '<i data-lucide="building-2"></i>', text: "Vá para o Prédio 1 — Apartamento 107", sub: "Legacy Grand East, 5245 W Irlo Bronson Hwy" },
         { icon: '<i data-lucide="lock"></i>', text: "Digite 2410 na fechadura eletrônica", sub: '<div style="background:var(--bg-card2);border-radius:12px;padding:12px;border:1px solid var(--border);margin-top:8px;"><img src="fechadura.png" alt="Lock interior" style="border-radius:12px;width:100%;max-height:200px;object-fit:cover;cursor:pointer;" onclick="openLightbox([\'fechadura.png\'],0)"><div style="text-align:center;font-size:0.8rem;margin-top:8px;"><i data-lucide="alert-triangle" style="stroke:var(--gold);width:16px;height:16px;vertical-align:middle;"></i> A trava marcada em vermelho NÃO gira — deixe como está</div></div>' },
       ],
@@ -805,7 +805,7 @@ const UNITS = {
 
     checkoutSteps: {
       pt: [
-        { icon: '<i data-lucide="clock"></i>', text: "Saia até as 11h (11 AM)", sub: "Late check-out sujeito a disponibilidade" },
+        { icon: '<i data-lucide="clock"></i>', text: "Saia até as 11 AM", sub: "Late check-out sujeito a disponibilidade" },
         { icon: '<i data-lucide="trash-2"></i>', text: "Leve todo o lixo para os contêineres do condomínio", sub: "Obrigatório — não deixe lixo dentro da unidade" },
         { icon: '<i data-lucide="brush"></i>', text: "Deixe a unidade organizada", sub: "Pratos lavados, tudo no lugar, toalhas dobradas" },
         { icon: '<i data-lucide="x-square"></i>', text: "Feche e trave todas as janelas e portas internas", sub: "" },
@@ -844,7 +844,7 @@ const UNITS = {
         { icon: "🚭", text: "Proibido fumar em qualquer área da unidade" },
         { icon: "🎉", text: "Sem festas ou eventos — máximo de 4 hóspedes" },
         { icon: "🐾", text: "Animais de estimação não são permitidos" },
-        { icon: "🔇", text: "Silêncio após as 22h — respeite os vizinhos" },
+        { icon: "🔇", text: "Silêncio após as 10 PM — respeite os vizinhos" },
         { icon: "🗑️", text: "Leve o lixo para fora antes do check-out" },
         { icon: "🧹", text: "Sem serviço de limpeza durante a estadia — limpeza extra disponível por $59 mediante solicitação à Mônica via Airbnb" }
       ],
@@ -886,9 +886,9 @@ const UNITS = {
 
     pool: {
       text: {
-        pt: "Piscina disponível para todos os hóspedes. Horário: 8h às 19h (8 AM–7 PM). Traga sua própria toalha — não são fornecidas.",
-        en: "Pool available for all guests. Hours: 8 AM to 7 PM. Bring your own towel — towels are not provided.",
-        es: "Piscina disponible para todos los huéspedes. Horario: 8 AM a 7 PM. Traiga su propia toalla — no se proporcionan."
+        pt: "Piscina disponível para todos os hóspedes.\nHorário: 8 AM – 10 PM.\nLocalização: área central do condomínio — siga as placas de sinalização.\n\n🚫 Regras:\n- Sem vidro na área da piscina\n- Sem comida na borda\n- Crianças menores de 14 anos devem estar acompanhadas\n- Respeite o limite máximo de ocupação\n\nTraga sua própria toalha — não fornecidas.",
+        en: "Pool available for all guests.\nHours: 8 AM – 10 PM.\nLocation: central area of the condominium — follow the signs.\n\n🚫 Rules:\n- No glass in the pool area\n- No food at the pool edge\n- Children under 14 must be accompanied\n- Respect maximum occupancy\n\nBring your own towel — not provided.",
+        es: "Piscina disponible para todos los huéspedes.\nHorario: 8 AM – 10 PM.\nUbicación: área central del condominio — siga las señales.\n\n🚫 Reglas:\n- Sin vidrio en el área de la piscina\n- Sin comida en el borde\n- Menores de 14 años deben estar acompañados\n- Respete la capacidad máxima\n\nTraiga su propia toalla — no se proporcionan."
       },
       photos: []
     },
@@ -925,23 +925,9 @@ const UNITS = {
     },
 
     trash: {
-      pt: "Coleta: segunda-feira e quinta-feira.\nHorário limite: coloque o lixo até as 7h nos dias de coleta.\nLocalização das lixeiras: no estacionamento, próximo ao bloco.\n\nAviso: não deixe lixo dentro da unidade ao fazer check-out.",
+      pt: "Coleta: segunda-feira e quinta-feira.\nHorário limite: coloque o lixo até as 7 AM nos dias de coleta.\nLocalização das lixeiras: no estacionamento, próximo ao bloco.\n\nAviso: não deixe lixo dentro da unidade ao fazer check-out.",
       en: "Collection days: Monday and Thursday.\nDeadline: put trash out by 7 AM on collection days.\nDumpster location: in the parking area, near the building.\n\nReminder: do not leave trash inside the unit at check-out.",
       es: "Días de recolección: lunes y jueves.\nHorario límite: saque la basura antes de las 7 AM en los días de recolección.\nUbicación de los contenedores: en el estacionamiento, cerca del bloque.\n\nAviso: no deje basura dentro de la unidad al hacer check-out."
-    },
-
-    amenities: {
-      hours: { pt: "8h às 22h (8 AM – 10 PM)", en: "8 AM to 10 PM", es: "8 AM a 10 PM" },
-      location: {
-        pt: "Área central do condomínio — siga as placas de sinalização.",
-        en: "Central area of the condominium — follow the signs.",
-        es: "Área central del condominio — siga las señales."
-      },
-      rules: {
-        pt: "Sem vidro na área da piscina • Sem comida na borda da piscina • Respeite o limite máximo de ocupação • Crianças menores de 14 anos devem estar acompanhadas",
-        en: "No glass in the pool area • No food at the pool edge • Respect maximum occupancy • Children under 14 must be accompanied",
-        es: "Sin vidrio en el área de la piscina • Sin comida en el borde • Respete la capacidad máxima • Menores de 14 años deben estar acompañados"
-      }
     },
 
     recommendations: {
@@ -965,7 +951,7 @@ const UNITS = {
     emergency: [
       {
         name: "Recepção Legacy Grand",
-        role: { pt: "Recepção do condomínio (10h–22h)", en: "Condo reception (10 AM–10 PM)", es: "Recepción del condominio (10h–22h)" },
+        role: { pt: "Recepção do condomínio (10 AM–10 PM)", en: "Condo reception (10 AM–10 PM)", es: "Recepción del condominio (10 AM–10 PM)" },
         phone: "+16896808177",
         whatsapp: false
       },
@@ -986,26 +972,27 @@ DADOS DA UNIDADE:
 - Prédio 1, Apartamento 107
 - Endereço: 5245 W Irlo Bronson Memorial Hwy, Kissimmee, FL 34746
 - WiFi: rede "LegacyGrandGuest", senha "192gate"
-- Check-in: 15h (3 PM) | Check-out: 11h (11 AM)
+- Check-in: 3 PM | Check-out: 11 AM
 - Código da fechadura: **2410**
 - Máximo de hóspedes: 4
 
 FECHADURA: **NÃO GIRE a trava interna** — se girar, a porta fica destravada e não tranca mais.
 
-REGRAS: sem festas, sem fumar, sem pets, silêncio após 22h, leve o lixo antes do check-out.
+REGRAS: sem festas, sem fumar, sem pets, silêncio após 10 PM, leve o lixo antes do check-out.
 
 LIMPEZA EXTRA: não há serviço de limpeza durante a estadia. Se o hóspede precisar de limpeza, está disponível por $59 — solicitar à Mônica via Airbnb com antecedência.
 
 ESTACIONAMENTO: qualquer vaga disponível ao redor dos prédios, sem vaga numerada.
 
 PISCINA & ACADEMIA:
-- Piscina: aberta das 8h às 19h (8 AM–7 PM). Trazer toalha própria.
-- Sem vidro na área da piscina. Sem comida na borda. Respeitar ocupação máxima.
+- Piscina: aberta das 8 AM às 10 PM. Trazer toalha própria.
+- Localização: área central do condomínio — siga as placas.
+- Regras: sem vidro, sem comida na borda, crianças menores de 14 acompanhadas, respeitar ocupação máxima.
 - Academia disponível no condomínio — consulte horários na recepção.
 
 LAVANDERIA: paga, perto da piscina — $3,50 lavar + $3,50 secar. Levar moedas.
 
-LIXO: coleta segunda e quinta. Colocar até as 7h. Lixeiras no estacionamento próximo ao bloco.
+LIXO: coleta segunda e quinta. Colocar até as 7 AM. Lixeiras no estacionamento próximo ao bloco.
 
 AR-CONDICIONADO: controlado no painel frontal da própria unidade. Ligar: botão POWER. Temperatura recomendada: 72°F–76°F. Modo: COOL. Não desligar ao sair.
 
@@ -1015,7 +1002,7 @@ SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 - Reservas: (407) 279-0048 | Site: firefightersallservices.net
 
 EMERGÊNCIA:
-- Recepção Legacy Grand: +1 689 680-8177 (10h–22h)
+- Recepção Legacy Grand: +1 689 680-8177 (10 AM–10 PM)
 - Mônica (Lyrios Fabrichini Services): mensagem no Airbnb
 
 SUPERMERCADO: Aldi em frente à propriedade — mais próximo e conveniente. RESTAURANTES: centro comercial próximo com várias opções para todas as refeições.
@@ -1042,8 +1029,9 @@ EXTRA CLEANING: there is no housekeeping during the stay. If the guest needs cle
 PARKING: any available space around the buildings, no assigned spot.
 
 POOL & GYM:
-- Pool: open 8 AM to 7 PM. Bring your own towel.
-- No glass in pool area. No food at pool edge. Respect max occupancy.
+- Pool: open 8 AM to 10 PM. Bring your own towel.
+- Location: central area of the condo — follow the signs.
+- Rules: no glass, no food at edge, children under 14 must be accompanied, respect max occupancy.
 - Gym available in the condo — check hours at the front desk.
 
 LAUNDRY: paid, near the pool — $3.50 wash + $3.50 dry. Bring coins.
@@ -1085,8 +1073,9 @@ LIMPIEZA EXTRA: no hay servicio de limpieza durante la estadía. Si el huésped 
 ESTACIONAMIENTO: cualquier espacio disponible alrededor de los edificios, sin espacio asignado.
 
 PISCINA & GIMNASIO:
-- Piscina: abierta de 8 AM a 7 PM. Traiga su propia toalla.
-- Sin vidrio en el área de la piscina. Sin comida en el borde. Respetar ocupación máxima.
+- Piscina: abierta de 8 AM a 10 PM. Traiga su propia toalla.
+- Ubicación: área central del condominio — siga las señales.
+- Reglas: sin vidrio, sin comida en el borde, menores de 14 acompañados, respetar ocupación máxima.
 - Gimnasio disponible en el condominio — consulte horarios en recepción.
 
 LAVANDERÍA: de pago, cerca de la piscina — $3.50 lavar + $3.50 secar. Traer monedas.
@@ -1101,7 +1090,7 @@ SHUTTLE GRATUITO (Lyrios Fabrichini Services):
 - Reservas: (407) 279-0048 | Sitio: firefightersallservices.net
 
 EMERGENCIA:
-- Recepción Legacy Grand: +1 689 680-8177 (10h–22h)
+- Recepción Legacy Grand: +1 689 680-8177 (10 AM–10 PM)
 - Mônica (Lyrios Fabrichini Services): mensaje en Airbnb
 
 SUPERMERCADO: Aldi justo enfrente de la propiedad — el más cercano y conveniente. RESTAURANTES: centro comercial cercano con varias opciones para todas las comidas.
@@ -1386,7 +1375,6 @@ function render() {
         ${renderRules(t)}
         ${u.ac ? renderAC(t) : ''}
         ${u.tv ? renderTV(t) : ''}
-        ${u.amenities ? renderAmenities(t) : ''}
         ${renderPool(t)}
         ${u.gym ? renderGym(t) : ''}
         ${u.laundry ? renderLaundry(t) : ''}
@@ -1714,7 +1702,7 @@ function renderPool(t) {
     ? u.pool.photos.map((url,i)=>`<div class="photo-item" onclick='openLightbox(${JSON.stringify(u.pool.photos)},${i})'><img src="${url}" alt="Pool" loading="lazy" /><span class="photo-zoom-hint">${t.photo_zoom}</span></div>`).join('')
     : `<div class="photo-item"><div class="photo-placeholder"><span class="photo-placeholder-icon">📷</span>${t.photo_placeholder}</div></div>`;
   return accItem('pool', '<i data-lucide="waves"></i>', t.pool_title, `
-    <p>${u.pool.text[currentLang]}</p>
+    <p style="white-space:pre-line;">${u.pool.text[currentLang]}</p>
     <div class="photo-grid">${photos}</div>
   `);
 }
