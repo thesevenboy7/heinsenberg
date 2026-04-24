@@ -656,7 +656,7 @@
     /* ── HERO NAV BUTTON ──────────────────── */
     .hero-nav-btn {
       width: 100%; margin-top: 10px; padding: 14px;
-      background: var(--purple); color: #fff; border-radius: var(--radius-sm);
+      background: transparent; border: 1.5px solid var(--purple); color: #fff; border-radius: var(--radius-sm);
       font-size: 0.93rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: opacity var(--transition);
     }
@@ -1448,7 +1448,7 @@ function renderHero(t) {
   return `
     <div class="hero">
       <div class="hero-label">${t.unit_label}</div>
-      <div class="hero-name">${u.name}</div>
+      ${(() => { const sep = u.name.indexOf(' — '); if (sep === -1) return `<div class="hero-name">${u.name}</div>`; return `<span style="font-size:0.85rem;color:var(--text-dim);font-weight:500;display:block;margin-bottom:2px">${u.name.slice(0, sep)}</span><div class="hero-name">${u.name.slice(sep + 3)}</div>`; })()}
       <div class="hero-location">📍 ${u.location}</div>
       <div class="hero-times">
         <div class="hero-time-card">
