@@ -463,8 +463,9 @@
     .rec-tip { font-size: 0.84rem; color: var(--text-dim); margin-top: 6px; }
 
     /* ── CHAT ─────────────────────────────── */
-    #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 160px); }
+    #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 112px); }
     #tab-chat.active { display: flex; }
+    .hero.chat-hidden { display: none; }
     .chat-messages {
       flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px;
       display: flex; flex-direction: column; gap: 12px;
@@ -1896,6 +1897,8 @@ function switchTab(tab) {
   if (btn) btn.classList.add('active');
   const content = document.getElementById('tab-' + tab);
   if (content) content.classList.add('active');
+  const hero = document.querySelector('.hero');
+  if (hero) hero.classList.toggle('chat-hidden', tab === 'chat');
   if (tab === 'chat') { renderChatMessages(t); setTimeout(() => scrollChat(), 50); }
 }
 
@@ -1908,6 +1911,8 @@ function attachTabListeners(t) {
       btn.classList.add('active');
       const content = document.getElementById('tab-' + activeTab);
       if (content) content.classList.add('active');
+      const hero = document.querySelector('.hero');
+      if (hero) hero.classList.toggle('chat-hidden', activeTab === 'chat');
       if (activeTab === 'chat') {
         renderChatMessages(t);
         setTimeout(() => scrollChat(), 50);
