@@ -1,0 +1,5 @@
+worker/.wrangler/
+node_modules/
+.claude/
+*.msi
+*.avif
