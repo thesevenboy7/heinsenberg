@@ -461,6 +461,8 @@
       border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
     }
     .rec-tip { font-size: 0.84rem; color: var(--text-dim); margin-top: 6px; }
+    .rec-photo { border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; aspect-ratio: 16/9; background: var(--bg-card2); cursor: pointer; }
+    .rec-photo img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ── CHAT ─────────────────────────────── */
     #tab-chat { flex: 1; display: none; flex-direction: column; height: calc(100vh - 112px); }
@@ -933,19 +935,19 @@ const UNITS = {
 
     recommendations: {
       pt: [
-        { name: "Aldi", type: "Supermercado", tip: "Em frente à propriedade — o mais próximo e conveniente para compras do dia a dia." },
-        { name: "Centro Comercial", type: "Restaurantes", tip: "Vários restaurantes disponíveis próximos à propriedade — ótimas opções para todas as refeições." },
-        { name: "Walt Disney World", type: "Atração", tip: "Shuttle gratuito disponível — reserve com antecedência pelo (407) 279-0048." }
+        { name: "Aldi", type: "Supermercado", tip: "Em frente à propriedade — o mais próximo e conveniente para compras do dia a dia.", mapsUrl: "https://maps.app.goo.gl/WfEEo7cGMBS4nvW58", photo: "aldi.jpg" },
+        { name: "Longhorn Steakhouse", type: "Restaurante", tip: "Churrascaria americana — ótimas carnes a poucos minutos da propriedade.", mapsUrl: "", photo: "longhorn.jpg" },
+        { name: "Walt Disney World", type: "Atração", tip: "Shuttle gratuito disponível — reserve com antecedência pelo (407) 279-0048.", mapsUrl: "https://maps.app.goo.gl/R5cHkfYqAEqKig1WA", photo: "disney.webp" }
       ],
       en: [
-        { name: "Aldi", type: "Grocery", tip: "Right across from the property — closest and most convenient for everyday shopping." },
-        { name: "Shopping Center", type: "Restaurants", tip: "Several restaurants available near the property — great options for all meals." },
-        { name: "Walt Disney World", type: "Attraction", tip: "Free shuttle available — reserve in advance at (407) 279-0048." }
+        { name: "Aldi", type: "Grocery", tip: "Right across from the property — closest and most convenient for everyday shopping.", mapsUrl: "https://maps.app.goo.gl/WfEEo7cGMBS4nvW58", photo: "aldi.jpg" },
+        { name: "Longhorn Steakhouse", type: "Restaurant", tip: "American steakhouse — great steaks just minutes from the property.", mapsUrl: "", photo: "longhorn.jpg" },
+        { name: "Walt Disney World", type: "Attraction", tip: "Free shuttle available — reserve in advance at (407) 279-0048.", mapsUrl: "https://maps.app.goo.gl/R5cHkfYqAEqKig1WA", photo: "disney.webp" }
       ],
       es: [
-        { name: "Aldi", type: "Supermercado", tip: "Justo enfrente de la propiedad — el más cercano y conveniente para compras diarias." },
-        { name: "Centro Comercial", type: "Restaurantes", tip: "Varios restaurantes disponibles cerca de la propiedad — excelentes opciones para todas las comidas." },
-        { name: "Walt Disney World", type: "Atracción", tip: "Shuttle gratuito disponible — reserve con anticipación al (407) 279-0048." }
+        { name: "Aldi", type: "Supermercado", tip: "Justo enfrente de la propiedad — el más cercano y conveniente para compras diarias.", mapsUrl: "https://maps.app.goo.gl/WfEEo7cGMBS4nvW58", photo: "aldi.jpg" },
+        { name: "Longhorn Steakhouse", type: "Restaurante", tip: "Restaurante de carnes americano — excelentes cortes a pocos minutos de la propiedad.", mapsUrl: "", photo: "longhorn.jpg" },
+        { name: "Walt Disney World", type: "Atracción", tip: "Shuttle gratuito disponible — reserve con anticipación al (407) 279-0048.", mapsUrl: "https://maps.app.goo.gl/R5cHkfYqAEqKig1WA", photo: "disney.webp" }
       ]
     },
 
@@ -1741,14 +1743,20 @@ function renderTrash(t) {
 }
 
 function renderRecommendations(t) {
-  const items = currentUnit.recommendations[currentLang].map(r => `
+  const items = currentUnit.recommendations[currentLang].map(r => {
+    const photo = r.photo ? `<div class="rec-photo" onclick='openLightbox(["${r.photo}"],0)'><img src="${r.photo}" alt="${r.name}" loading="lazy" /></div>` : '';
+    const mapsBtn = r.mapsUrl ? `<div class="action-row" style="margin-top:10px;"><a href="${r.mapsUrl}" target="_blank" rel="noopener" class="action-btn btn-maps">🗺️ ${t.parking_maps}</a></div>` : '';
+    return `
     <div class="rec-card">
+      ${photo}
       <div class="rec-header">
         <span class="rec-name">${r.name}</span>
         <span class="rec-type">${r.type}</span>
       </div>
       <p class="rec-tip">${r.tip}</p>
-    </div>`).join('');
+      ${mapsBtn}
+    </div>`;
+  }).join('');
   return accItem('rec', '<i data-lucide="utensils"></i>', t.rec_title, items);
 }
 
