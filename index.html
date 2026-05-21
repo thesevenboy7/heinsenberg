@@ -1139,6 +1139,8 @@ const i18n = {
     chat_worker_notice: "Configure o WORKER_URL para ativar o chat com IA.",
     photo_placeholder: "Foto em breve", map_placeholder: "Mapa em breve",
     photo_zoom: "🔍 ampliar",
+    wa_msg: "Olá {name}, sou hóspede da {unit} e preciso de ajuda.",
+    wa_fallback_msg: "Olá, preciso de ajuda com o meu check-in.",
     fallback_title: "Unidade não encontrada",
     fallback_text: "O link que você acessou não corresponde a nenhuma unidade. Contate o suporte.",
     fallback_contact: "Contato de suporte", unit_label: "UNIDADE",
@@ -1195,6 +1197,8 @@ const i18n = {
     chat_worker_notice: "Set WORKER_URL to enable AI chat.",
     photo_placeholder: "Photo coming soon", map_placeholder: "Map coming soon",
     photo_zoom: "🔍 zoom",
+    wa_msg: "Hello {name}, I am a guest at {unit} and need help.",
+    wa_fallback_msg: "Hello, I need help with my check-in.",
     fallback_title: "Unit not found",
     fallback_text: "The link you accessed doesn't match any unit. Please contact support.",
     fallback_contact: "Support contact", unit_label: "UNIT",
@@ -1251,6 +1255,8 @@ const i18n = {
     chat_worker_notice: "Configure WORKER_URL para activar el chat con IA.",
     photo_placeholder: "Foto próximamente", map_placeholder: "Mapa próximamente",
     photo_zoom: "🔍 ampliar",
+    wa_msg: "Hola {name}, soy huésped de {unit} y necesito ayuda.",
+    wa_fallback_msg: "Hola, necesito ayuda con mi check-in.",
     fallback_title: "Unidad no encontrada",
     fallback_text: "El enlace no corresponde a ninguna unidad. Por favor contacte al soporte.",
     fallback_contact: "Contacto de soporte", unit_label: "UNIDAD",
@@ -1471,32 +1477,6 @@ function renderHero(t) {
     </div>`;
 }
 
-function renderTransferBanner(t) {
-  const u = currentUnit;
-  const photos = u.transfer.photos && u.transfer.photos.length
-    ? u.transfer.photos.map((url, i) => `
-        <div class="transfer-photo-item" onclick='openLightbox(${JSON.stringify(u.transfer.photos)},${i})'>
-          <img src="${url}" alt="Transfer" loading="lazy" />
-        </div>`).join('')
-    : '';
-  return `
-    <div class="transfer-banner" id="transfer-banner">
-      <button class="transfer-banner-btn" onclick="toggleTransferBanner()">
-        <div class="transfer-banner-top">
-          <span class="transfer-badge">${t.transfer_badge}</span>
-          <span class="transfer-chevron" id="transfer-chevron">▼</span>
-        </div>
-        <div class="transfer-headline">${t.transfer_headline}</div>
-      </button>
-      <div class="transfer-banner-body" id="transfer-body">
-        <div class="transfer-banner-inner">
-          <p class="transfer-banner-text">${u.transfer.text[currentLang]}</p>
-          ${photos ? `<div class="transfer-photo-grid">${photos}</div>` : ''}
-        </div>
-      </div>
-    </div>`;
-}
-
 function toggleTransferBanner() {
   const banner = document.getElementById('transfer-banner');
   const chevron = document.getElementById('transfer-chevron');
@@ -1668,34 +1648,6 @@ function renderTransferSection(t) {
   `);
 }
 
-function renderAppliances(t) {
-  const u = currentUnit;
-  return accItem('appliances', '<i data-lucide="thermometer"></i>', t.appliances_title, `
-    <p>${u.appliances.text[currentLang]}</p>
-    <div class="photo-grid">${photoGrid(u.appliances.photos, 'Appliance', t)}</div>
-  `);
-}
-
-function renderAmenities(t) {
-  const a = currentUnit.amenities;
-  return accItem('amenities', '<i data-lucide="waves"></i>', t.amenities_title, `
-    <div class="amenities-list">
-      <div class="amenities-item">
-        <span class="amenities-icon">🕐</span>
-        <div><div class="amenities-label">${t.amenities_hours}</div><div class="amenities-val">${a.hours[currentLang]}</div></div>
-      </div>
-      <div class="amenities-item">
-        <span class="amenities-icon">📍</span>
-        <div><div class="amenities-label">${t.amenities_location}</div><div class="amenities-val">${a.location[currentLang]}</div></div>
-      </div>
-      <div class="amenities-item">
-        <span class="amenities-icon">📋</span>
-        <div><div class="amenities-label">${t.amenities_rules}</div><div class="amenities-val">${a.rules[currentLang]}</div></div>
-      </div>
-    </div>
-  `);
-}
-
 function renderPool(t) {
   const u = currentUnit;
   const photos = u.pool.photos && u.pool.photos.length
@@ -1762,7 +1714,7 @@ function renderRecommendations(t) {
 
 function renderEmergency(t) {
   const contacts = currentUnit.emergency.map(c => {
-    const waMsg = encodeURIComponent(`Olá ${c.name}, sou hóspede da ${currentUnit.name} e preciso de ajuda.`);
+    const waMsg = encodeURIComponent(t.wa_msg.replace('{name}', c.name).replace('{unit}', currentUnit.name));
     const hasPhone = c.phone && c.phone.length > 0;
     return `
       <div class="contact-card">
@@ -1779,7 +1731,7 @@ function renderEmergency(t) {
 }
 
 function renderFallback(t) {
-  const waMsg = encodeURIComponent('Olá, preciso de ajuda com o meu check-in.');
+  const waMsg = encodeURIComponent(t.wa_fallback_msg);
   return `
     <header class="header">
       <div class="logo">LF Services</div>
