@@ -1,0 +1,8 @@
+name = "heinsenberg-worker"
+main = "index.js"
+compatibility_date = "2026-04-15"
+preview_urls = false
+
+[[kv_namespaces]]
+binding = "FAQ_LOG"
+id = "d6b1e6e38ab642ed882911ab5c671b7f"
